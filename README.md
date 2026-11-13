@@ -136,19 +136,11 @@ The server uses a fresh subprocess per investigation, a single-worker lock, and 
 - **Small public demo:** one investigation at a time; concurrent requests can receive 429. No persistent history, background monitoring, authentication, payment execution, custody, recovery, or invoice/list reconciliation.
 - **Exports:** CSV is a generic reconciliation table for spreadsheets, not a tested QuickBooks import format. “Copy Proof” copies a provider-evidence summary, not a cryptographic proof or direct Trezu/Sputnik API integration. JSON preserves the full report and group metadata.
 
-## Build provenance and hackathon disclosures
+## Provenance and disclosures
 
-The standalone application was implemented on **November 13, 2026**. Its reader was developed during the same hackathon period and imported from the November 11 closeout archive. This is a new NEAR project, not an earlier product ported from another chain. The preserved import is separated from application code in `reader/`; archive and file digests are recorded in [reader/PROVENANCE.json](reader/PROVENANCE.json).
+The standalone application was built on **November 13, 2026**. Its reader was developed during the same hackathon period and imported from the November 11 closeout archive. This is a new NEAR project, not a product ported from another chain.
 
-- Original input archive: `inputs/source-closeout/payout-source-closeout-v5-20261111.tar.gz`, SHA-256 `c92edadfc65a46627d673b3e1d265dd2861bdd4fdcdea0a7cd5e72abc8105efe`.
-- Preserved engine: `reader/payout_probe.py`, SHA-256 `0ac8f7364292f5e9268bbcc465f433f9ac2ff48c7aeb9d2facfc0f24ce99f4a2`.
-- Application work: stdlib HTTP API, worker isolation, adapter, CLI, vanilla HTML/CSS/JavaScript workbench, exports, tests, Docker and hosting configuration. No third-party runtime libraries or frontend templates. Styling follows IBM Carbon design tokens; it does not use the Carbon component library.
+- Python standard library and vanilla HTML/CSS/JavaScript; no third-party runtime libraries or frontend templates. Styling follows IBM Carbon design tokens without using its component library.
 - AI coding agents assisted implementation and review.
+- The imported reader is preserved unchanged. Source archive, file hashes and capture provenance: [reader/PROVENANCE.json](reader/PROVENANCE.json).
 - Single project entry; no second project is being submitted by this author/team. [MIT license](LICENSE).
-
-Verify the preserved engine independently:
-
-```sh
-sha256sum reader/payout_probe.py
-# 0ac8f7364292f5e9268bbcc465f433f9ac2ff48c7aeb9d2facfc0f24ce99f4a2
-```
