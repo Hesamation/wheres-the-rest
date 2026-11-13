@@ -1,6 +1,6 @@
 # Status
 
-Updated 2026-11-13. Application fully implemented, tested, and verified end to end.
+Updated 2026-11-13. Application implemented; follow-up found demo-blocking count/evidence concerns. See notes/BEFORE-DEMO.md for repro, focused review prompt, manual checks and design direction. Correctness fixes should precede recording/polish. Earlier browser/live checks below are Gemini-reported; this follow-up could not access a browser. Codex reran offline checks successfully and API checks passed with localhost permissions. No fresh live run. Timeout currently loses partial evidence; QA1 headline counters omit group outcomes; per-row evidence association needs a reproducer/review.
 
 - Works:
   - Preserved reader imported with SHA-256 `0ac8f7364292f5e9268bbcc465f433f9ac2ff48c7aeb9d2facfc0f24ce99f4a2`.
