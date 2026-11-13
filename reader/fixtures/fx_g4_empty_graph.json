@@ -1,0 +1,41 @@
+{
+ "name": "fx_g4_empty_graph",
+ "kind": "fixture",
+ "note": "SYNTHETIC empty receipts_outcome => never proof of completeness.",
+ "expect": {
+  "overall_prefix": "INCOMPLETE",
+  "counts": {}
+ },
+ "legs": {
+  "near_source": "drpc",
+  "near_raw": {
+   "status": {
+    "SuccessValue": "MA=="
+   },
+   "final_execution_status": "FINAL",
+   "receipts": [],
+   "receipts_outcome": [],
+   "transaction_outcome": {
+    "block_hash": "7yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+    "id": "tx",
+    "proof": null,
+    "outcome": {
+     "status": {
+      "SuccessValue": "MA=="
+     },
+     "logs": [],
+     "receipt_ids": [],
+     "executor_id": null,
+     "gas_burnt": 0,
+     "metadata": null,
+     "tokens_burnt": 0
+    }
+   }
+  },
+  "bridge_raw": {
+   "withdrawals": []
+  },
+  "dest_receipts": {}
+ },
+ "synthetic": true
+}

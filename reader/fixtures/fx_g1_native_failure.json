@@ -1,0 +1,45 @@
+{
+ "name": "fx_g1_native_failure",
+ "kind": "fixture",
+ "note": "SYNTHETIC native {'Failure': ...} status object.",
+ "expect": {
+  "overall_prefix": "SOURCE_FAILED",
+  "counts": {}
+ },
+ "legs": {
+  "near_source": "drpc",
+  "near_raw": {
+   "status": {
+    "Failure": {
+     "ActionError": {
+      "kind": "FunctionCallError"
+     }
+    }
+   },
+   "final_execution_status": "FINAL",
+   "receipts": [],
+   "receipts_outcome": [],
+   "transaction_outcome": {
+    "block_hash": "7yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+    "id": "txroot",
+    "proof": null,
+    "outcome": {
+     "status": {
+      "SuccessValue": "MA=="
+     },
+     "logs": [],
+     "receipt_ids": [],
+     "executor_id": null,
+     "gas_burnt": 0,
+     "metadata": null,
+     "tokens_burnt": 0
+    }
+   }
+  },
+  "bridge_raw": {
+   "withdrawals": []
+  },
+  "dest_receipts": {}
+ },
+ "synthetic": true
+}

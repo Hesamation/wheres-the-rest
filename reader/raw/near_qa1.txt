@@ -1,0 +1,6 @@
+### NEAR archival tx 863ZDaRijV6j5RiMXf9GaJDBN86e1j2MNevLQNhR1zRe signer=sponsor-staging.trezu.near 2026-11-10T22:26:58Z
+-- via https://archival-rpc.near.org
+
+HTTP 000
+-- via https://near.drpc.org
+{"id":1,"jsonrpc":"2.0","result":{"final_execution_status":"FINAL","receipts":[{"predecessor_id":"sponsor-staging.trezu.near","priority":0,"receipt":{"Action":{"actions":[{"FunctionCall":{"args":"eyJsaXN0X2lkIjoiZjkwYzQ0ZmI0OTMxZTJiYWUyYTY0MzZkZmE5NzEyNjBmNzYwMjlhOTZiZmI4MjJhOThkOTJmZmFiZWNmYmUxMiJ9","deposit":"0","gas":1000000000000000,"method_name":"payout_batch"}}],"gas_price":"1000000000","input_data_ids":[],"is_promise_yield":false,"output_data_receivers":[],"signer_id":"sponsor-staging.trezu.near","signer_public_key":"ed25519:E4bRq87YjMgJjNUr994UNEeV85bvifR3BU2URunrFoBr"}},"receipt_id":"7R4knHHmxx4FDheqzQZTyjgcgwW5ksf3f8L6KAVtRJJy","receiver_id":"bulkpayment.near"},{"predecessor_id":"bulkpayment.near","priority":0,"receipt":{"Action":{"actions":[{"FunctionCall":{"args":"eyJ0b2tlbiI6ImJhc2UtMHg4MzM1ODlmY2Q2ZWRiNmUwOGY0YzdjMzJkNGY3MWI1NGJkYTAyOTEzLm9tZnQubmVhciIsInJlY2VpdmVyX2lkIjoiY

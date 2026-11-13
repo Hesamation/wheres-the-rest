@@ -1,0 +1,722 @@
+{
+ "name": "fx_g4_exact20_complete",
+ "kind": "fixture",
+ "note": "SYNTHETIC exactly-20 terminal chain, all reachable resolved => derived complete.",
+ "expect": {
+  "overall_prefix": "ALL_ROWS_OBSERVED",
+  "counts": {
+   "OBSERVED_MATCH": 1
+  }
+ },
+ "legs": {
+  "near_source": "drpc",
+  "near_raw": {
+   "status": {
+    "SuccessValue": "MA=="
+   },
+   "final_execution_status": "FINAL",
+   "receipts": [
+    {
+     "receipt_id": "r00",
+     "predecessor_id": "p.near",
+     "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+     "receipt": {
+      "Action": {
+       "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+       "actions": [],
+       "gas": "0",
+       "deposit": "0"
+      }
+     },
+     "priority": 0
+    },
+    {
+     "receipt_id": "r01",
+     "predecessor_id": "p.near",
+     "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+     "receipt": {
+      "Action": {
+       "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+       "actions": [],
+       "gas": "0",
+       "deposit": "0"
+      }
+     },
+     "priority": 0
+    },
+    {
+     "receipt_id": "r02",
+     "predecessor_id": "p.near",
+     "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+     "receipt": {
+      "Action": {
+       "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+       "actions": [],
+       "gas": "0",
+       "deposit": "0"
+      }
+     },
+     "priority": 0
+    },
+    {
+     "receipt_id": "r03",
+     "predecessor_id": "p.near",
+     "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+     "receipt": {
+      "Action": {
+       "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+       "actions": [],
+       "gas": "0",
+       "deposit": "0"
+      }
+     },
+     "priority": 0
+    },
+    {
+     "receipt_id": "r04",
+     "predecessor_id": "p.near",
+     "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+     "receipt": {
+      "Action": {
+       "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+       "actions": [],
+       "gas": "0",
+       "deposit": "0"
+      }
+     },
+     "priority": 0
+    },
+    {
+     "receipt_id": "r05",
+     "predecessor_id": "p.near",
+     "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+     "receipt": {
+      "Action": {
+       "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+       "actions": [],
+       "gas": "0",
+       "deposit": "0"
+      }
+     },
+     "priority": 0
+    },
+    {
+     "receipt_id": "r06",
+     "predecessor_id": "p.near",
+     "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+     "receipt": {
+      "Action": {
+       "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+       "actions": [],
+       "gas": "0",
+       "deposit": "0"
+      }
+     },
+     "priority": 0
+    },
+    {
+     "receipt_id": "r07",
+     "predecessor_id": "p.near",
+     "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+     "receipt": {
+      "Action": {
+       "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+       "actions": [],
+       "gas": "0",
+       "deposit": "0"
+      }
+     },
+     "priority": 0
+    },
+    {
+     "receipt_id": "r08",
+     "predecessor_id": "p.near",
+     "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+     "receipt": {
+      "Action": {
+       "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+       "actions": [],
+       "gas": "0",
+       "deposit": "0"
+      }
+     },
+     "priority": 0
+    },
+    {
+     "receipt_id": "r09",
+     "predecessor_id": "p.near",
+     "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+     "receipt": {
+      "Action": {
+       "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+       "actions": [],
+       "gas": "0",
+       "deposit": "0"
+      }
+     },
+     "priority": 0
+    },
+    {
+     "receipt_id": "r10",
+     "predecessor_id": "p.near",
+     "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+     "receipt": {
+      "Action": {
+       "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+       "actions": [],
+       "gas": "0",
+       "deposit": "0"
+      }
+     },
+     "priority": 0
+    },
+    {
+     "receipt_id": "r11",
+     "predecessor_id": "p.near",
+     "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+     "receipt": {
+      "Action": {
+       "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+       "actions": [],
+       "gas": "0",
+       "deposit": "0"
+      }
+     },
+     "priority": 0
+    },
+    {
+     "receipt_id": "r12",
+     "predecessor_id": "p.near",
+     "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+     "receipt": {
+      "Action": {
+       "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+       "actions": [],
+       "gas": "0",
+       "deposit": "0"
+      }
+     },
+     "priority": 0
+    },
+    {
+     "receipt_id": "r13",
+     "predecessor_id": "p.near",
+     "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+     "receipt": {
+      "Action": {
+       "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+       "actions": [],
+       "gas": "0",
+       "deposit": "0"
+      }
+     },
+     "priority": 0
+    },
+    {
+     "receipt_id": "r14",
+     "predecessor_id": "p.near",
+     "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+     "receipt": {
+      "Action": {
+       "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+       "actions": [],
+       "gas": "0",
+       "deposit": "0"
+      }
+     },
+     "priority": 0
+    },
+    {
+     "receipt_id": "r15",
+     "predecessor_id": "p.near",
+     "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+     "receipt": {
+      "Action": {
+       "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+       "actions": [],
+       "gas": "0",
+       "deposit": "0"
+      }
+     },
+     "priority": 0
+    },
+    {
+     "receipt_id": "r16",
+     "predecessor_id": "p.near",
+     "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+     "receipt": {
+      "Action": {
+       "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+       "actions": [],
+       "gas": "0",
+       "deposit": "0"
+      }
+     },
+     "priority": 0
+    },
+    {
+     "receipt_id": "r17",
+     "predecessor_id": "p.near",
+     "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+     "receipt": {
+      "Action": {
+       "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+       "actions": [],
+       "gas": "0",
+       "deposit": "0"
+      }
+     },
+     "priority": 0
+    },
+    {
+     "receipt_id": "r18",
+     "predecessor_id": "p.near",
+     "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+     "receipt": {
+      "Action": {
+       "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+       "actions": [],
+       "gas": "0",
+       "deposit": "0"
+      }
+     },
+     "priority": 0
+    },
+    {
+     "receipt_id": "r19",
+     "predecessor_id": "p.near",
+     "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+     "receipt": {
+      "Action": {
+       "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+       "actions": [],
+       "gas": "0",
+       "deposit": "0"
+      }
+     },
+     "priority": 0
+    }
+   ],
+   "receipts_outcome": [
+    {
+     "block_hash": "7zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "id": "r00",
+     "proof": null,
+     "outcome": {
+      "status": {
+       "SuccessValue": "MA=="
+      },
+      "logs": [
+       "EVENT_JSON:{\"standard\": \"nep141\", \"version\": \"1.0.0\", \"event\": \"ft_burn\", \"data\": [{\"owner_id\": \"intents.near\", \"amount\": \"10000\", \"memo\": \"WITHDRAW_TO:0xc366efeff224ea755118b19c30202869c5a85490\"}]}"
+      ],
+      "receipt_ids": [
+       "r01"
+      ],
+      "executor_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+      "gas_burnt": 0,
+      "metadata": null,
+      "tokens_burnt": 0
+     }
+    },
+    {
+     "block_hash": "7zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "id": "r01",
+     "proof": null,
+     "outcome": {
+      "status": {
+       "SuccessValue": "MA=="
+      },
+      "logs": [],
+      "receipt_ids": [
+       "r02"
+      ],
+      "executor_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+      "gas_burnt": 0,
+      "metadata": null,
+      "tokens_burnt": 0
+     }
+    },
+    {
+     "block_hash": "7zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "id": "r02",
+     "proof": null,
+     "outcome": {
+      "status": {
+       "SuccessValue": "MA=="
+      },
+      "logs": [],
+      "receipt_ids": [
+       "r03"
+      ],
+      "executor_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+      "gas_burnt": 0,
+      "metadata": null,
+      "tokens_burnt": 0
+     }
+    },
+    {
+     "block_hash": "7zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "id": "r03",
+     "proof": null,
+     "outcome": {
+      "status": {
+       "SuccessValue": "MA=="
+      },
+      "logs": [],
+      "receipt_ids": [
+       "r04"
+      ],
+      "executor_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+      "gas_burnt": 0,
+      "metadata": null,
+      "tokens_burnt": 0
+     }
+    },
+    {
+     "block_hash": "7zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "id": "r04",
+     "proof": null,
+     "outcome": {
+      "status": {
+       "SuccessValue": "MA=="
+      },
+      "logs": [],
+      "receipt_ids": [
+       "r05"
+      ],
+      "executor_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+      "gas_burnt": 0,
+      "metadata": null,
+      "tokens_burnt": 0
+     }
+    },
+    {
+     "block_hash": "7zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "id": "r05",
+     "proof": null,
+     "outcome": {
+      "status": {
+       "SuccessValue": "MA=="
+      },
+      "logs": [],
+      "receipt_ids": [
+       "r06"
+      ],
+      "executor_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+      "gas_burnt": 0,
+      "metadata": null,
+      "tokens_burnt": 0
+     }
+    },
+    {
+     "block_hash": "7zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "id": "r06",
+     "proof": null,
+     "outcome": {
+      "status": {
+       "SuccessValue": "MA=="
+      },
+      "logs": [],
+      "receipt_ids": [
+       "r07"
+      ],
+      "executor_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+      "gas_burnt": 0,
+      "metadata": null,
+      "tokens_burnt": 0
+     }
+    },
+    {
+     "block_hash": "7zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "id": "r07",
+     "proof": null,
+     "outcome": {
+      "status": {
+       "SuccessValue": "MA=="
+      },
+      "logs": [],
+      "receipt_ids": [
+       "r08"
+      ],
+      "executor_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+      "gas_burnt": 0,
+      "metadata": null,
+      "tokens_burnt": 0
+     }
+    },
+    {
+     "block_hash": "7zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "id": "r08",
+     "proof": null,
+     "outcome": {
+      "status": {
+       "SuccessValue": "MA=="
+      },
+      "logs": [],
+      "receipt_ids": [
+       "r09"
+      ],
+      "executor_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+      "gas_burnt": 0,
+      "metadata": null,
+      "tokens_burnt": 0
+     }
+    },
+    {
+     "block_hash": "7zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "id": "r09",
+     "proof": null,
+     "outcome": {
+      "status": {
+       "SuccessValue": "MA=="
+      },
+      "logs": [],
+      "receipt_ids": [
+       "r10"
+      ],
+      "executor_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+      "gas_burnt": 0,
+      "metadata": null,
+      "tokens_burnt": 0
+     }
+    },
+    {
+     "block_hash": "7zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "id": "r10",
+     "proof": null,
+     "outcome": {
+      "status": {
+       "SuccessValue": "MA=="
+      },
+      "logs": [],
+      "receipt_ids": [
+       "r11"
+      ],
+      "executor_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+      "gas_burnt": 0,
+      "metadata": null,
+      "tokens_burnt": 0
+     }
+    },
+    {
+     "block_hash": "7zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "id": "r11",
+     "proof": null,
+     "outcome": {
+      "status": {
+       "SuccessValue": "MA=="
+      },
+      "logs": [],
+      "receipt_ids": [
+       "r12"
+      ],
+      "executor_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+      "gas_burnt": 0,
+      "metadata": null,
+      "tokens_burnt": 0
+     }
+    },
+    {
+     "block_hash": "7zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "id": "r12",
+     "proof": null,
+     "outcome": {
+      "status": {
+       "SuccessValue": "MA=="
+      },
+      "logs": [],
+      "receipt_ids": [
+       "r13"
+      ],
+      "executor_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+      "gas_burnt": 0,
+      "metadata": null,
+      "tokens_burnt": 0
+     }
+    },
+    {
+     "block_hash": "7zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "id": "r13",
+     "proof": null,
+     "outcome": {
+      "status": {
+       "SuccessValue": "MA=="
+      },
+      "logs": [],
+      "receipt_ids": [
+       "r14"
+      ],
+      "executor_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+      "gas_burnt": 0,
+      "metadata": null,
+      "tokens_burnt": 0
+     }
+    },
+    {
+     "block_hash": "7zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "id": "r14",
+     "proof": null,
+     "outcome": {
+      "status": {
+       "SuccessValue": "MA=="
+      },
+      "logs": [],
+      "receipt_ids": [
+       "r15"
+      ],
+      "executor_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+      "gas_burnt": 0,
+      "metadata": null,
+      "tokens_burnt": 0
+     }
+    },
+    {
+     "block_hash": "7zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "id": "r15",
+     "proof": null,
+     "outcome": {
+      "status": {
+       "SuccessValue": "MA=="
+      },
+      "logs": [],
+      "receipt_ids": [
+       "r16"
+      ],
+      "executor_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+      "gas_burnt": 0,
+      "metadata": null,
+      "tokens_burnt": 0
+     }
+    },
+    {
+     "block_hash": "7zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "id": "r16",
+     "proof": null,
+     "outcome": {
+      "status": {
+       "SuccessValue": "MA=="
+      },
+      "logs": [],
+      "receipt_ids": [
+       "r17"
+      ],
+      "executor_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+      "gas_burnt": 0,
+      "metadata": null,
+      "tokens_burnt": 0
+     }
+    },
+    {
+     "block_hash": "7zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "id": "r17",
+     "proof": null,
+     "outcome": {
+      "status": {
+       "SuccessValue": "MA=="
+      },
+      "logs": [],
+      "receipt_ids": [
+       "r18"
+      ],
+      "executor_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+      "gas_burnt": 0,
+      "metadata": null,
+      "tokens_burnt": 0
+     }
+    },
+    {
+     "block_hash": "7zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "id": "r18",
+     "proof": null,
+     "outcome": {
+      "status": {
+       "SuccessValue": "MA=="
+      },
+      "logs": [],
+      "receipt_ids": [
+       "r19"
+      ],
+      "executor_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+      "gas_burnt": 0,
+      "metadata": null,
+      "tokens_burnt": 0
+     }
+    },
+    {
+     "block_hash": "7zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "id": "r19",
+     "proof": null,
+     "outcome": {
+      "status": {
+       "SuccessValue": "MA=="
+      },
+      "logs": [],
+      "receipt_ids": [],
+      "executor_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+      "gas_burnt": 0,
+      "metadata": null,
+      "tokens_burnt": 0
+     }
+    }
+   ],
+   "transaction_outcome": {
+    "block_hash": "7yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+    "id": "tx",
+    "proof": null,
+    "outcome": {
+     "status": {
+      "SuccessValue": "MA=="
+     },
+     "logs": [],
+     "receipt_ids": [
+      "r00"
+     ],
+     "executor_id": null,
+     "gas_burnt": 0,
+     "metadata": null,
+     "tokens_burnt": 0
+    }
+   }
+  },
+  "bridge_raw": {
+   "withdrawals": [
+    {
+     "status": "COMPLETED",
+     "data": {
+      "tx_hash": "TX_C",
+      "transfer_tx_hash": "0x8888888888888888888888888888888888888888888888888888888888888888",
+      "chain": "eth:8453",
+      "decimals": 6,
+      "amount": "10000",
+      "withdrawal_fee": "2400",
+      "withdraw_amount": "7600",
+      "near_token_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+      "defuse_asset_identifier": "eth:8453:0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+      "created_at": "SYNTHETIC"
+     }
+    }
+   ]
+  },
+  "dest_receipts": {
+   "0x8888888888888888888888888888888888888888888888888888888888888888": {
+    "status": "0x1",
+    "blockNumber": "0x64",
+    "logs": [
+     {
+      "address": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+      "topics": [
+       "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+       "0x0000000000000000000000002cff890f0378a11913b6129b2e97417a2c302680",
+       "0x000000000000000000000000c366efeff224ea755118b19c30202869c5a85490"
+      ],
+      "data": "0x0000000000000000000000000000000000000000000000000000000000001db0",
+      "logIndex": "0x1",
+      "blockNumber": "0x64"
+     }
+    ]
+   }
+  },
+  "dest_tip": 800
+ },
+ "synthetic": true
+}

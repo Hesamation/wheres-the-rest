@@ -1,0 +1,79 @@
+{
+ "name": "fx_g1_recipient_form",
+ "kind": "fixture",
+ "note": "SYNTHETIC WITHDRAW_TO to a NEAR account => destination outside EVM scope; explicit UNSUPPORTED_SCOPE.",
+ "expect": {
+  "overall_prefix": "UNSUPPORTED_SCOPE",
+  "counts": {
+   "UNSUPPORTED_SCOPE": 1
+  }
+ },
+ "legs": {
+  "near_source": "drpc",
+  "near_raw": {
+   "status": {
+    "SuccessValue": "MA=="
+   },
+   "final_execution_status": "FINAL",
+   "receipts": [
+    {
+     "receipt_id": "r1",
+     "predecessor_id": "p.near",
+     "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+     "receipt": {
+      "Action": {
+       "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+       "actions": [],
+       "gas": "0",
+       "deposit": "0"
+      }
+     },
+     "priority": 0
+    }
+   ],
+   "receipts_outcome": [
+    {
+     "block_hash": "7zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "id": "r1",
+     "proof": null,
+     "outcome": {
+      "status": {
+       "SuccessValue": "MA=="
+      },
+      "logs": [
+       "EVENT_JSON:{\"standard\": \"nep141\", \"version\": \"1.0.0\", \"event\": \"ft_burn\", \"data\": [{\"owner_id\": \"intents.near\", \"amount\": \"10000\", \"memo\": \"WITHDRAW_TO:5WtGw1pLPfxfKwT9YdmFFMF5ob9wRXYGf6rHNfqfBo4X\"}]}"
+      ],
+      "receipt_ids": [],
+      "executor_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+      "gas_burnt": 0,
+      "metadata": null,
+      "tokens_burnt": 0
+     }
+    }
+   ],
+   "transaction_outcome": {
+    "block_hash": "7yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+    "id": "txroot",
+    "proof": null,
+    "outcome": {
+     "status": {
+      "SuccessValue": "MA=="
+     },
+     "logs": [],
+     "receipt_ids": [
+      "r1"
+     ],
+     "executor_id": null,
+     "gas_burnt": 0,
+     "metadata": null,
+     "tokens_burnt": 0
+    }
+   }
+  },
+  "bridge_raw": {
+   "withdrawals": []
+  },
+  "dest_receipts": {}
+ },
+ "synthetic": true
+}

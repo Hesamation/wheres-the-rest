@@ -1,0 +1,35 @@
+{
+  "archive_file": "inputs/source-closeout/payout-source-closeout-v5-20261111.tar.gz",
+  "archive_sha256": "c92edadfc65a46627d673b3e1d265dd2861bdd4fdcdea0a7cd5e72abc8105efe",
+  "payout_probe_sha256": "0ac8f7364292f5e9268bbcc465f433f9ac2ff48c7aeb9d2facfc0f24ce99f4a2",
+  "imported_at": "2026-11-13T05:22:00Z",
+  "saved_examples": [
+    {
+      "id": "qa1",
+      "label": "QA1 Ambiguous Group Deficit (0.01 x 3 USDC)",
+      "tx_hash": "863ZDaRijV6j5RiMXf9GaJDBN86e1j2MNevLQNhR1zRe",
+      "signer_id": "sponsor-staging.trezu.near",
+      "captured_at": "2026-11-10T22:26:58Z",
+      "fixture": "fixtures/offline_qa1.json",
+      "summary": "3 burns of 0.01 USDC; 1 observed on Base (0.0076 USDC net after 0.0024 fee), 2 unrecorded; grouped finding because individual attribution is ambiguous."
+    },
+    {
+      "id": "qa2",
+      "label": "QA2 Mixed Delivery (0.19 USDC observed, 0.20 USDC unrecorded)",
+      "tx_hash": "CbyrTsdExtWDbBsdUNqQC65JMBFwXEzkeaGJGmQb2QDz",
+      "signer_id": "sponsor-staging.trezu.near",
+      "captured_at": "2026-11-10T22:32:14Z",
+      "fixture": "fixtures/offline_qa2.json",
+      "summary": "0.19 USDC burn observed on Base (0.1876 USDC net after 0.0024 fee); 0.20 USDC burn without matching bridge record."
+    },
+    {
+      "id": "prod_control",
+      "label": "Production Control (1.00 USDC observed via FastNEAR fallback)",
+      "tx_hash": "FD7gA9L45Btw79YvGL49km9nwgWcDJS4QjTid9G4CZFu",
+      "signer_id": "sponsor.trezu.near",
+      "captured_at": "2026-11-11T01:16:56Z",
+      "fixture": "fixtures/control_prod_fd7g.json",
+      "summary": "1.00 USDC burn observed on Base (0.9976 USDC net after 0.0024 fee); verified via FastNEAR fallback when primary dRPC timed out."
+    }
+  ]
+}
