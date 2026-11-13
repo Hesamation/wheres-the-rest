@@ -239,7 +239,7 @@ In compliance with NEAR HACKATHON rules (Q-001, Q-002, Q-003, Q-005, Q-014, Q-01
   - **Runtime Dependencies:** 100% Python 3.13+ standard library (`http.server`, `urllib`, `json`, `csv`, `subprocess`, `argparse`, `hashlib`, `unittest`). **Zero external pip packages.**
   - **Frontend:** Vanilla JavaScript (ES6+), semantic HTML5, pure CSS3 styled to IBM Carbon Design System design tokens. **Zero npm packages, zero Node build steps.**
   - **Infrastructure:** Docker minimal Alpine container; deployed on Railway.
-  - **AI Assistance:** Code was developed with AI assistance (GLM-based coding agents in the ZCode harness) under human architectural supervision following `project/PLAN.md` and `project/ACCEPTANCE.md`.
+  - **AI Assistance:** AI coding agents were used for implementation; all claims human-verified.
 - **Prior Chain Disclosure:** This project did **not** exist on any other blockchain before NEAR HACKATHON 2026. It was conceived and built specifically for NEAR's cross-chain bridge ecosystem.
 - **Multi-Project Disclosure:** Solo entry. This author/team is entering only this single project into NEAR HACKATHON 2026.
 - **License:** Open source under the [MIT License](LICENSE). The repository remains public throughout judging.
