@@ -1,0 +1,152 @@
+== GENERATED MATRIX: group size x record count x destination state ==
+  [PASS] m_n1_r0_full: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n1_r0_partial: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n1_r0_pending: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n1_r0_unavailable: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n1_r0_reverted: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n1_r0_zero_matching: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n1_r1_full: ALL_ROWS_OBSERVED (receipt-level; not final settlement)
+  [PASS] m_n1_r1_partial: ALL_ROWS_OBSERVED (receipt-level; not final settlement)
+  [PASS] m_n1_r1_pending: IN_PROGRESS — bridge/destination pending
+  [PASS] m_n1_r1_unavailable: INCONCLUSIVE — required leg unavailable or destination response malformed
+  [PASS] m_n1_r1_reverted: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n1_r1_zero_matching: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n1_r2_full: MATCH_WITH_UNMATCHED_EVIDENCE — all burns observed plus unmatched extras (surface, do not net away)
+  [PASS] m_n1_r2_partial: MATCH_WITH_UNMATCHED_EVIDENCE — all burns observed plus unmatched extras (surface, do not net away)
+  [PASS] m_n1_r2_pending: IN_PROGRESS — bridge/destination pending
+  [PASS] m_n1_r2_unavailable: INCONCLUSIVE — required leg unavailable or destination response malformed
+  [PASS] m_n1_r2_reverted: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n1_r2_zero_matching: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n2_r0_full: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n2_r0_partial: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n2_r0_pending: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n2_r0_unavailable: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n2_r0_reverted: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n2_r0_zero_matching: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n2_r1_full: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n2_r1_partial: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n2_r1_pending: IN_PROGRESS — bridge/destination pending
+  [PASS] m_n2_r1_unavailable: INCONCLUSIVE — required leg unavailable or destination response malformed
+  [PASS] m_n2_r1_reverted: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n2_r1_zero_matching: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n2_r2_full: ALL_ROWS_OBSERVED (receipt-level; not final settlement)
+  [PASS] m_n2_r2_partial: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n2_r2_pending: IN_PROGRESS — bridge/destination pending
+  [PASS] m_n2_r2_unavailable: INCONCLUSIVE — required leg unavailable or destination response malformed
+  [PASS] m_n2_r2_reverted: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n2_r2_zero_matching: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n2_r3_full: MATCH_WITH_UNMATCHED_EVIDENCE — all burns observed plus unmatched extras (surface, do not net away)
+  [PASS] m_n2_r3_partial: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n2_r3_pending: IN_PROGRESS — bridge/destination pending
+  [PASS] m_n2_r3_unavailable: INCONCLUSIVE — required leg unavailable or destination response malformed
+  [PASS] m_n2_r3_reverted: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n2_r3_zero_matching: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n3_r0_full: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n3_r0_partial: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n3_r0_pending: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n3_r0_unavailable: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n3_r0_reverted: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n3_r0_zero_matching: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n3_r1_full: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n3_r1_partial: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n3_r1_pending: IN_PROGRESS — bridge/destination pending
+  [PASS] m_n3_r1_unavailable: INCONCLUSIVE — required leg unavailable or destination response malformed
+  [PASS] m_n3_r1_reverted: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n3_r1_zero_matching: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n3_r3_full: ALL_ROWS_OBSERVED (receipt-level; not final settlement)
+  [PASS] m_n3_r3_partial: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n3_r3_pending: IN_PROGRESS — bridge/destination pending
+  [PASS] m_n3_r3_unavailable: INCONCLUSIVE — required leg unavailable or destination response malformed
+  [PASS] m_n3_r3_reverted: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n3_r3_zero_matching: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n3_r4_full: MATCH_WITH_UNMATCHED_EVIDENCE — all burns observed plus unmatched extras (surface, do not net away)
+  [PASS] m_n3_r4_partial: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n3_r4_pending: IN_PROGRESS — bridge/destination pending
+  [PASS] m_n3_r4_unavailable: INCONCLUSIVE — required leg unavailable or destination response malformed
+  [PASS] m_n3_r4_reverted: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] m_n3_r4_zero_matching: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+== MIXED RECIPIENTS (full destination only) ==
+  [PASS] mix_n2_r2: ALL_ROWS_OBSERVED (receipt-level; not final settlement)
+  [PASS] mix_n3_r3: ALL_ROWS_OBSERVED (receipt-level; not final settlement)
+  [PASS] mix_n2_r1: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] mix_n2_r3: MATCH_WITH_UNMATCHED_EVIDENCE — all burns observed plus unmatched extras (surface, do not net away)
+== FEE ACCOUNTING ==
+  [PASS] fee_valid: ALL_ROWS_OBSERVED (receipt-level; not final settlement)
+  [PASS] fee_invalid: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+== RECEIPT IDENTITY / DEST STATES ==
+  [PASS] hash_mismatch: INCONCLUSIVE — required leg unavailable or destination response malformed
+== EXECUTION-EVIDENCE (drpc + FastNEAR) ==
+  [PASS] wrapper_no_status: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+  [PASS] pending_outcome: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+  [PASS] child_edges_absent: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+  [PASS] child_edges_empty: ALL_ROWS_OBSERVED (receipt-level; not final settlement)
+  [PASS] child_edges_not_list: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+  [PASS] outcome_missing_id: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+  [PASS] outcome_unknown_status: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+  [PASS] fastnear_child_edges_absent: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+  [PASS] fastnear_full: ALL_ROWS_OBSERVED (receipt-level; not final settlement)
+  [PASS] fastnear_missing_outcome: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+  [PASS] fastnear_empty_receipts: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+== SHARED DESTINATION TX / REPEATED OBSERVATIONS / ORDER ==
+  [PASS] shared_dest_two_logs: MATCH_WITH_UNMATCHED_EVIDENCE — all burns observed plus unmatched extras (surface, do not net away)
+  [PASS] shared_dest_two_burns_two_logs: ALL_ROWS_OBSERVED (receipt-level; not final settlement)
+  [PASS] shared_dest_two_burns_one_log_copied: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] repeated_dest_obs: ALL_ROWS_OBSERVED (receipt-level; not final settlement)
+  [PASS] duplicate_record_obs: ALL_ROWS_OBSERVED (receipt-level; not final settlement)
+  [PASS] reordered_records: ALL_ROWS_OBSERVED (receipt-level; not final settlement)
+  [PASS] reordered_dup_observations: ALL_ROWS_OBSERVED (receipt-level; not final settlement)
+== BOUNDARY VALIDATION: monetary types / malformed records & events [v4] ==
+  [PASS] money_float_fractional: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] money_float_int_valued: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] money_bool_values: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] money_negative_ints: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] money_garbage_strings: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] money_null_values: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] money_str_forms: ALL_ROWS_OBSERVED (receipt-level; not final settlement)
+  [PASS] money_int_forms: ALL_ROWS_OBSERVED (receipt-level; not final settlement)
+  [PASS] burn_amount_garbage: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] burn_amount_float: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] burn_amount_bool: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] burn_amount_negative: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] burn_amount_null: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] burn_event_data_entry_not_object: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] bridge_extra_null: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] bridge_extra_string: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] bridge_extra_list: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] bridge_data_not_object: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] bridge_status_missing: IN_PROGRESS — bridge/destination pending
+  [PASS] bridge_missing_transfer_tx: IN_PROGRESS — bridge/destination pending
+== [v5] SOURCE-BOUNDARY: transaction root / outcome entries / burn data ==
+  [PASS] fastnear_root_absent: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+  [PASS] fastnear_root_non_object: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+  [PASS] fastnear_root_outcome_non_object: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+  [PASS] fastnear_root_receipt_ids_missing: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+  [PASS] fastnear_root_receipt_ids_not_list: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+  [PASS] fastnear_root_valid_control: ALL_ROWS_OBSERVED (receipt-level; not final settlement)
+  [PASS] drpc_root_absent: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+  [PASS] drpc_root_null: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+  [PASS] drpc_root_non_object: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+  [PASS] drpc_root_outcome_missing: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+  [PASS] drpc_root_receipt_ids_missing: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+  [PASS] drpc_root_receipt_ids_not_list: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+  [PASS] outcome_extra_null: UNSUPPORTED_SOURCE — malformed source entries (1 null/non-object outcome/receipt entries)
+  [PASS] outcome_extra_string: UNSUPPORTED_SOURCE — malformed source entries (1 null/non-object outcome/receipt entries)
+  [PASS] outcome_extra_number: UNSUPPORTED_SOURCE — malformed source entries (1 null/non-object outcome/receipt entries)
+  [PASS] fn_receipt_extra_null: UNSUPPORTED_SOURCE — malformed source entries (1 null/non-object outcome/receipt entries)
+  [PASS] fn_receipt_extra_string: UNSUPPORTED_SOURCE — malformed source entries (1 null/non-object outcome/receipt entries)
+  [PASS] drpc_nested_outcome_not_object: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+  [PASS] fn_nested_outcome_not_object: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+  [PASS] burn_data_absent: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] burn_data_null: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] burn_data_string: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] burn_data_object: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] burn_primary_data_primary_string: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] burn_primary_data_primary_object: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] unrelated_ft_transfer: ALL_ROWS_OBSERVED (receipt-level; not final settlement)
+  [PASS] unrelated_other_standard: ALL_ROWS_OBSERVED (receipt-level; not final settlement)
+  [PASS] unrelated_other_event: ALL_ROWS_OBSERVED (receipt-level; not final settlement)
+  [PASS] non_withdrawal_plain_burn: ALL_ROWS_OBSERVED (receipt-level; not final settlement)
+  [PASS] non_withdrawal_other_memo: ALL_ROWS_OBSERVED (receipt-level; not final settlement)
+  [PASS] out_of_scope_malformed_burn: UNSUPPORTED_SCOPE — rows/records outside the supported source-token→Base-USDC scope
+
+ALL INVARIANTS PASSED

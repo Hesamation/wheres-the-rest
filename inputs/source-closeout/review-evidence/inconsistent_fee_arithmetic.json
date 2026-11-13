@@ -1,0 +1,62 @@
+{
+  "case": "inconsistent_fee_arithmetic",
+  "synthetic": true,
+  "kind": "fixture",
+  "near_tx": null,
+  "source": "drpc",
+  "source_status": "SuccessValue",
+  "final_execution_status": "fixture",
+  "rows_found": 1,
+  "bridge_records": 1,
+  "obligations_found": null,
+  "list_advisory": [],
+  "list_binding": null,
+  "summary": {
+    "counts": {
+      "INVALID_RECORD": 1,
+      "UNMATCHED_DEST_TRANSFER": 1
+    },
+    "completeness": {
+      "complete": true,
+      "reason": "reachable graph fully resolved",
+      "action_outcomes": 1,
+      "referenced": 1,
+      "resolved": 1,
+      "data_receipts": 0,
+      "pending": false,
+      "missing": 0
+    },
+    "source_status": "SuccessValue",
+    "burn_diag": {
+      "attempts_no_burn": 0,
+      "unsupported_executor": 0,
+      "unsupported_recipient_form": 0,
+      "failed_outcome_logs": 0,
+      "outcomes_seen": 2,
+      "malformed": false,
+      "malformed_events": 0,
+      "malformed_entries": 0
+    },
+    "list_check": "not requested",
+    "bridge_malformed": false,
+    "overall": "INVALID_EVIDENCE \u2014 monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)"
+  },
+  "results": [
+    {
+      "row": 0,
+      "recipient": "0xc366efeff224ea755118b19c30202869c5a85490",
+      "amount": 10000,
+      "verdict": "INVALID_RECORD",
+      "note": "bridge record unusable (gross 10000 != fee 999 + net 7600)"
+    },
+    {
+      "row": null,
+      "recipient": "0xc366efeff224ea755118b19c30202869c5a85490",
+      "amount": 7600,
+      "verdict": "UNMATCHED_DEST_TRANSFER",
+      "note": "transfer 7600 at 0x1111111111111111111111111111111111111111111111111111111111111111:1 consumed by nothing \u2014 unmatched evidence, not automatically an overpayment"
+    }
+  ],
+  "disclaimer": "missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records",
+  "generated_at": "2026-11-11T03:29:44Z"
+}
