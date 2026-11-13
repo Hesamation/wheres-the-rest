@@ -1,0 +1,33 @@
+bridge schema probe 2026-11-10T22:27:50Z
+--- bare-string params ---
+{"id":1,"jsonrpc":"2.0","error":"Invalid parameters"} [HTTP 201]
+--- params {hash} ---
+{"id":1,"jsonrpc":"2.0","error":"Internal server error"} [HTTP 201]
+--- params {transactionHash} ---
+{"id":1,"jsonrpc":"2.0","error":"Internal server error"} [HTTP 201]
+--- params {tx_hash} ---
+{"id":1,"jsonrpc":"2.0","error":"Internal server error"} [HTTP 201]
+--- params [hash, near] ---
+{"id":1,"jsonrpc":"2.0","error":"Invalid parameters"} [HTTP 201]
+--- method withdrawalStatus ---
+{"id":1,"jsonrpc":"2.0","error":"Internal server error"} [HTTP 201]
+--- method status ---
+{"id":1,"jsonrpc":"2.0","error":"Internal server error"} [HTTP 201]
+--- rpc.discover ---
+{"id":1,"jsonrpc":"2.0","error":"Internal server error"} [HTTP 201]
+--- no method (error shows?) ---
+{"id":1,"jsonrpc":"2.0","error":"Invalid request format"} [HTTP 201]
+bridge GET probes 2026-11-10T22:28:33Z
+/ -> HTTP 404 ct=application/json; charset=utf-8 bytes=93
+/docs -> HTTP 404 ct=application/json; charset=utf-8 bytes=101
+/swagger.json -> HTTP 404 ct=application/json; charset=utf-8 bytes=117
+/openapi.json -> HTTP 404 ct=application/json; charset=utf-8 bytes=117
+/health -> HTTP 404 ct=application/json; charset=utf-8 bytes=105
+/rpc/docs -> HTTP 404 ct=application/json; charset=utf-8 bytes=109
+--- extra param keys ---
+transaction_hash -> {"id":1,"jsonrpc":"2.0","error":"Internal server error"} [HTTP 201]
+near_tx_hash -> {"id":1,"jsonrpc":"2.0","error":"Internal server error"} [HTTP 201]
+tx -> {"id":1,"jsonrpc":"2.0","error":"Internal server error"} [HTTP 201]
+id -> {"id":1,"jsonrpc":"2.0","error":"Internal server error"} [HTTP 201]
+transaction -> {"id":1,"jsonrpc":"2.0","error":"Internal server error"} [HTTP 201]
+nested {request} -> {"id":1,"jsonrpc":"2.0","error":"Internal server error"} [HTTP 201]

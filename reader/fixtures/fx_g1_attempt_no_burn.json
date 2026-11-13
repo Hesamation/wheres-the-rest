@@ -1,0 +1,82 @@
+{
+ "name": "fx_g1_attempt_no_burn",
+ "kind": "fixture",
+ "note": "SYNTHETIC ft_withdraw attempted, no successful ft_burn log => NOT a verified withdrawal (NO_BURN_OBSERVED).",
+ "expect": {
+  "overall_prefix": "NO_BURN_OBSERVED",
+  "counts": {}
+ },
+ "legs": {
+  "near_source": "drpc",
+  "near_raw": {
+   "status": {
+    "SuccessValue": "MA=="
+   },
+   "final_execution_status": "FINAL",
+   "receipts": [
+    {
+     "receipt_id": "r1",
+     "predecessor_id": "a",
+     "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+     "receipt": {
+      "Action": {
+       "receiver_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+       "actions": [
+        {
+         "FunctionCall": {
+          "method_name": "ft_withdraw",
+          "args": "eyJ0b2tlbiI6ICJiYXNlLTB4ODMzNTg5ZmNkNmVkYjZlMDhmNGM3YzMyZDRmNzFiNTRiZGEwMjkxMy5vbWZ0Lm5lYXIiLCAicmVjZWl2ZXJfaWQiOiAiYmFzZS0weDgzMzU4OWZjZDZlZGI2ZTA4ZjRjN2MzMmQ0ZjcxYjU0YmRhMDI5MTMub21mdC5uZWFyIiwgImFtb3VudCI6ICIxMDAwMCIsICJtZW1vIjogIldJVEhEUkFXX1RPOjB4YzM2NmVmZWZmMjI0ZWE3NTUxMThiMTljMzAyMDI4NjljNWE4NTQ5MCJ9",
+          "deposit": "0",
+          "gas": "1"
+         }
+        }
+       ]
+      }
+     },
+     "priority": 0
+    }
+   ],
+   "receipts_outcome": [
+    {
+     "block_hash": "7zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+     "id": "r1",
+     "proof": null,
+     "outcome": {
+      "status": {
+       "SuccessValue": "MA=="
+      },
+      "logs": [],
+      "receipt_ids": [],
+      "executor_id": "base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near",
+      "gas_burnt": 0,
+      "metadata": null,
+      "tokens_burnt": 0
+     }
+    }
+   ],
+   "transaction_outcome": {
+    "block_hash": "7yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+    "id": "tx",
+    "proof": null,
+    "outcome": {
+     "status": {
+      "SuccessValue": "MA=="
+     },
+     "logs": [],
+     "receipt_ids": [
+      "r1"
+     ],
+     "executor_id": null,
+     "gas_burnt": 0,
+     "metadata": null,
+     "tokens_burnt": 0
+    }
+   }
+  },
+  "bridge_raw": {
+   "withdrawals": []
+  },
+  "dest_receipts": {}
+ },
+ "synthetic": true
+}
