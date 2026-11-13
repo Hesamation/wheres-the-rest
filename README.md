@@ -1,8 +1,8 @@
-# Payout Reader
+# Where's the Rest?
 
 **NEAR says the payout executed. Did the USDC arrive on Base?**
 
-Payout Reader is a read-only reconciliation workbench for treasury operators. **Trace supported withdrawals from executed NEAR burns through bridge records to Base USDC transfer logs.** Account for observed fees, see unresolved gaps, and inspect or export the evidence behind each finding as JSON, CSV, or Markdown.
+Where's the Rest? is a read-only reconciliation workbench for treasury operators. **Trace supported withdrawals from executed NEAR burns through bridge records to Base USDC transfer logs.** Account for observed fees, see unresolved gaps, and inspect or export the evidence behind each finding as JSON, CSV, or Markdown.
 
 [Open the hosted demo](https://payout-reader.up.railway.app) · [Try the grouped deficit](https://payout-reader.up.railway.app/?example=qa1) · [Try the successful control](https://payout-reader.up.railway.app/?example=prod_control)
 
@@ -23,7 +23,7 @@ Saved evidence is explicitly labeled and dated. To refresh an example, select **
 
 ## Why this exists
 
-A treasury operator checking a cross-chain payout needs to connect several observations: what executed on NEAR, what the bridge recorded, and what USDC transfer appeared on Base. Source success alone does not answer that whole question. Payout Reader brings those observations into one report, with three matching rules that matter in practice:
+A treasury operator checking a cross-chain payout needs to connect several observations: what executed on NEAR, what the bridge recorded, and what USDC transfer appeared on Base. Source success alone does not answer that whole question. Where's the Rest? brings those observations into one report, with three matching rules that matter in practice:
 
 - **Follow executed withdrawals.** Read the NEAR receipt graph and executed `ft_burn` logs, then compare source gross amounts, bridge fees and net amounts, and destination USDC transfer logs. A submitted action or completed bridge record alone is not enough for an observed match.
 - **Count each destination transfer once.** Match by transaction and log identity so repeated evidence cannot satisfy multiple burns. Keep indistinguishable burns grouped when the evidence cannot identify which individual burn matches an observed transfer.
@@ -38,13 +38,13 @@ A treasury operator checking a cross-chain payout needs to connect several obser
 Requires **Python 3.13+**. Runtime and offline checks use the standard library: no pip install, Node build, database, wallet, or API key.
 
 ```sh
-git clone https://github.com/Hesamation/payout-reader.git
-cd payout-reader
+git clone https://github.com/Hesamation/wheres-the-rest.git
+cd wheres-the-rest
 python3 main.py --check
 python3 main.py --serve
 ```
 
-Expected: checks exit 0 and print `ALL CHECKS PASSED SUCCESSFULLY`. The server prints `Payout Reader server running at http://127.0.0.1:8765/`. Open that address; QA1 loads automatically.
+Expected: checks exit 0 and print `ALL CHECKS PASSED SUCCESSFULLY`. The server prints `Where's the Rest? server running at http://127.0.0.1:8765/`. Open that address; QA1 loads automatically.
 
 The offline suite currently runs **359 reader checks and 19 application tests (378 total)**. It covers reader regressions/invariants, parity across all 27 fixtures, grouped monetary totals, input validation, API boundaries, and CLI output. It requires no provider access.
 
@@ -86,9 +86,9 @@ curl -sS -X POST http://127.0.0.1:8765/api/report \
 ### Docker (optional)
 
 ```sh
-docker build -t payout-reader .
-docker run -p 8765:8765 payout-reader
-docker run payout-reader python3 main.py --check
+docker build -t wheres-the-rest .
+docker run -p 8765:8765 wheres-the-rest
+docker run wheres-the-rest python3 main.py --check
 ```
 
 ## Real mainnet examples

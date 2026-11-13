@@ -1,5 +1,5 @@
 /**
- * Payout Reader — Cross-Chain Audit Workbench Frontend Controller
+ * Where's the Rest? — Cross-Chain Audit Workbench Frontend Controller
  * Vanilla ES2022+ JavaScript, zero external runtime dependencies.
  */
 
@@ -354,7 +354,7 @@ function generateMarkdownProof(envelope) {
     `- **Audit Status**: **${overallCode}** (${overall})`,
     "- **Route**: `base-0x8335...omft.near` → Base USDC (`eth:8453`)",
     `- **Evidence Timestamp**: ${captured}`,
-    `- **Auditor**: Payout Reader (SHA-256 \`${readerSha}\`)`,
+    `- **Auditor**: Where's the Rest? (SHA-256 \`${readerSha}\`)`,
     "",
     "| Row(s) | Recipient | Gross/burn (USDC) | Observed fees (USDC) | Observed net (USDC) | Verdict | Base Tx |",
     "|---|---|---|---|---|---|---|",

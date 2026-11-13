@@ -15,7 +15,7 @@ from app import cli
 def test_cli_help():
     res = subprocess.run([sys.executable, "main.py", "--help"], cwd=str(REPO_ROOT), capture_output=True, text=True)
     assert res.returncode == 0
-    assert "Payout Reader" in res.stdout
+    assert "Where's the Rest?" in res.stdout
     assert "--serve" in res.stdout
     assert "--saved" in res.stdout
     assert "--live" in res.stdout

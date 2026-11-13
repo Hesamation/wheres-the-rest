@@ -1,4 +1,4 @@
-"""Standard-library HTTP server for payout-reader web UI and API.
+"""Standard-library HTTP server for wheres-the-rest web UI and API.
 
 Serves:
 - Static assets (index.html, style.css, app.js) from static/
@@ -29,7 +29,7 @@ from app.validation import MAX_REQUEST_BYTES, validate_report_request  # noqa: E
 
 
 class PayoutRequestHandler(BaseHTTPRequestHandler):
-    server_version = "PayoutReaderServer/1.0"
+    server_version = "WheresTheRestServer/1.0"
 
     def log_message(self, format: str, *args) -> None:
         """Clean custom request logging."""
@@ -77,7 +77,7 @@ class PayoutRequestHandler(BaseHTTPRequestHandler):
         path = self.path.split("?")[0]
 
         if path in ("/healthz", "/api/health"):
-            self._send_json(HTTPStatus.OK, {"status": "ok", "service": "payout-reader"})
+            self._send_json(HTTPStatus.OK, {"status": "ok", "service": "wheres-the-rest"})
             return
 
         if path == "/api/examples":
@@ -196,7 +196,7 @@ def make_server(host: str = "127.0.0.1", port: int = 8765) -> ThreadingHTTPServe
 def run_server(host: str = "127.0.0.1", port: int = 8765) -> None:
     """Run server until interrupted."""
     server = make_server(host, port)
-    print(f"Payout Reader server running at http://{host}:{port}/")
+    print(f"Where's the Rest? server running at http://{host}:{port}/")
     print("Press Ctrl+C to stop.")
     try:
         server.serve_forever()

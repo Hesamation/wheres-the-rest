@@ -115,7 +115,7 @@ def report_to_markdown_proof(envelope: dict) -> str:
         f"- **Audit Status**: **{overall_code}** ({overall})",
         "- **Route**: `base-0x8335...omft.near` → Base USDC (`eth:8453`)",
         f"- **Evidence Timestamp**: {captured}",
-        f"- **Auditor**: Payout Reader (SHA-256 `{reader_sha}`)",
+        f"- **Auditor**: Where's the Rest? (SHA-256 `{reader_sha}`)",
         "",
         "| Row(s) | Recipient | Gross/burn (USDC) | Observed fees (USDC) | Observed net (USDC) | Verdict | Base Tx |",
         "|---|---|---|---|---|---|---|",

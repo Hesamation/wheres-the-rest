@@ -9,7 +9,7 @@ Open this repository directly in your chosen agent harness. No parent workspace 
 ## Paste this to the builder when ready to start
 
 ```text
-Build this payout-reader app end to end. Read START-HERE.md, AGENTS.md,
+Build this wheres-the-rest app end to end. Read START-HERE.md, AGENTS.md,
 project/STATUS.md and project/PLAN.md. Preserve existing work and reuse
 our accepted reader. Implement, test, check the actual UI and prepare the
 local demo. Make routine decisions yourself; don't stop between phases
@@ -27,7 +27,7 @@ Sending that prompt authorizes implementation; merely opening the repo does not.
 From this directory, after confirming the correct GitHub account:
 
 ```sh
-gh repo create OWNER/payout-reader --private --source=. --remote=origin --push
+gh repo create OWNER/wheres-the-rest --private --source=. --remote=origin --push
 ```
 
 Replace OWNER with the human's account/organization. If origin already exists, inspect it and push rather than creating/replacing it blindly. Account access must work; the earlier parent-workspace push returned Repository not found. No private remote exists for this product yet.

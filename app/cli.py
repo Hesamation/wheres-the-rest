@@ -135,7 +135,7 @@ def main(argv: list[str] | None = None) -> int:
     default_host = os.environ.get("HOST", "127.0.0.1")
     default_port = int(os.environ.get("PORT", "8765"))
 
-    parser = argparse.ArgumentParser(description="Payout Reader — NEAR USDC cross-chain payout audit tool")
+    parser = argparse.ArgumentParser(description="Where's the Rest? — NEAR USDC cross-chain payout audit tool")
     parser.add_argument("--serve", action="store_true", help="Start local web server")
     parser.add_argument("--host", default=default_host, help=f"Server host (default: {default_host})")
     parser.add_argument("--port", type=int, default=default_port, help=f"Server port (default: {default_port})")

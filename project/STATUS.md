@@ -1,6 +1,6 @@
 # Status
 
-Updated 2026-11-13. README now leads with the mainnet QA example and concrete matching strengths; app purpose and saved-case explanations clarified. Frontend regressions pass; all three saved examples checked in the local browser; diff whitespace clean. Railway rollout verification is pending.
+Updated 2026-11-13. Renamed to Where's the Rest? (`Hesamation/wheres-the-rest`); app, CLI/export branding, README links and screenshot updated. Fresh checks: 378 Python checks and frontend regressions pass; renamed workbench checked locally. Next: verify Railway rollout and GitHub source connection after rename; hosted demo retains its existing URL.
 
 - Works: read-only NEAR → Base USDC reconciliation, three dated saved examples, live provider queries, expandable evidence, exact amounts, JSON/CSV/Markdown exports. Preserved reader and archive digests verified unchanged.
 - Corrected: group exports now retain/sum every observed transfer and include all receipt links (2/3-match fixtures previously exported only the first); destination evidence uses tx + log identity; UI totals use BigInt and source/bridge evidence; live CLI JSON/CSV stdout is clean; failed checks no longer print a PASSED total; negative body lengths and static-directory prefix traversal rejected. Clarified same-recipient burn ambiguity, stale-report behavior, table keyboard semantics, address wrapping, README claims.

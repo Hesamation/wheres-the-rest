@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Payout Reader main entrypoint."""
+"""Where's the Rest? main entrypoint."""
 import sys
 from app.cli import main
 
