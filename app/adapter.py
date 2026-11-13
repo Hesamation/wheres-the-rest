@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import copy
 import json
+import re
 import sys
 import time
 from pathlib import Path
@@ -214,13 +215,23 @@ def _build_envelope(
             row_indices = []
             group_details = None
 
-        # Determine evidenced fee and net payout strictly from evidence
+        # Determine evidenced fee and net payout strictly from evidence.
+        # Use dest tx hash extracted from the reader's authoritative note to look up
+        # bridge and dest evidence — avoids false association when multiple rows share
+        # the same gross amount (Bug: amount-only lookup can assign wrong bridge record).
         evidenced_fee = None
         evidenced_net = None
         evidence_burn = None
         evidence_bridge = None
         evidence_dest = None
         group_burns = None
+
+        # Extract dest tx hash from reader note (present in OBSERVED_MATCH and GROUP_FINDING)
+        _note_dest_tx = None
+        if note:
+            _m = re.search(r"dest tx (0x[0-9a-fA-F]+)\s", note)
+            if _m:
+                _note_dest_tx = _m.group(1)
 
         if kind == "group" and row_indices:
             group_burns = [
@@ -233,6 +244,34 @@ def _build_envelope(
                 for idx in row_indices
                 if idx < len(norm_burns)
             ]
+            # Group findings may have observed matches — attach the bridge/dest evidence
+            # from the note so the drawer can show it.
+            if _note_dest_tx:
+                for rec in norm_records:
+                    if rec["transferTxHash"] == _note_dest_tx and rec["status"] == "COMPLETED":
+                        evidence_bridge = {
+                            "transferTxHash": rec["transferTxHash"],
+                            "chain": rec["chain"],
+                            "fee": rec["fee"],
+                            "feeFormatted": rec["feeFormatted"],
+                            "withdrawAmount": rec["withdrawAmount"],
+                            "withdrawAmountFormatted": rec["withdrawAmountFormatted"],
+                        }
+                        evidenced_fee = rec["fee"]
+                        evidenced_net = rec["withdrawAmount"]
+                        break
+                if evidence_bridge and evidence_bridge.get("transferTxHash"):
+                    for d_entry in norm_dest:
+                        if d_entry["transferTxHash"] == evidence_bridge["transferTxHash"]:
+                            evidence_dest = {
+                                "transferTxHash": d_entry["transferTxHash"],
+                                "logIndex": d_entry["logIndex"],
+                                "receiptStatus": d_entry["receiptStatus"],
+                                "block": d_entry["block"],
+                                "confirmations": d_entry["confirmations"],
+                                "explorerUrl": d_entry["explorerUrl"],
+                            }
+                            break
         elif kind == "single" and row_indices and row_indices[0] < len(norm_burns):
             burn_ref = norm_burns[row_indices[0]]
             evidence_burn = {
@@ -241,8 +280,25 @@ def _build_envelope(
                 "burnOwner": burn_ref["burnOwner"],
                 "executor": burn_ref["executor"],
             }
-            # Find matching bridge record if OBSERVED_MATCH
-            if verdict == "OBSERVED_MATCH":
+            # Find matching bridge record if OBSERVED_MATCH.
+            # Use the dest tx hash from the reader note (authoritative) to avoid
+            # false association when multiple rows share the same gross amount.
+            if verdict == "OBSERVED_MATCH" and _note_dest_tx:
+                for rec in norm_records:
+                    if rec["transferTxHash"] == _note_dest_tx and rec["status"] == "COMPLETED":
+                        evidence_bridge = {
+                            "transferTxHash": rec["transferTxHash"],
+                            "chain": rec["chain"],
+                            "fee": rec["fee"],
+                            "feeFormatted": rec["feeFormatted"],
+                            "withdrawAmount": rec["withdrawAmount"],
+                            "withdrawAmountFormatted": rec["withdrawAmountFormatted"],
+                        }
+                        evidenced_fee = rec["fee"]
+                        evidenced_net = rec["withdrawAmount"]
+                        break
+            elif verdict == "OBSERVED_MATCH" and not _note_dest_tx:
+                # Fallback: match by gross amount (only correct when amounts are unique)
                 for rec in norm_records:
                     if rec["amount"] == burn_ref["amount"] and rec["status"] == "COMPLETED":
                         evidence_bridge = {
@@ -256,22 +312,22 @@ def _build_envelope(
                         evidenced_fee = rec["fee"]
                         evidenced_net = rec["withdrawAmount"]
                         break
-                # Find matching dest transfer
-                if evidence_bridge and evidence_bridge.get("transferTxHash"):
-                    for d_entry in norm_dest:
-                        if (
-                            d_entry["transferTxHash"] == evidence_bridge["transferTxHash"]
-                            and d_entry["to"].lower() == (recipient or "").lower()
-                        ):
-                            evidence_dest = {
-                                "transferTxHash": d_entry["transferTxHash"],
-                                "logIndex": d_entry["logIndex"],
-                                "receiptStatus": d_entry["receiptStatus"],
-                                "block": d_entry["block"],
-                                "confirmations": d_entry["confirmations"],
-                                "explorerUrl": d_entry["explorerUrl"],
-                            }
-                            break
+            # Find matching dest transfer
+            if evidence_bridge and evidence_bridge.get("transferTxHash"):
+                for d_entry in norm_dest:
+                    if (
+                        d_entry["transferTxHash"] == evidence_bridge["transferTxHash"]
+                        and d_entry["to"].lower() == (recipient or "").lower()
+                    ):
+                        evidence_dest = {
+                            "transferTxHash": d_entry["transferTxHash"],
+                            "logIndex": d_entry["logIndex"],
+                            "receiptStatus": d_entry["receiptStatus"],
+                            "block": d_entry["block"],
+                            "confirmations": d_entry["confirmations"],
+                            "explorerUrl": d_entry["explorerUrl"],
+                        }
+                        break
 
         structured_rows.append({
             "id": f"finding-{f_idx}",
