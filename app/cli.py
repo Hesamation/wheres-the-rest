@@ -121,7 +121,8 @@ def run_checks() -> int:
             print("    " + res.stdout.strip().replace("\n", "\n    "))
 
     total = reader_passes + app_tests
-    print(f"\nTOTAL: {reader_passes} reader checks + {app_tests} application tests = {total} PASSED.")
+    label = "PASSED" if all_passed else "CHECKED (failures above)"
+    print(f"\nTOTAL: {reader_passes} reader checks + {app_tests} application tests = {total} {label}.")
     if all_passed:
         print("\nALL CHECKS PASSED SUCCESSFULLY (Exit 0).")
         return 0
@@ -175,7 +176,7 @@ def main(argv: list[str] | None = None) -> int:
             sys.stderr.write(f"Error: Invalid NEAR account ID: {args.live_signer}\n")
             return 1
 
-        print(f"Reconciling live payout for tx {args.live_tx} (signer: {args.live_signer})...")
+        print(f"Reconciling live payout for tx {args.live_tx} (signer: {args.live_signer})...", file=sys.stderr)
         envelope = run_worker(mode="live", tx_hash=args.live_tx, signer_id=args.live_signer)
         if args.json:
             print(json.dumps(envelope, indent=2))

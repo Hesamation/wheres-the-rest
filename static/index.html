@@ -85,7 +85,7 @@
             <button type="button" id="tab-saved" class="segmented-btn active" role="tab" aria-selected="true" aria-controls="saved-controls-panel">
               Saved Evidence (3)
             </button>
-            <button type="button" id="tab-live" class="segmented-btn" role="tab" aria-selected="false" aria-controls="live-controls-panel">
+            <button type="button" id="tab-live" class="segmented-btn" role="tab" aria-selected="false" aria-controls="live-form-panel">
               Live Query
             </button>
           </div>
@@ -201,7 +201,7 @@
           <div class="carbon-table-toolbar">
             <div class="table-toolbar__title">
               <h3>Withdrawal Leg Findings</h3>
-              <span class="table-toolbar__subtitle">Exact gross burns, evidenced bridge fees, and verified Base net delivery</span>
+              <span class="table-toolbar__subtitle">Gross per source burn; fees and net total the observed transfers in each finding</span>
             </div>
             <div class="table-toolbar__actions">
               <span id="table-row-count" class="carbon-tag carbon-tag--gray">1 finding</span>
@@ -215,9 +215,9 @@
                   <th scope="col" class="th-expand" aria-label="Expand row details"></th>
                   <th scope="col" class="th-row">Row / Leg</th>
                   <th scope="col" class="th-recipient">Recipient (Base)</th>
-                  <th scope="col" class="th-num">Gross Burn</th>
-                  <th scope="col" class="th-num">Bridge Fee</th>
-                  <th scope="col" class="th-num">Net Delivered</th>
+                  <th scope="col" class="th-num">Gross / Burn</th>
+                  <th scope="col" class="th-num">Observed Fees</th>
+                  <th scope="col" class="th-num">Net Observed</th>
                   <th scope="col" class="th-status">Audit Verdict</th>
                 </tr>
               </thead>

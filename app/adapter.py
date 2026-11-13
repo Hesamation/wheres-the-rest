@@ -215,119 +215,62 @@ def _build_envelope(
             row_indices = []
             group_details = None
 
-        # Determine evidenced fee and net payout strictly from evidence.
-        # Use dest tx hash extracted from the reader's authoritative note to look up
-        # bridge and dest evidence — avoids false association when multiple rows share
-        # the same gross amount (Bug: amount-only lookup can assign wrong bridge record).
-        evidenced_fee = None
-        evidenced_net = None
+        # Project the reader's recorded matches by exact destination log identity.
+        # This selects evidence already named by the reader; it makes no new
+        # matching decisions. Keep all observed group members, not just the first.
+        observed_transfers = []
+        seen_logs = set()
+        expected_observed = (group_details["observed"] if group_details
+                             else int(verdict == "OBSERVED_MATCH"))
+        for transfer_tx, log_index in re.findall(
+            r"dest tx (0x[0-9a-fA-F]{64}) log (\d+) pays ", note
+        ):
+            identity = (transfer_tx, int(log_index))
+            if identity in seen_logs:
+                continue
+            seen_logs.add(identity)
+            dest_ref = next((d for d in norm_dest
+                             if d["transferTxHash"] == transfer_tx
+                             and d["logIndex"] == int(log_index)
+                             and (d["to"] or "").lower() == (recipient or "").lower()), None)
+            bridge_ref = next((b for b in norm_records
+                               if dest_ref and b["transferTxHash"] == transfer_tx
+                               and b["status"] == "COMPLETED"
+                               and b["amount"] == to_str_amount(amount)
+                               and b["withdrawAmount"] == dest_ref["amount"]), None)
+            if not dest_ref or not bridge_ref:
+                continue
+            observed_transfers.append({
+                "bridgeRecord": {key: bridge_ref[key] for key in (
+                    "transferTxHash", "chain", "fee", "feeFormatted",
+                    "withdrawAmount", "withdrawAmountFormatted")},
+                "destTransfer": {key: dest_ref[key] for key in (
+                    "transferTxHash", "logIndex", "receiptStatus", "block",
+                    "confirmations", "explorerUrl")},
+            })
+
+        projection_warning = None
+        if len(observed_transfers) != expected_observed:
+            # Never publish a partial monetary total as the whole observed total.
+            projection_warning = "Observed evidence projection incomplete; inspect original reader note."
+            observed_transfers = []
+        evidence_bridge = observed_transfers[0]["bridgeRecord"] if observed_transfers else None
+        evidence_dest = observed_transfers[0]["destTransfer"] if observed_transfers else None
+        evidenced_fee = (sum(int(x["bridgeRecord"]["fee"]) for x in observed_transfers)
+                         if observed_transfers else None)
+        evidenced_net = (sum(int(x["bridgeRecord"]["withdrawAmount"]) for x in observed_transfers)
+                         if observed_transfers else None)
         evidence_burn = None
-        evidence_bridge = None
-        evidence_dest = None
         group_burns = None
-
-        # Extract dest tx hash from reader note (present in OBSERVED_MATCH and GROUP_FINDING)
-        _note_dest_tx = None
-        if note:
-            _m = re.search(r"dest tx (0x[0-9a-fA-F]+)\s", note)
-            if _m:
-                _note_dest_tx = _m.group(1)
-
-        if kind == "group" and row_indices:
+        if kind == "group":
             group_burns = [
-                {
-                    "rowIndex": idx,
-                    "outcomeId": norm_burns[idx]["outcomeId"],
-                    "logIndex": norm_burns[idx]["logIndex"],
-                    "executor": norm_burns[idx]["executor"],
-                }
-                for idx in row_indices
-                if idx < len(norm_burns)
+                {"rowIndex": idx, **{key: norm_burns[idx][key] for key in (
+                    "outcomeId", "logIndex", "executor")}}
+                for idx in row_indices if idx < len(norm_burns)
             ]
-            # Group findings may have observed matches — attach the bridge/dest evidence
-            # from the note so the drawer can show it.
-            if _note_dest_tx:
-                for rec in norm_records:
-                    if rec["transferTxHash"] == _note_dest_tx and rec["status"] == "COMPLETED":
-                        evidence_bridge = {
-                            "transferTxHash": rec["transferTxHash"],
-                            "chain": rec["chain"],
-                            "fee": rec["fee"],
-                            "feeFormatted": rec["feeFormatted"],
-                            "withdrawAmount": rec["withdrawAmount"],
-                            "withdrawAmountFormatted": rec["withdrawAmountFormatted"],
-                        }
-                        evidenced_fee = rec["fee"]
-                        evidenced_net = rec["withdrawAmount"]
-                        break
-                if evidence_bridge and evidence_bridge.get("transferTxHash"):
-                    for d_entry in norm_dest:
-                        if d_entry["transferTxHash"] == evidence_bridge["transferTxHash"]:
-                            evidence_dest = {
-                                "transferTxHash": d_entry["transferTxHash"],
-                                "logIndex": d_entry["logIndex"],
-                                "receiptStatus": d_entry["receiptStatus"],
-                                "block": d_entry["block"],
-                                "confirmations": d_entry["confirmations"],
-                                "explorerUrl": d_entry["explorerUrl"],
-                            }
-                            break
         elif kind == "single" and row_indices and row_indices[0] < len(norm_burns):
-            burn_ref = norm_burns[row_indices[0]]
-            evidence_burn = {
-                "outcomeId": burn_ref["outcomeId"],
-                "logIndex": burn_ref["logIndex"],
-                "burnOwner": burn_ref["burnOwner"],
-                "executor": burn_ref["executor"],
-            }
-            # Find matching bridge record if OBSERVED_MATCH.
-            # Use the dest tx hash from the reader note (authoritative) to avoid
-            # false association when multiple rows share the same gross amount.
-            if verdict == "OBSERVED_MATCH" and _note_dest_tx:
-                for rec in norm_records:
-                    if rec["transferTxHash"] == _note_dest_tx and rec["status"] == "COMPLETED":
-                        evidence_bridge = {
-                            "transferTxHash": rec["transferTxHash"],
-                            "chain": rec["chain"],
-                            "fee": rec["fee"],
-                            "feeFormatted": rec["feeFormatted"],
-                            "withdrawAmount": rec["withdrawAmount"],
-                            "withdrawAmountFormatted": rec["withdrawAmountFormatted"],
-                        }
-                        evidenced_fee = rec["fee"]
-                        evidenced_net = rec["withdrawAmount"]
-                        break
-            elif verdict == "OBSERVED_MATCH" and not _note_dest_tx:
-                # Fallback: match by gross amount (only correct when amounts are unique)
-                for rec in norm_records:
-                    if rec["amount"] == burn_ref["amount"] and rec["status"] == "COMPLETED":
-                        evidence_bridge = {
-                            "transferTxHash": rec["transferTxHash"],
-                            "chain": rec["chain"],
-                            "fee": rec["fee"],
-                            "feeFormatted": rec["feeFormatted"],
-                            "withdrawAmount": rec["withdrawAmount"],
-                            "withdrawAmountFormatted": rec["withdrawAmountFormatted"],
-                        }
-                        evidenced_fee = rec["fee"]
-                        evidenced_net = rec["withdrawAmount"]
-                        break
-            # Find matching dest transfer
-            if evidence_bridge and evidence_bridge.get("transferTxHash"):
-                for d_entry in norm_dest:
-                    if (
-                        d_entry["transferTxHash"] == evidence_bridge["transferTxHash"]
-                        and d_entry["to"].lower() == (recipient or "").lower()
-                    ):
-                        evidence_dest = {
-                            "transferTxHash": d_entry["transferTxHash"],
-                            "logIndex": d_entry["logIndex"],
-                            "receiptStatus": d_entry["receiptStatus"],
-                            "block": d_entry["block"],
-                            "confirmations": d_entry["confirmations"],
-                            "explorerUrl": d_entry["explorerUrl"],
-                        }
-                        break
+            evidence_burn = {key: norm_burns[row_indices[0]][key] for key in (
+                "outcomeId", "logIndex", "burnOwner", "executor")}
 
         structured_rows.append({
             "id": f"finding-{f_idx}",
@@ -349,6 +292,8 @@ def _build_envelope(
                 "groupBurns": group_burns,
                 "bridgeRecord": evidence_bridge,
                 "destTransfer": evidence_dest,
+                "observedTransfers": observed_transfers,
+                "projectionWarning": projection_warning,
             },
             "note": note,
         })

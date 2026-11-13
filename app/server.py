@@ -104,7 +104,7 @@ class PayoutRequestHandler(BaseHTTPRequestHandler):
             rel = path.lstrip("/")
             file_path = (STATIC_DIR / rel).resolve()
             # Prevent directory traversal outside STATIC_DIR
-            if not str(file_path).startswith(str(STATIC_DIR.resolve())):
+            if not file_path.is_relative_to(STATIC_DIR.resolve()):
                 self._send_error(HTTPStatus.FORBIDDEN, "Access forbidden")
                 return
 
@@ -146,10 +146,10 @@ class PayoutRequestHandler(BaseHTTPRequestHandler):
             self._send_error(HTTPStatus.BAD_REQUEST, "Invalid Content-Length header")
             return
 
-        if length > MAX_REQUEST_BYTES:
+        if length < 0 or length > MAX_REQUEST_BYTES:
             self._send_error(
                 HTTPStatus.BAD_REQUEST,
-                f"Request body exceeds {MAX_REQUEST_BYTES} bytes limit",
+                f"Content-Length must be between 0 and {MAX_REQUEST_BYTES} bytes",
             )
             return
 

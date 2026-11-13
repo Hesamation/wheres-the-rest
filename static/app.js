@@ -180,7 +180,7 @@ function initStaleControls() {
   });
 
   btnDismissStale.addEventListener("click", () => {
-    hideStaleBanner();
+    document.getElementById("stale-banner").style.display = "none";
   });
 }
 
@@ -355,7 +355,7 @@ function generateMarkdownProof(envelope) {
     `- **Evidence Timestamp**: ${captured}`,
     `- **Auditor**: Payout Reader (SHA-256 \`${readerSha}\`)`,
     "",
-    "| Row(s) | Recipient | Gross (USDC) | Fee (USDC) | Net (USDC) | Verdict | Base Tx |",
+    "| Row(s) | Recipient | Gross/burn (USDC) | Observed fees (USDC) | Observed net (USDC) | Verdict | Base Tx |",
     "|---|---|---|---|---|---|---|",
   ];
 
@@ -377,6 +377,12 @@ function generateMarkdownProof(envelope) {
   }
 
   lines.push("");
+  for (const r of rows) {
+    if (r.groupDetails) {
+      lines.push(`Group [${(r.rowIndices || []).join(",")}]: ${r.groupDetails.observed} observed; ${r.groupDetails.unrecorded} unrecorded. Source-burn attribution remains ambiguous.`);
+    }
+  }
+  lines.push(`Evidence mode: ${req.mode || "unknown"}. Amounts are provider observations; “proof” is not a cryptographic proof.`);
   lines.push("> **Conservative Evidence Disclaimer**: Missing observations are ambiguous, not proof of permanent loss. OBSERVED_MATCH represents receipt-level provider evidence with block confirmations, not final settlement.");
   return lines.join("\n");
 }
@@ -414,6 +420,7 @@ async function runReconciliation(payload) {
     }
 
     renderReport(data);
+    checkStaleStatus();
   } catch (err) {
     showError(err.message);
   } finally {
@@ -501,45 +508,37 @@ function renderReport(report) {
   if (req.mode === "live") {
     modeBadge.textContent = "Live Network Observation";
   } else {
-    modeBadge.textContent = "Offline Verified Evidence";
+    modeBadge.textContent = "Saved Provider Evidence";
   }
 
-  // Calculate detailed aggregate numbers
-  let totalGross = 0;
-  let totalBridgeFee = 0;
-  let totalObservedNet = 0;
-  let totalUnrecordedGross = 0;
+  // Monetary totals stay in atomic BigInt units, including grouped observations.
+  const sumAmounts = (items, field) => items.reduce((sum, item) =>
+    sum === null || item[field] == null ? null : sum + BigInt(item[field]), 0n);
+  const totalGross = sumAmounts(normEv.sourceBurns || [], "amount");
+  const totalBridgeGross = sumAmounts(normEv.bridgeWithdrawals || [], "amount");
+  let totalObservedNet = 0n;
+  let totalUnrecordedGross = 0n;
 
   let trueObservedCount = counts.observedMatches || 0;
   let trueUnrecordedCount = counts.unrecorded || 0;
-  let truePendingCount = counts.pending || 0;
 
   rows.forEach((r) => {
-    const grossVal = parseInt(r.amounts?.gross || "0", 10);
-    const feeVal = parseInt(r.amounts?.fee || "0", 10);
-    const netVal = parseInt(r.amounts?.net || "0", 10);
-
-    if (r.kind === "group" && r.groupDetails) {
-      trueObservedCount += r.groupDetails.observed || 0;
-      trueUnrecordedCount += r.groupDetails.unrecorded || 0;
-      truePendingCount += r.groupDetails.pending || 0;
-
-      totalGross += grossVal * (r.groupDetails.rowsInGroup || 1);
-      if (r.groupDetails.observed > 0) {
-        totalObservedNet += netVal;
-        totalBridgeFee += feeVal;
-      }
-      if (r.groupDetails.unrecorded > 0) {
-        totalUnrecordedGross += grossVal * r.groupDetails.unrecorded;
-      }
-    } else {
-      totalGross += grossVal;
-      if (r.verdict === "OBSERVED_MATCH") {
-        totalObservedNet += netVal;
-        totalBridgeFee += feeVal;
-      } else if (r.verdict === "NOT_RECORDED") {
-        totalUnrecordedGross += grossVal;
-      }
+    const grossVal = r.amounts?.gross == null ? null : BigInt(r.amounts.gross);
+    const observed = r.kind === "group"
+      ? r.groupDetails?.observed || 0 : Number(r.verdict === "OBSERVED_MATCH");
+    const unrecorded = r.kind === "group"
+      ? r.groupDetails?.unrecorded || 0 : Number(r.verdict === "NOT_RECORDED");
+    if (r.kind === "group") {
+      trueObservedCount += observed;
+      trueUnrecordedCount += unrecorded;
+    }
+    if (observed) {
+      totalObservedNet = totalObservedNet === null || r.amounts?.net == null
+        ? null : totalObservedNet + BigInt(r.amounts.net);
+    }
+    if (unrecorded) {
+      totalUnrecordedGross = totalUnrecordedGross === null || grossVal === null
+        ? null : totalUnrecordedGross + grossVal * BigInt(unrecorded);
     }
   });
 
@@ -554,17 +553,17 @@ function renderReport(report) {
   } else if (overallCode === "MISMATCH") {
     outcomeCard.classList.add("verdict-mismatch");
     outcomeTag.className = "carbon-tag carbon-tag--red";
-    outcomeTag.textContent = "DEFICIT (MISMATCH)";
+    outcomeTag.textContent = "DELIVERY MISMATCH";
 
     if (req.exampleId === "qa1") {
       outcomeTitle.textContent = "3 Intended Payments — 1 Observed on Base, 2 Unrecorded";
-      outcomeDesc.textContent = "Three identical 0.010000 USDC burns. One payment was delivered on Base (0.007600 USDC net after 0.002400 USDC fee). Two burns remain unrecorded on the bridge. Recipient attribution is ambiguous due to identical amounts.";
+      outcomeDesc.textContent = "Three identical 0.010000 USDC burns. One payment was delivered on Base (0.007600 USDC net after 0.002400 USDC fee). Two burns remain unrecorded on the bridge. All three burns name the same recipient. Which source burn corresponds to the observed transfer is ambiguous.";
     } else if (req.exampleId === "qa2") {
       outcomeTitle.textContent = "2 Intended Payments — 1 Observed on Base, 1 Unrecorded";
       outcomeDesc.textContent = "0.190000 USDC burn verified delivered on Base (0.187600 USDC net after 0.002400 USDC fee). 0.200000 USDC burn lacks an observed bridge withdrawal record.";
     } else {
-      outcomeTitle.textContent = "Delivery Mismatch — Some Payments Lack Observed Delivery";
-      outcomeDesc.textContent = `${trueObservedCount} observed delivered, ${trueUnrecordedCount} unrecorded on bridge. Unrecorded burns are ambiguous, not proof of permanent loss.`;
+      outcomeTitle.textContent = "Delivery Mismatch — Inspect the Findings";
+      outcomeDesc.textContent = summary.overall || `${trueObservedCount} observed on Base, ${trueUnrecordedCount} unrecorded on bridge. Inspect each finding.`;
     }
   } else if (overallCode === "IN_PROGRESS") {
     outcomeCard.classList.add("verdict-inconclusive");
@@ -581,11 +580,11 @@ function renderReport(report) {
   }
 
   // C. KPI Metrics Grid (Accurate calculations)
-  document.getElementById("kpi-burns-count").textContent = counts.sourceBurns || rows.length;
+  document.getElementById("kpi-burns-count").textContent = counts.sourceBurns ?? 0;
   document.getElementById("kpi-burns-amt").textContent = formatUSDCFromMicro(totalGross);
 
   document.getElementById("kpi-bridge-count").textContent = counts.bridgeRecords ?? 0;
-  document.getElementById("kpi-bridge-amt").textContent = formatUSDCFromMicro(totalObservedNet + totalBridgeFee);
+  document.getElementById("kpi-bridge-amt").textContent = formatUSDCFromMicro(totalBridgeGross);
 
   document.getElementById("kpi-observed-count").textContent = trueObservedCount;
   document.getElementById("kpi-observed-amt").textContent = formatUSDCFromMicro(totalObservedNet);
@@ -628,14 +627,12 @@ function renderReport(report) {
       // 1. Parent Data Row
       const parentTr = document.createElement("tr");
       parentTr.className = "parent-row";
-      parentTr.tabIndex = 0;
-      parentTr.setAttribute("role", "button");
       parentTr.setAttribute("aria-expanded", "false");
       parentTr.setAttribute("aria-controls", `detail-${idx}`);
 
       parentTr.innerHTML = `
         <td class="th-expand">
-          <button type="button" class="expand-toggle" aria-label="Toggle details for ${escapeHtml(rowLabel)}">
+          <button type="button" class="expand-toggle" aria-expanded="false" aria-controls="detail-${idx}" aria-label="Toggle details for ${escapeHtml(rowLabel)}">
             <svg class="carbon-icon expand-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
               <path d="M6 3.7L7.4 2.3 13.1 8l-5.7 5.7L6 12.3 10.3 8z"/>
             </svg>
@@ -659,6 +656,7 @@ function renderReport(report) {
       const ev = r.evidence || {};
       const burnEv = ev.sourceBurn;
       const groupBurns = ev.groupBurns;
+      const observations = ev.observedTransfers || [];
       const bridgeEv = ev.bridgeRecord;
       const destEv = ev.destTransfer;
 
@@ -682,26 +680,28 @@ function renderReport(report) {
       // Bridge Leg content
       let bridgeLegHtml = '<span style="color:var(--cds-text-helper)">No bridge record</span>';
       if (bridgeEv) {
-        bridgeLegHtml = `
+        bridgeLegHtml = (observations.length ? observations : [{bridgeRecord: bridgeEv}]).map(({bridgeRecord: bridgeEv}) => `
           <strong>Tx Hash:</strong> <span class="monospace">${escapeHtml(bridgeEv.transferTxHash || "-")}</span><br>
           <strong>Chain:</strong> ${escapeHtml(bridgeEv.chain || "eth:8453")}<br>
           <strong>Evidenced Fee:</strong> ${escapeHtml(bridgeEv.feeFormatted || "-")} USDC<br>
           <strong>Withdraw Net:</strong> ${escapeHtml(bridgeEv.withdrawAmountFormatted || "-")} USDC
-        `;
+        `).join("<hr>");
       }
 
       // Destination Leg content
       let destLegHtml = '<span style="color:var(--cds-text-helper)">No destination receipt</span>';
       if (destEv) {
+        destLegHtml = (observations.length ? observations : [{destTransfer: destEv}]).map(({destTransfer: destEv}) => {
         const link = destEv.explorerUrl
           ? `<a href="${destEv.explorerUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(truncateMiddle(destEv.transferTxHash, 14, 12))} &nearr;</a>`
           : `<span class="monospace">${escapeHtml(truncateMiddle(destEv.transferTxHash, 14, 12))}</span>`;
-        destLegHtml = `
+        return `
           <strong>Tx Hash:</strong> ${link}<br>
           <strong>Log Index:</strong> ${destEv.logIndex ?? "-"}<br>
           <strong>Block:</strong> ${destEv.block ?? "-"}<br>
           <strong>Status:</strong> ${destEv.receiptStatus === "0x1" ? '<span style="color:var(--cds-support-success-text)">Success (0x1)</span>' : escapeHtml(destEv.receiptStatus || "-")}
         `;
+        }).join("<hr>");
       }
 
       // Group Alert
@@ -710,10 +710,10 @@ function renderReport(report) {
         const gd = r.groupDetails;
         groupAlertHtml = `
           <div class="group-alert-box">
-            <strong>Group Finding &mdash; Ambiguous Payment Attribution</strong>
+            <strong>Group Finding &mdash; Ambiguous Burn Attribution</strong>
             ${gd.rowsInGroup} identical gross burns (${grossStr}) were executed to the same recipient address.
-            Evidence breakdown: <strong>${gd.observed} payment observed on Base</strong> and <strong>${gd.unrecorded} unrecorded</strong> on bridge.
-            Because the source contract emitted identical burn amounts, individual payment attribution is mathematically ambiguous and cannot be deterministically mapped.
+            Evidence breakdown: <strong>${gd.observed} payment(s) observed on Base</strong> and <strong>${gd.unrecorded} unrecorded</strong> on bridge.
+            Because the source contract emitted identical burn amounts, individual source-burn attribution is ambiguous and cannot be deterministically mapped.
           </div>
         `;
       }
@@ -722,6 +722,7 @@ function renderReport(report) {
         <td colspan="7">
           <div class="expandable-content">
             ${groupAlertHtml}
+            ${ev.projectionWarning ? `<p role="status">${escapeHtml(ev.projectionWarning)}</p>` : ""}
             
             <div class="trail-grid">
               <div class="trail-card">
@@ -760,6 +761,7 @@ function renderReport(report) {
       // Expansion toggle function
       const toggleRow = () => {
         const isExpanded = parentTr.classList.contains("expanded");
+        parentTr.querySelector(".expand-toggle").setAttribute("aria-expanded", String(!isExpanded));
         if (isExpanded) {
           parentTr.classList.remove("expanded");
           parentTr.setAttribute("aria-expanded", "false");
@@ -772,12 +774,6 @@ function renderReport(report) {
       };
 
       parentTr.addEventListener("click", toggleRow);
-      parentTr.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          toggleRow();
-        }
-      });
 
       // Expand the first row by default for immediate 5-second evidence legibility
       if (idx === 0) {
@@ -850,11 +846,11 @@ function getVerdictTagClass(verdict) {
 }
 
 function formatUSDCFromMicro(microInt) {
-  if (isNaN(microInt) || microInt === 0) return "0.000000 USDC";
-  const s = String(microInt).padStart(7, "0");
-  const whole = s.slice(0, -6) || "0";
-  const frac = s.slice(-6);
-  return `${whole}.${frac} USDC`;
+  if (microInt == null) return "See evidence";
+  const amount = BigInt(microInt);
+  const sign = amount < 0n ? "-" : "";
+  const s = String(amount < 0n ? -amount : amount).padStart(7, "0");
+  return `${sign}${s.slice(0, -6)}.${s.slice(-6)} USDC`;
 }
 
 function truncateMiddle(str, front = 10, back = 8) {
@@ -888,7 +884,7 @@ function initKeyboardNavigation() {
     // Escape dismisses error or stale notification
     if (e.key === "Escape") {
       clearError();
-      hideStaleBanner();
+      document.getElementById("stale-banner").style.display = "none";
     }
   });
 }

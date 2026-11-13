@@ -114,7 +114,7 @@ def report_to_markdown_proof(envelope: dict) -> str:
         f"- **Evidence Timestamp**: {captured}",
         f"- **Auditor**: Payout Reader (SHA-256 `{reader_sha}`)",
         "",
-        "| Row(s) | Recipient | Gross (USDC) | Fee (USDC) | Net (USDC) | Verdict | Base Tx |",
+        "| Row(s) | Recipient | Gross/burn (USDC) | Observed fees (USDC) | Observed net (USDC) | Verdict | Base Tx |",
         "|---|---|---|---|---|---|---|",
     ]
 
@@ -136,8 +136,14 @@ def report_to_markdown_proof(envelope: dict) -> str:
             dest_link = "-"
         lines.append(f"| {indices} | {recip} | {gross} | {fee} | {net} | {verdict} | {dest_link} |")
 
+    lines.append("")
+    for r in rows:
+        if r.get("groupDetails"):
+            gd = r["groupDetails"]
+            indices = ",".join(str(i) for i in r.get("rowIndices", []))
+            lines.append(f"Group [{indices}]: {gd['observed']} observed; {gd['unrecorded']} unrecorded. Source-burn attribution remains ambiguous.")
+    lines.append(f"Evidence mode: {req.get('mode', 'unknown')}. Amounts are provider observations; “proof” is not a cryptographic proof.")
     lines.extend([
-        "",
         "> **Conservative Evidence Disclaimer**: Missing observations are ambiguous, not proof of permanent loss. OBSERVED_MATCH represents receipt-level provider evidence with block confirmations, not final settlement.",
     ])
     return "\n".join(lines)
