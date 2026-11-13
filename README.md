@@ -126,7 +126,7 @@ The standalone application was implemented on **November 13, 2026**. Its reader 
 - Preserved engine: `reader/payout_probe.py`, SHA-256 `0ac8f7364292f5e9268bbcc465f433f9ac2ff48c7aeb9d2facfc0f24ce99f4a2`.
 - Application work: stdlib HTTP API, worker isolation, adapter, CLI, vanilla HTML/CSS/JavaScript workbench, exports, tests, Docker and hosting configuration. No third-party runtime libraries or frontend templates. Styling follows IBM Carbon design tokens; it does not use the Carbon component library.
 - AI coding agents assisted implementation and review. The repository includes reproducible checks; this is not a claim that every behavior has been human-verified.
-- Single project entry; no second project is being submitted by this author/team. [MIT license](LICENSE). The repository must be made public before submission and remain public through judging.
+- Single project entry; no second project is being submitted by this author/team. [MIT license](LICENSE).
 
 Verify the preserved engine independently:
 
@@ -134,13 +134,3 @@ Verify the preserved engine independently:
 sha256sum reader/payout_probe.py
 # 0ac8f7364292f5e9268bbcc465f433f9ac2ff48c7aeb9d2facfc0f24ce99f4a2
 ```
-
-## Demo recording guide (90–120 seconds)
-
-1. **0–10s — operator problem, with the app already open:** “NEAR says the treasury payout executed. Did the USDC actually arrive on Base?”
-2. **10–35s — one complete live action:** enter the control transaction and signer above in **Live Query**, click **Reconcile**, and show the actual result. If providers are unavailable, state that and switch visibly to dated saved evidence. Never call a saved replay live.
-3. **35–65s — the contrast:** open **QA1: Group Deficit**. “This mainnet staging transaction burned three identical amounts to the same recipient. We observe one transfer; two burns have no bridge record. We keep source-burn attribution ambiguous.” Expand the three evidence legs.
-4. **65–85s — usable output:** show **Copy Proof** and a JSON/CSV report. Explain that these are provider observations for investigation, not proof of loss or a reason to resend funds.
-5. **85–100s — why NEAR and next step:** “We reconcile executed NEAR burns through the bridge to Base receipts, including fees and grouped ambiguity. Read-only, no wallet connection. Try the demo and inspect the code.”
-
-For the human's later release: publish this repository, attach the video to a public X post saying it was built at NEAR HACKATHON, include `@NEARProtocol` and `#NEARHackathon`, and submit both links. Current official deadline: **November 14, 2026 at 23:59 UTC**. Keep the hosted demo available through judging (November 18; ideally November 25). Recheck [the official rules](https://nearhackathon.com/HACKATHON.md) immediately before submission.
