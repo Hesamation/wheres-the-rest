@@ -33,7 +33,12 @@ class PayoutRequestHandler(BaseHTTPRequestHandler):
 
     def log_message(self, format: str, *args) -> None:
         """Clean custom request logging."""
-        sys.stderr.write(f"[{self.log_date_time_string()}] {args[0]} {args[1]} -> {args[2]}\n")
+        if len(args) >= 3:
+            sys.stderr.write(f"[{self.log_date_time_string()}] {args[0]} {args[1]} -> {args[2]}\n")
+        elif args:
+            sys.stderr.write(f"[{self.log_date_time_string()}] {' '.join(str(a) for a in args)}\n")
+        else:
+            sys.stderr.write(f"[{self.log_date_time_string()}] {format}\n")
 
     def _send_json(self, status: int, payload: dict | list) -> None:
         body = json.dumps(payload, indent=2).encode("utf-8")
@@ -56,8 +61,24 @@ class PayoutRequestHandler(BaseHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
         self.end_headers()
 
+    def do_HEAD(self) -> None:
+        """Handle HEAD requests for healthchecks and probes."""
+        path = self.path.split("?")[0]
+        if path in ("/healthz", "/api/health", "/api/examples", "/", "/index.html"):
+            self.send_response(HTTPStatus.OK)
+            self.send_header("Content-Type", "text/html; charset=utf-8" if path in ("/", "/index.html") else "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.end_headers()
+            return
+        self.send_response(HTTPStatus.OK)
+        self.end_headers()
+
     def do_GET(self) -> None:
         path = self.path.split("?")[0]
+
+        if path in ("/healthz", "/api/health"):
+            self._send_json(HTTPStatus.OK, {"status": "ok", "service": "payout-reader"})
+            return
 
         if path == "/api/examples":
             examples_list = list(SAVED_EXAMPLES_META.values())
