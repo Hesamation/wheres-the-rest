@@ -1,33 +1,16 @@
-# Acceptance gates
+# Finish checklist
 
-Unchecked until actually run in this product checkout. Record commands, implementation hash, results and limitations at each batch closeout.
+Run these during the build; summarize results in STATUS when stopping. No separate reports or approval gates. Don't repeat passing checks unless changes or failures justify it.
 
-## Foundation
-
-- [ ] Archive SHA-256 and 478-entry manifest verified before runtime import.
-- [ ] Reader suite, independent verifier, generated invariants and ten regressions pass locally.
-- [ ] Separate thirteen-case harness passes, with no parent-workspace dependency. Run original harness in a disposable copy: it writes outputs beside itself.
-- [ ] Three public examples have complete provenance; FD7g production control is not EEDi offline_control.
-- [ ] All necessary inputs tracked; no implicit dependency on private parent or ignored evidence.
-
-## Adapter/API
-
-- [ ] Original runner parity on saved/synthetic cases: verdicts, counts, completeness.
-- [ ] Exact six-decimal formatting, integer strings and large amounts; UI/export agree.
-- [ ] Group ambiguity, single log consumption, unsupported/mixed scope and extras preserved.
-- [ ] Source failure, missing graph, malformed data, provider unavailable, pending, revert and missing transfer stay conservative.
-- [ ] Worker isolation, busy requests, timeout cleanup and unknown-state handling exercised.
-- [ ] Live inputs validated; saved IDs allowlisted; no paths/secrets/tracebacks leaked; provider content rendered safely.
-- [ ] Saved mode tested without network; never silently substituted for live.
-
-## UI/delivery
-
-- [ ] QA1, QA2 and production control match saved observations in PLAN.md.
-- [ ] Actual browser flow checked at desktop/mobile widths; keyboard/focus, long IDs and errors/loading/download work.
-- [ ] Clean clone reproduces setup, offline checks and app startup outside this workspace.
-- [ ] One bounded three-example live refresh recorded with timestamps/provider failures; not treated as guaranteed historical results.
-- [ ] README states scope, provider trust, no receipt proofs/finality threshold, no permanent-loss inference and no obligation checking.
-- [ ] Video shows real user flow and explicit saved/live provenance.
-- [ ] Release reviewed for credentials, personal data and third-party material; license/name/publication approved separately.
-
-No blanket parser audit, fresh competitor research or WBTS tests by default. Reopen only for concrete new evidence relevant to delivery.
+- [ ] Verify archive hash/manifest, import unchanged reader, run its suite, independent verifier, invariants and regressions plus the separate 13-case harness in a disposable copy. Historical evidence must stay unchanged.
+- [ ] Adapter matches original runner verdicts/counts/completeness on saved/synthetic cases. No duplicated matching logic.
+- [ ] QA1, QA2 and FD7g production control match the saved observations in PLAN. EEDi offline_control is a separate case; don't relabel it.
+- [ ] Exact six-decimal money and integer-string export; displayed report and JSON agree.
+- [ ] Group ambiguity, one-use transfer identities, extra evidence, unsupported scope and failure/incomplete/pending/invalid/revert states remain honest.
+- [ ] Saved examples work without network. Live failure stays visible; no silent saved substitution.
+- [ ] Requests validate inputs; workers isolate evidence and clean up on timeout/failure/busy requests; no secrets, paths or tracebacks leak.
+- [ ] Check actual desktop/mobile browser flow: input, loading/errors, group details, evidence links, keyboard/focus and JSON download.
+- [ ] Clean clone can follow README to run app and offline checks without parent workspace or ignored files.
+- [ ] Try three live examples once before recording; record actual failures/outcomes, not assumed historical results.
+- [ ] README and short video explain scope, saved/live dates and provider-trusted receipt observations; no finality, loss or recovery overclaims.
+- [ ] Before public release: review credentials/personal data/imported material and settle license/name with human. Public release/deployment/submission require separate authorization.

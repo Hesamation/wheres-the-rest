@@ -1,33 +1,44 @@
 # Start here
 
-Read in order: [AGENTS.md](AGENTS.md), [status](project/STATUS.md), [decisions](project/DECISIONS.md), [build plan](project/PLAN.md), [acceptance](project/ACCEPTANCE.md), then [input provenance](inputs/README.md).
+Open this repository directly in your chosen agent harness. No parent workspace or prior conversation is needed.
 
-Inspect `git status --short`, `git log -3 --oneline` and `git remote -v`. Preserve existing changes. All paths below are relative to this repository; no parent checkout or chat is required.
+1. Read AGENTS.md, project/STATUS.md and project/PLAN.md.
+2. Inspect Git status and preserve existing changes.
+3. Once authorized, build the complete app and run project/ACCEPTANCE.md. Keep going without batch approval stops.
 
-## Bootstrap prompt for any harness
-
-```text
-Read START-HERE.md and its linked instructions, status, decisions, plan,
-acceptance and input provenance. Inspect the actual Git state first.
-Preserve existing work. Distinguish historical evidence from fresh checks.
-Continue only the next authorized task recorded in project/STATUS.md.
-Current checkpoint is preparation only; do not implement until the human
-explicitly authorizes implementation. Never use Astra. No delegation,
-spending, publication, deployment, external messages or submission.
-Do not depend on another harness's memory, tools or conversation history.
-```
-
-## Implementation authorization template — human sends this separately
+## Paste this to the builder when ready to start
 
 ```text
-Implement the approved plan, starting with Batch 1. Continue through the
-routine batches using the acceptance gates. Commit/checkpoint each batch.
-Keep scope fixed; escalate material architecture or scope changes.
-No delegation, spending, public release, deployment or submission.
+Build this payout-reader app end to end. Read START-HERE.md, AGENTS.md,
+project/STATUS.md and project/PLAN.md. Preserve existing work and reuse
+our accepted reader. Implement, test, check the actual UI and prepare the
+local demo. Make routine decisions yourself; don't stop between phases
+or generate extra plans/reports. Commit useful progress. Before stopping,
+leave a short STATUS with checks, known problems and next steps.
+Create a private GitHub remote with gh if needed and push, using the
+account I specify. No public release, deployment, purchases, external
+messages, submission or additional agents. Never use Astra.
 ```
 
-## Switching builders
+Sending that prompt authorizes implementation; merely opening the repo does not.
 
-Use the same checkout, or clone the product repository including its latest commits. If work is uncommitted, checkpoint it or transfer it explicitly first. Stop the previous writer before starting another. The new builder reads these files and verifies the recorded commit/checks before continuing. Harness-specific instructions may point here; do not duplicate the specification into competing memory stores.
+## Private remote
 
-No provider has been selected. GLM-5.3/ZCode was recommended, with Gemini/Antigravity as fallback; neither is a human selection. Do not automatically switch models or buy capacity on limit errors. Save a checkpoint and report the limitation.
+From this directory, after confirming the correct GitHub account:
+
+```sh
+gh repo create OWNER/payout-reader --private --source=. --remote=origin --push
+```
+
+Replace OWNER with the human's account/organization. If origin already exists, inspect it and push rather than creating/replacing it blindly. Account access must work; the earlier parent-workspace push returned Repository not found. No private remote exists for this product yet.
+
+## Switching agents
+
+Stop the old writer. Open the same checkout in the new harness and say:
+
+```text
+Read START-HERE.md and project/STATUS.md, inspect the current work and
+continue the authorized build. Preserve changes. Don't restart planning.
+```
+
+Git plus a short STATUS is the handoff. Harness memory is optional. On a different machine, push/clone first, or explicitly transfer the current checkout including uncommitted work.

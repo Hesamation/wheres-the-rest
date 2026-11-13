@@ -1,11 +1,7 @@
 # Payout reader
 
-Read-only NEAR payout evidence report. **Starter repository only: no application is implemented.**
+Read-only NEAR payout evidence report. **Starter only; app not yet built.**
 
-Start with [START-HERE.md](START-HERE.md). The working directory name is not a final product brand.
+Open [START-HERE.md](START-HERE.md) for the build prompt and remote setup. The [plan](project/PLAN.md) contains the agreed scope and architecture; [STATUS](project/STATUS.md) is the only resume note.
 
-Planned v1: one local page, live lookup, three explicitly saved examples, grouped findings, evidence links and JSON export. Scope is the configured NEAR USDC bridge token to Base USDC. Provider observations are not cryptographic proofs or final settlement.
-
-The reviewed reader remains sealed in `inputs/`; importing it into runtime code is implementation Batch 1. No runtime setup/start commands exist yet. Builder selection and implementation authorization remain open.
-
-This repository must work independently of its parent planning workspace. It has no remote yet and is not approved for public release. License selection is pending; do not infer a license for imported material.
+Working directory name is not a final brand. No remote or license selected yet. Private build inputs require review before public release.

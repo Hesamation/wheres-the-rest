@@ -12,4 +12,4 @@ The harness `source-closeout/review-evidence/check_v5.py` finds the archive rela
 
 The archive includes historical research/competitor and raw provider material. It is a private build input, not a pre-approved public distribution. Before publication select/review necessary reader/test/example files and resolve license/attribution. Do not publicly ship unrelated private planning or competitor material by default.
 
-Product runtime reader import/extraction and new fixtures are implementation Batch 1, not starter preparation.
+Product runtime reader import/extraction and new fixtures are the start of implementation, not starter preparation.
