@@ -3,225 +3,294 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NEAR USDC Payout Reconciler — Cross-Chain Audit</title>
+  <title>Payout Reconciler — Cross-Chain Audit Workbench</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <div class="app-shell">
-    <header class="app-header" role="banner">
-      <div class="header-inner">
-        <div class="brand">
-          <div class="brand-badge">NEAR &rarr; Base</div>
-          <h1>Payout Reconciler</h1>
+  <div class="carbon-shell">
+    <!-- Carbon Top Shell Header -->
+    <header class="carbon-header" role="banner">
+      <div class="carbon-header__inner">
+        <div class="carbon-header__brand">
+          <div class="brand-title">
+            <span class="brand-prefix">NEAR &rarr; Base</span>
+            <h1>Payout Reconciler</h1>
+          </div>
+          <span class="brand-divider" aria-hidden="true">|</span>
+          <div class="brand-scope" title="Supported token pair">
+            <span class="scope-text">USDC (6 decimals)</span>
+          </div>
         </div>
-        <p class="tagline">Independent receipt-level reconciliation for NEAR USDC cross-chain bulk payouts via Chaindefuser bridge.</p>
-        <div class="scope-pill">
-          <span class="pill-label">Scope:</span>
-          <code>base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near</code>
-          <span class="arrow">&rarr;</span>
-          <code>Base USDC (eth:8453, 6 decimals)</code>
+
+        <div class="carbon-header__actions">
+          <div id="provenance-chip" class="provenance-chip" title="Current audit evidence source and capture date">
+            <span class="chip-dot" aria-hidden="true"></span>
+            <span id="provenance-chip-text" class="chip-text">Saved Case: QA1</span>
+          </div>
+          <button type="button" id="btn-download-json" class="carbon-btn carbon-btn--ghost" title="Export raw JSON reconciliation report" aria-label="Download JSON Report">
+            <svg class="carbon-icon" width="16" height="16" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+              <path d="M26 24v4H6v-4H4v4a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2v-4z"/>
+              <path d="M26 14l-1.41-1.41L17 20.17V2h-2v18.17l-7.59-7.58L6 14l10 10 10-10z"/>
+            </svg>
+            <span>Download JSON</span>
+          </button>
         </div>
       </div>
     </header>
 
-    <main class="app-main" role="main">
-      <!-- Input Controls Section -->
-      <section class="panel controls-panel" aria-labelledby="controls-heading">
-        <h2 id="controls-heading" class="sr-only">Audit Configuration</h2>
-
-        <div class="mode-selector" role="radiogroup" aria-label="Reconciliation Mode">
-          <label class="mode-tab">
-            <input type="radio" name="mode" value="saved" checked id="mode-saved">
-            <span class="tab-label">Saved Examples <span class="badge-offline">Offline</span></span>
-          </label>
-          <label class="mode-tab">
-            <input type="radio" name="mode" value="live" id="mode-live">
-            <span class="tab-label">Live Network <span class="badge-live">Live RPC</span></span>
-          </label>
-        </div>
-
-        <!-- Saved Examples Picker -->
-        <div id="saved-controls" class="mode-section">
-          <div class="section-intro">
-            <p>Select a verified historical reconciliation case with sealed evidence:</p>
-          </div>
-          <div class="examples-grid" id="examples-grid" role="list">
-            <div class="loading-placeholder">Loading saved examples...</div>
+    <!-- Main Workbench Area -->
+    <main class="carbon-main" id="main-content" role="main">
+      
+      <!-- Stale Results Banner -->
+      <div id="stale-banner" class="carbon-banner carbon-banner--warning" style="display: none;" role="status" aria-live="polite">
+        <div class="carbon-banner__content">
+          <svg class="carbon-icon carbon-icon--status" width="16" height="16" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+            <path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2zm0 5a1.5 1.5 0 1 1-1.5 1.5A1.5 1.5 0 0 1 16 7zm2 17h-4v-9h4z"/>
+          </svg>
+          <div class="carbon-banner__text">
+            <strong>Inputs modified</strong> &mdash; The displayed report reflects a previous reconciliation.
           </div>
         </div>
+        <div class="carbon-banner__actions">
+          <button type="button" id="btn-re-reconcile" class="carbon-btn carbon-btn--sm carbon-btn--primary">Re-run</button>
+          <button type="button" id="btn-dismiss-stale" class="carbon-btn carbon-btn--sm carbon-btn--ghost" aria-label="Dismiss stale notification">&times;</button>
+        </div>
+      </div>
 
-        <!-- Live Inputs Form -->
-        <form id="live-form" class="mode-section" style="display: none;" novalidate>
-          <div class="form-row">
-            <div class="form-group flex-2">
-              <label for="live-tx">NEAR Transaction Hash <span class="required">*</span></label>
-              <input type="text" id="live-tx" name="live-tx" placeholder="e.g. FD7gA9L45Btw79YvGL49km9nwgWcDJS4QjTid9G4CZFu" spellcheck="false" autocomplete="off" aria-describedby="tx-help">
-              <span id="tx-help" class="form-help">32-byte base58 encoded transaction hash</span>
-            </div>
-            <div class="form-group flex-1">
-              <label for="live-signer">Signer Account ID <span class="required">*</span></label>
-              <input type="text" id="live-signer" name="live-signer" placeholder="e.g. sponsor.trezu.near" spellcheck="false" autocomplete="off" aria-describedby="signer-help">
-              <span id="signer-help" class="form-help">NEAR named or 64-hex implicit account</span>
-            </div>
-          </div>
-          <div class="form-actions">
-            <button type="submit" id="btn-submit-live" class="btn btn-primary">
-              <span class="btn-text">Reconcile Live Payout</span>
+      <!-- Workbench Control Bar (Compact Toolbar) -->
+      <section class="workbench-toolbar" aria-label="Reconciliation controls">
+        <div class="toolbar-primary">
+          <div class="mode-segmented-group" role="tablist" aria-label="Reconciliation mode">
+            <button type="button" id="tab-saved" class="segmented-btn active" role="tab" aria-selected="true" aria-controls="saved-controls-panel">
+              Saved Evidence (3)
             </button>
+            <button type="button" id="tab-live" class="segmented-btn" role="tab" aria-selected="false" aria-controls="live-controls-panel">
+              Live Query
+            </button>
+          </div>
+
+          <!-- Saved Examples Switcher -->
+          <div id="saved-controls-panel" class="saved-switcher" role="tabpanel" aria-labelledby="tab-saved">
+            <span class="switcher-label">Case:</span>
+            <div class="example-pills" id="example-pills-container" role="radiogroup" aria-label="Saved reconciliation cases">
+              <!-- Dynamically populated buttons -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Query Input Form (Drawer/Collapsible) -->
+        <form id="live-form-panel" class="live-input-bar" role="tabpanel" aria-labelledby="tab-live" style="display: none;" novalidate>
+          <div class="live-input-fields">
+            <div class="carbon-form-item flex-2">
+              <label for="live-tx" class="carbon-label">NEAR Transaction Hash <span class="required">*</span></label>
+              <input type="text" id="live-tx" name="live-tx" class="carbon-text-input monospace" placeholder="e.g. FD7gA9L45Btw79YvGL49km9nwgWcDJS4QjTid9G4CZFu" spellcheck="false" autocomplete="off" required>
+            </div>
+            <div class="carbon-form-item flex-1">
+              <label for="live-signer" class="carbon-label">Signer Account ID <span class="required">*</span></label>
+              <input type="text" id="live-signer" name="live-signer" class="carbon-text-input monospace" placeholder="e.g. sponsor.trezu.near" spellcheck="false" autocomplete="off" required>
+            </div>
+            <div class="live-actions">
+              <button type="submit" id="btn-submit-live" class="carbon-btn carbon-btn--primary">
+                <span>Reconcile</span>
+              </button>
+            </div>
           </div>
         </form>
-
-        <!-- Loading indicator -->
-        <div id="loading-state" class="loading-state" style="display: none;" aria-live="polite">
-          <div class="spinner"></div>
-          <div class="loading-text">
-            <strong id="loading-title">Reconciling Payout Evidence...</strong>
-            <span id="loading-desc">Executing isolated verification subprocess...</span>
-          </div>
-        </div>
-
-        <!-- Error Banner -->
-        <div id="error-banner" class="alert alert-error" style="display: none;" role="alert">
-          <strong id="error-title">Error</strong>
-          <span id="error-message"></span>
-        </div>
       </section>
 
-      <!-- Results Section -->
-      <section id="results-panel" class="panel results-panel" style="display: none;" aria-labelledby="results-heading">
-        <div class="results-header">
-          <h2 id="results-heading">Reconciliation Audit Summary</h2>
-          <div class="results-actions">
-            <button type="button" id="btn-download-json" class="btn btn-secondary">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              <span>Download JSON Report</span>
-            </button>
-          </div>
+      <!-- Loading State -->
+      <div id="loading-state" class="carbon-loading-bar" style="display: none;" aria-live="polite">
+        <div class="carbon-spinner" aria-hidden="true"></div>
+        <div class="loading-message">
+          <span id="loading-title" class="loading-title">Reconciling Payout Evidence...</span>
+          <span id="loading-desc" class="loading-desc">Verifying source burns, bridge records, and Base receipts</span>
         </div>
+      </div>
 
-        <!-- Overall Verdict Banner -->
-        <div id="overall-banner" class="overall-banner" role="region" aria-label="Overall Finding">
-          <div class="overall-icon" id="overall-icon" aria-hidden="true"></div>
-          <div class="overall-body">
-            <div class="overall-code-tag" id="overall-code-tag">VERDICT</div>
-            <h3 class="overall-title" id="overall-title">Reconciliation Result</h3>
-            <p class="overall-desc" id="overall-desc"></p>
-          </div>
+      <!-- Error Notification -->
+      <div id="error-banner" class="carbon-banner carbon-banner--error" style="display: none;" role="alert">
+        <svg class="carbon-icon carbon-icon--status" width="16" height="16" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+          <path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2zm-1 6h2v11h-2zm1 17a1.5 1.5 0 1 1 1.5-1.5A1.5 1.5 0 0 1 16 25z"/>
+        </svg>
+        <div class="carbon-banner__content">
+          <strong id="error-title">Reconciliation Error</strong>
+          <span id="error-message"></span>
         </div>
+        <button type="button" id="btn-clear-error" class="carbon-btn carbon-btn--sm carbon-btn--ghost" aria-label="Dismiss error">&times;</button>
+      </div>
 
-        <!-- Metadata Grid -->
-        <div class="meta-strip">
-          <div class="meta-item">
-            <span class="meta-label">Mode:</span>
-            <span class="meta-val" id="meta-mode">-</span>
+      <!-- Workbench Results Container -->
+      <div id="workbench-body" class="workbench-body">
+        
+        <!-- Executive Outcome & 5-Second KPI Strip -->
+        <section class="outcome-section" aria-label="Reconciliation outcome summary">
+          <div id="outcome-card" class="outcome-card verdict-mismatch">
+            <div class="outcome-header">
+              <div class="outcome-status-badge">
+                <span id="outcome-tag" class="carbon-tag carbon-tag--red">MISMATCH</span>
+                <span id="outcome-mode-badge" class="mode-badge">Saved Offline Evidence</span>
+              </div>
+              <div class="outcome-meta-inline">
+                <span class="meta-label">Captured:</span>
+                <span id="meta-captured" class="meta-value monospace">-</span>
+              </div>
+            </div>
+            
+            <div class="outcome-headline">
+              <h2 id="outcome-title" class="outcome-title">Reconciliation Result</h2>
+              <p id="outcome-desc" class="outcome-desc">Reconciliation audit findings</p>
+            </div>
           </div>
-          <div class="meta-item">
-            <span class="meta-label">NEAR Tx:</span>
-            <span class="meta-val monospace" id="meta-tx">-</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label">Signer:</span>
-            <span class="meta-val monospace" id="meta-signer">-</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label">Evidence Captured:</span>
-            <span class="meta-val" id="meta-captured">-</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label">Source Provider:</span>
-            <span class="meta-val" id="meta-provider">-</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label">Graph Completeness:</span>
-            <span class="meta-val" id="meta-completeness">-</span>
-          </div>
-        </div>
 
-        <!-- Metrics Cards -->
-        <div class="metrics-grid">
-          <div class="metric-card">
-            <span class="metric-num" id="metric-burns">0</span>
-            <span class="metric-label">Source Burns</span>
+          <!-- KPI Metric Cards (Carbon Data Tiles) -->
+          <div class="kpi-grid">
+            <div class="kpi-card" id="kpi-burns">
+              <span class="kpi-label">Source Burns</span>
+              <div class="kpi-numbers">
+                <span class="kpi-value" id="kpi-burns-count">0</span>
+                <span class="kpi-sub" id="kpi-burns-amt">0.000000 USDC</span>
+              </div>
+            </div>
+            <div class="kpi-card" id="kpi-bridge">
+              <span class="kpi-label">Bridge Records</span>
+              <div class="kpi-numbers">
+                <span class="kpi-value" id="kpi-bridge-count">0</span>
+                <span class="kpi-sub" id="kpi-bridge-amt">0.000000 USDC</span>
+              </div>
+            </div>
+            <div class="kpi-card kpi-card--success" id="kpi-observed">
+              <span class="kpi-label">Observed on Base</span>
+              <div class="kpi-numbers">
+                <span class="kpi-value" id="kpi-observed-count">0</span>
+                <span class="kpi-sub" id="kpi-observed-amt">0.000000 USDC</span>
+              </div>
+            </div>
+            <div class="kpi-card kpi-card--warning" id="kpi-unrecorded">
+              <span class="kpi-label">Unrecorded Deficit</span>
+              <div class="kpi-numbers">
+                <span class="kpi-value" id="kpi-unrecorded-count">0</span>
+                <span class="kpi-sub" id="kpi-unrecorded-amt">0.000000 USDC</span>
+              </div>
+            </div>
           </div>
-          <div class="metric-card">
-            <span class="metric-num" id="metric-bridge">0</span>
-            <span class="metric-label">Bridge Records</span>
-          </div>
-          <div class="metric-card metric-observed">
-            <span class="metric-num" id="metric-observed">0</span>
-            <span class="metric-label">Observed on Base</span>
-          </div>
-          <div class="metric-card metric-unrecorded">
-            <span class="metric-num" id="metric-unrecorded">0</span>
-            <span class="metric-label">Unrecorded Deficit</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric-num" id="metric-pending">0</span>
-            <span class="metric-label">In-Flight / Pending</span>
-          </div>
-        </div>
+        </section>
 
-        <!-- Withdrawal Rows & Findings Table -->
-        <div class="table-section">
-          <div class="table-header">
-            <h3>Withdrawal Leg Findings</h3>
-            <span class="table-subtext">Exact gross burn, evidenced fee, and verified Base net transfer</span>
+        <!-- Carbon Data Table: Withdrawal Leg Findings -->
+        <section class="table-container" aria-label="Withdrawal leg findings">
+          <div class="carbon-table-toolbar">
+            <div class="table-toolbar__title">
+              <h3>Withdrawal Leg Findings</h3>
+              <span class="table-toolbar__subtitle">Exact gross burns, evidenced bridge fees, and verified Base net delivery</span>
+            </div>
+            <div class="table-toolbar__actions">
+              <span id="table-row-count" class="carbon-tag carbon-tag--gray">1 finding</span>
+            </div>
           </div>
-          <div class="table-responsive">
-            <table class="findings-table" aria-label="Withdrawal Leg Findings">
+
+          <div class="carbon-table-wrapper" tabindex="0" role="region" aria-label="Withdrawal leg audit table">
+            <table class="carbon-data-table" id="findings-table">
               <thead>
                 <tr>
-                  <th scope="col" style="width: 100px;">Row</th>
-                  <th scope="col">Recipient (Base)</th>
-                  <th scope="col" class="num-col">Gross Burn</th>
-                  <th scope="col" class="num-col">Evidenced Fee</th>
-                  <th scope="col" class="num-col">Evidenced Net</th>
-                  <th scope="col">Audit Verdict</th>
-                  <th scope="col" style="width: 80px;">Details</th>
+                  <th scope="col" class="th-expand" aria-label="Expand row details"></th>
+                  <th scope="col" class="th-row">Row / Leg</th>
+                  <th scope="col" class="th-recipient">Recipient (Base)</th>
+                  <th scope="col" class="th-num">Gross Burn</th>
+                  <th scope="col" class="th-num">Bridge Fee</th>
+                  <th scope="col" class="th-num">Net Delivered</th>
+                  <th scope="col" class="th-status">Audit Verdict</th>
                 </tr>
               </thead>
               <tbody id="findings-tbody">
-                <!-- Dynamically populated -->
+                <!-- Dynamically populated with Carbon expandable rows -->
               </tbody>
             </table>
           </div>
-        </div>
+        </section>
 
-        <!-- Explorer Links -->
-        <div class="explorer-strip">
-          <span class="explorer-label">External Explorers:</span>
-          <div class="explorer-links" id="explorer-links">
-            <!-- Populated via JS -->
-          </div>
-        </div>
+        <!-- Technical Provenance & Diagnostics (Progressive Disclosure) -->
+        <section class="provenance-section" aria-label="Technical provenance and diagnostics">
+          <details class="carbon-accordion-item" id="diag-accordion">
+            <summary class="carbon-accordion-header">
+              <svg class="carbon-icon carbon-accordion-chevron" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"/>
+              </svg>
+              <span class="accordion-title">Technical Provenance & Normalized Evidence Graph</span>
+              <span class="accordion-badge">Detailed Audit Trail</span>
+            </summary>
+            
+            <div class="carbon-accordion-content">
+              <!-- Meta Key-Value Details -->
+              <div class="provenance-grid">
+                <div class="provenance-item">
+                  <span class="p-label">NEAR Transaction:</span>
+                  <span class="p-val monospace" id="meta-tx">-</span>
+                </div>
+                <div class="provenance-item">
+                  <span class="p-label">Signer Account:</span>
+                  <span class="p-val monospace" id="meta-signer">-</span>
+                </div>
+                <div class="provenance-item">
+                  <span class="p-label">Execution Status:</span>
+                  <span class="p-val" id="meta-status">-</span>
+                </div>
+                <div class="provenance-item">
+                  <span class="p-label">Graph Completeness:</span>
+                  <span class="p-val" id="meta-completeness">-</span>
+                </div>
+                <div class="provenance-item">
+                  <span class="p-label">Reader Digest:</span>
+                  <span class="p-val monospace" id="meta-sha256">-</span>
+                </div>
+              </div>
 
-        <!-- Technical Evidence Accordion -->
-        <details class="evidence-accordion">
-          <summary><strong>Normalized Evidence Graph & Diagnostic Counters</strong></summary>
-          <div class="evidence-body">
-            <h4>Diagnostic Summary</h4>
-            <pre class="json-dump" id="burn-diag-dump"></pre>
-            <h4>Normalized Source Burns (NEAR ft_burn logs)</h4>
-            <pre class="json-dump" id="burns-dump"></pre>
-            <h4>Bridge Withdrawals (Chaindefuser)</h4>
-            <pre class="json-dump" id="bridge-dump"></pre>
-            <h4>Observed Transfers (Base USDC receipts)</h4>
-            <pre class="json-dump" id="dest-dump"></pre>
-          </div>
-        </details>
+              <!-- External Explorer Links -->
+              <div class="explorers-group">
+                <span class="explorers-label">External Block Explorers:</span>
+                <div class="explorers-pills" id="explorer-links">
+                  <!-- Populated via JS -->
+                </div>
+              </div>
 
-        <!-- Conservative Semantics Disclaimer -->
-        <div class="disclaimer-callout">
-          <strong>Conservative Evidence Semantics:</strong>
-          <p id="disclaimer-text">Missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records.</p>
-        </div>
-      </section>
+              <!-- Raw Normalized Logs Accordions -->
+              <div class="raw-evidence-dumps">
+                <details class="dump-subitem">
+                  <summary>Normalized Source Burns (NEAR ft_burn logs)</summary>
+                  <pre class="json-dump" id="burns-dump"></pre>
+                </details>
+                <details class="dump-subitem">
+                  <summary>Bridge Records (Chaindefuser)</summary>
+                  <pre class="json-dump" id="bridge-dump"></pre>
+                </details>
+                <details class="dump-subitem">
+                  <summary>Destination Transfers (Base USDC Receipts)</summary>
+                  <pre class="json-dump" id="dest-dump"></pre>
+                </details>
+                <details class="dump-subitem">
+                  <summary>Diagnostic Counters</summary>
+                  <pre class="json-dump" id="burn-diag-dump"></pre>
+                </details>
+              </div>
+            </div>
+          </details>
+
+          <!-- Conservative Evidence Semantics Disclaimer -->
+          <aside class="semantics-callout" role="note" aria-label="Evidence semantics qualification">
+            <div class="semantics-callout__icon" aria-hidden="true">&#9432;</div>
+            <div class="semantics-callout__text">
+              <strong>Conservative Evidence Semantics:</strong>
+              <p id="disclaimer-text">Missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH represents receipt-level provider evidence with block confirmations, not a claim of final settlement; no bridge root cause is established solely by the absence of records.</p>
+            </div>
+          </aside>
+        </section>
+
+      </div>
     </main>
 
-    <footer class="app-footer">
-      <div class="footer-inner">
-        <span>Payout Reader &bull; Standard Library Python 3.14 + Vanilla Web</span>
-        <span>Independent Multi-Leg Verification</span>
+    <!-- Carbon Shell Footer -->
+    <footer class="carbon-footer" role="contentinfo">
+      <div class="carbon-footer__inner">
+        <span class="footer-title">Payout Reconciler &bull; Cross-Chain Audit Workbench</span>
+        <span class="footer-scope">Scope: <code>base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near</code> &rarr; Base USDC (eth:8453)</span>
       </div>
     </footer>
   </div>
