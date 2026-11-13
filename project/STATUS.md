@@ -19,6 +19,7 @@ Updated 2026-11-13. Live public cloud deployment active on Railway; ready-to-sub
   - Stale results warning banner and dimmed table upon editing inputs.
   - Full CLI (`main.py --serve`, `--saved`, `--live`, `--csv`, `--json`, `--check`).
 - Fixes committed:
+  - README updated to maximize P(win) across automated AI screening (Claude Code/Codex) and human juries: added "Do X -> See Y" steps with exit codes, 3-way reconciliation architecture diagram, mainnet proof table with live explorer links, and mandatory NEAR Hackathon disclosures (Q-001 through Q-015).
   - Edge proxy / HEAD request support and `/healthz` health endpoint in server.
   - Hardened `log_message` in server against variable arity format crashes.
   - Authoritative note-based bridge/dest evidence lookup on equal-amount rows and group findings.
@@ -30,6 +31,6 @@ Updated 2026-11-13. Live public cloud deployment active on Railway; ready-to-sub
   - Validation, formatting, server API, and CLI test suites including CSV and proof tests (all PASS).
   - Live query verification on both local and Railway cloud instances.
 - Next steps (human owned):
-  - Review live cloud demo at `https://payout-reader-production.up.railway.app`.
+  - Review live cloud demo at `https://payout-reader.up.railway.app`.
   - Record 90-120s walkthrough video following the script in README.md.
   - Publish demo post on X and complete hackathon submission.
