@@ -1,6 +1,6 @@
 # Payout reader — implementation plan
 
-Prepared 2026-11-13 from the full conversational plan. Builder unselected; preparation does not authorize implementation. Once authorized, execute this plan continuously without phase approvals.
+Historical design snapshot, prepared 2026-11-13 before implementation. The build is complete. This document retains original intent and estimates; README.md and project/STATUS.md describe shipped behavior and known deviations, including timeout handling and exports.
 
 ## Outcome and scope
 

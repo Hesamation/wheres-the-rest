@@ -20,7 +20,7 @@ Built for **NEAR HACKATHON 2026**. Intended tracks: **Real-World Money** (payout
 
 1. Open **QA1: Group Deficit**. This real mainnet staging transaction contains three identical 0.010000 USDC burns to the **same Base recipient**.
 2. See **1 observed transfer and 2 unrecorded burns**. The observed transfer is 0.007600 USDC after an evidenced 0.002400 USDC fee. The reader cannot assign it to a particular source burn; it preserves the group.
-3. Expand the finding to inspect NEAR outcome/log identities, the bridge record, and the Base receipt link. Switch to **Control: 1.00 USDC** to see a fully observed payout.
+3. Inspect the expanded finding (reopen it if collapsed) for NEAR outcome/log identities, the bridge record, and the Base receipt link. Switch to **Control: 1.00 USDC** to see a fully observed payout.
 4. **Download JSON**, **Download CSV**, or **Copy Proof** exports the displayed investigation without another provider query.
 
 Saved evidence is explicitly labeled and dated. To refresh an example, select **Live Query**: an empty form is prefilled from the displayed report. Click **Reconcile** to request fresh provider observations. Existing form entries are preserved; you can also enter another supported transaction and signer. Live mode never substitutes a saved result.

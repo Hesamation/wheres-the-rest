@@ -1,7 +1,7 @@
 # Working instructions
 
-- Build the narrow product in project/PLAN.md. Read START-HERE.md and project/STATUS.md to resume; consult other files only as needed.
-- Once the human authorizes the build, carry it through implementation, checks and demo preparation. No batch approvals, repeated planning, mandatory reports or separate documentation commits.
+- The product is implemented. Read README.md for current behavior and project/STATUS.md for verification limits and next actions. project/PLAN.md is historical design intent, not a pending build instruction.
+- Carry authorized maintenance through appropriate checks. No batch approvals, repeated planning, mandatory reports or separate documentation commits.
 - Make routine implementation decisions yourself. Ask only for material scope changes, spending, public release/deployment, external messages or submission. No secrets in Git; no force-push or destruction of existing work.
 - Keep the read-only scope and conservative evidence semantics. Reuse the accepted reader; preserve its original input archive. Claim only checks actually run. Use project/ACCEPTANCE.md as the finish checklist, not a reporting process.
 - Commit meaningful progress and push to the private remote when available. Before stopping or switching agents, update project/STATUS.md with only what works, checks/failures, and what to do next. No duplicate logs or commit-hash bookkeeping; Git records history.
