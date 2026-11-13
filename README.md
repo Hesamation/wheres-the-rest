@@ -8,7 +8,7 @@ Where's the Rest? is a read-only reconciliation workbench for treasury operators
 
 Built for **NEAR HACKATHON 2026**. Intended tracks: **Real-World Money** (payout reconciliation) and **Social Money** (inspectable treasury payout evidence for Trezu/DAO workflows).
 
-**Replay a real mainnet QA discrepancy:** three identical burns to one recipient, one observed destination transfer, and two burns without matching bridge records. A separate successful payout provides the control.
+**Replay a [real mainnet QA discrepancy](https://github.com/NEAR-DevHub/trezu/issues/1924):** three identical burns to one recipient, one observed destination transfer, and two burns without matching bridge records. The public report includes reproduction steps, screenshots and transaction links. A separate successful payout provides the control.
 
 ![Saved QA1 evidence: three NEAR burns, one Base observation, two unrecorded burns](docs/workbench.jpg)
 
@@ -95,11 +95,13 @@ docker run wheres-the-rest python3 main.py --check
 
 | Case / saved capture (UTC) | NEAR transaction / signer | Saved finding |
 |---|---|---|
-| **QA1** · Nov 10, 22:26:58 | [863ZDa…](https://nearblocks.io/txns/863ZDaRijV6j5RiMXf9GaJDBN86e1j2MNevLQNhR1zRe) · `sponsor-staging.trezu.near` | Three 0.01 burns to one recipient; one 0.0076 transfer observed, two burns unrecorded. Source-burn attribution remains grouped. |
-| **QA2** · Nov 10, 22:32:14 | [CbyrTs…](https://nearblocks.io/txns/CbyrTsdExtWDbBsdUNqQC65JMBFwXEzkeaGJGmQb2QDz) · `sponsor-staging.trezu.near` | 0.19 → 0.1876 observed; a separate 0.20 burn has no matching bridge record. |
+| **[QA1 report](https://github.com/NEAR-DevHub/trezu/issues/1924)** · Nov 10, 22:26:58 | [863ZDa…](https://nearblocks.io/txns/863ZDaRijV6j5RiMXf9GaJDBN86e1j2MNevLQNhR1zRe) · `sponsor-staging.trezu.near` | Three 0.01 burns to one recipient; one 0.0076 transfer observed, two burns unrecorded. Source-burn attribution remains grouped. |
+| **[QA2 follow-up](https://github.com/NEAR-DevHub/trezu/issues/1924#issuecomment-6746057831)** · Nov 10, 22:32:14 | [CbyrTs…](https://nearblocks.io/txns/CbyrTsdExtWDbBsdUNqQC65JMBFwXEzkeaGJGmQb2QDz) · `sponsor-staging.trezu.near` | 0.19 → 0.1876 observed; a separate 0.20 burn has no matching bridge record. |
 | **Control** · Nov 11, 01:16:56 | [FD7gA9…](https://nearblocks.io/txns/FD7gA9L45Btw79YvGL49km9nwgWcDJS4QjTid9G4CZFu) · `sponsor.trezu.near` | 1.000000 − 0.002400 fee = 0.997600 USDC observed on Base. |
 
 All dates are **2026**. Destination receipts: [QA1](https://basescan.org/tx/0xcc876a99edda48c8a3d754bc3237438de0b903ad6967aebe41bbc7b624261e6e), [QA2](https://basescan.org/tx/0x6c45df6eb72f605d34a63ca4836536125c9c3cb0969a98cffa51ff34af6be708), [Control](https://basescan.org/tx/0x6f845a0325d9762b0584d01dfdf789513ac3e2f33639e3d27f9f60d6055ab21a). Saved captures retain historical observations; confirmation depth in a capture is not a current network reading. Capture provenance is in [reader/PROVENANCE.json](reader/PROVENANCE.json).
+
+The QA cases were reported on Trezu staging against mainnet. The reporter's [scope clarification](https://github.com/NEAR-DevHub/trezu/issues/1924#issuecomment-6744636005) says confidential bulk payments and Near Business were unaffected.
 
 ## How it works
 
