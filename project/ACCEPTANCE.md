@@ -5,7 +5,7 @@ Run these during the build; summarize results in STATUS when stopping. No separa
 - [x] Verify archive hash/manifest, import unchanged reader, run its suite, independent verifier, invariants and regressions plus the separate 13-case harness in a disposable copy. Historical evidence must stay unchanged.
 - [x] Adapter matches original runner verdicts/counts/completeness on saved/synthetic cases. No duplicated matching logic.
 - [x] QA1, QA2 and FD7g production control match the saved observations in PLAN. EEDi offline_control is a separate case; don't relabel it.
-- [ ] Exact six-decimal money and integer-string export; displayed report and JSON agree. Follow-up found QA1 headline counts omit group outcomes; verify row evidence associations too (notes/BEFORE-DEMO.md).
+- [ ] Exact six-decimal money and integer-string export; displayed report and JSON agree. Follow-up found QA1 headline counts omit group outcomes; verify row evidence associations too.
 - [x] Group ambiguity, one-use transfer identities, extra evidence, unsupported scope and failure/incomplete/pending/invalid/revert states remain honest.
 - [x] Saved examples work without network. Live failure stays visible; no silent saved substitution.
 - [ ] Requests validate inputs; workers isolate evidence and clean up on timeout/failure/busy requests; no secrets, paths or tracebacks leak. Timeout partial-evidence preservation remains unresolved.
