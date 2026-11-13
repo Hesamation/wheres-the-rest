@@ -1,0 +1,12 @@
+  [PASS] group_all_pending: IN_PROGRESS — bridge/destination pending
+  [PASS] group_destination_unavailable: INCONCLUSIVE — required leg unavailable or destination response malformed
+  [PASS] group_zero_matching_transfers: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)
+  [PASS] inconsistent_fee_arithmetic: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] reachable_outcome_wrapper_without_execution: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+  [PASS] receipt_transaction_hash_mismatch: INCONCLUSIVE — required leg unavailable or destination response malformed
+  [PASS] missing_child_edges_field: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)
+  [PASS] fractional_integer_fields: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] malformed_extra_bridge_record: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+  [PASS] malformed_source_burn_amount: INVALID_EVIDENCE — monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)
+
+REPRO ALL PASSED (10/10)

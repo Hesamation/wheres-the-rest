@@ -1,0 +1,62 @@
+{
+  "case": "malformed_extra_bridge_record",
+  "synthetic": true,
+  "kind": "fixture",
+  "near_tx": null,
+  "source": "drpc",
+  "source_status": "SuccessValue",
+  "final_execution_status": "fixture",
+  "rows_found": 1,
+  "bridge_records": 2,
+  "obligations_found": null,
+  "list_advisory": [],
+  "list_binding": null,
+  "summary": {
+    "counts": {
+      "OBSERVED_MATCH": 1,
+      "INVALID_RECORD": 1
+    },
+    "completeness": {
+      "complete": true,
+      "reason": "reachable graph fully resolved",
+      "action_outcomes": 1,
+      "referenced": 1,
+      "resolved": 1,
+      "data_receipts": 0,
+      "pending": false,
+      "missing": 0
+    },
+    "source_status": "SuccessValue",
+    "burn_diag": {
+      "attempts_no_burn": 0,
+      "unsupported_executor": 0,
+      "unsupported_recipient_form": 0,
+      "failed_outcome_logs": 0,
+      "outcomes_seen": 2,
+      "malformed": false,
+      "malformed_events": 0,
+      "malformed_entries": 0
+    },
+    "list_check": "not requested",
+    "bridge_malformed": true,
+    "overall": "INVALID_EVIDENCE \u2014 monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)"
+  },
+  "results": [
+    {
+      "row": 0,
+      "recipient": "0xc366efeff224ea755118b19c30202869c5a85490",
+      "amount": 10000,
+      "verdict": "OBSERVED_MATCH",
+      "note": "dest tx 0x1111111111111111111111111111111111111111111111111111111111111111 log 1 pays 7600 (= gross 10000 \u2212 fee 2400); receipt 0x1 block 100 confirmations 100 vs tip 200 \u2014 OBSERVED_MATCH, not final settlement"
+    },
+    {
+      "row": null,
+      "recipient": null,
+      "amount": null,
+      "verdict": "INVALID_RECORD",
+      "note": "bridge record unusable: bridge withdrawal entry is not an object (got NoneType) \u2014 explicit unsupported evidence, never green"
+    }
+  ],
+  "disclaimer": "missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records",
+  "generated_at": "2026-11-11T03:29:44Z"
+}

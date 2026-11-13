@@ -1,0 +1,38 @@
+== INDEPENDENT: offline_qa1 (raw near/bridge/base vs probe output) ==
+  [PASS] qa1.burns_independent: independent ft_burn+WITHDRAW_TO count = 3 (expect 3)
+  [PASS] qa1.bridge_records: independent bridge withdrawals = 1 (expect 1)
+  [PASS] qa1.bridge_gross: bridge record gross = 10000
+  [PASS] qa1.base_transfer: independent Base USDC transfers = [7600] (expect [7600])
+  [PASS] qa1.probe_rows: probe rows_found = 3
+  [PASS] qa1.group: probe group observed/unrecorded = 1/2 (expect 1/2 — matches independent counts)
+  [PASS] qa1.mismatch: probe overall = 'MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)'
+== INDEPENDENT: offline_qa2 ==
+  [PASS] qa2.burns_independent: independent burn count = 2 (expect 2)
+  [PASS] qa2.bridge_records: bridge records = 1
+  [PASS] qa2.bridge_gross: bridge record gross = 190000 (the OTHER burn, 200000, has no record)
+  [PASS] qa2.base_transfer: Base transfers = [187600] (expect [187600])
+  [PASS] qa2.probe_rows: probe rows = 2
+  [PASS] qa2.counts: probe counts = {'OBSERVED_MATCH': 1, 'NOT_RECORDED': 1} (expect 1 observed / 1 not recorded)
+== INDEPENDENT: offline_control (fastnear raw) ==
+  [PASS] control.burns_independent: independent burn count = 1 (expect 1)
+  [PASS] control.bridge_gross: bridge gross = 24950000
+  [PASS] control.base_transfer: Base transfer = [24947600] (expect [24947600] = 24950000 - 2400)
+  [PASS] control.probe_all_observed: probe overall = 'ALL_ROWS_OBSERVED (receipt-level; not final settlement)', rows = 1
+== INDEPENDENT: fee arithmetic across all three ==
+  [PASS] qa1.fee_math: 10000 - 2400 == 7600
+  [PASS] qa2.fee_math: 190000 - 2400 == 187600
+  [PASS] control.fee_math: 24950000 - 2400 == 24947600
+== INDEPENDENT: cardinality of observed vs uncovered (offline cases) ==
+  [PASS] offline_qa1.dest_identity: receipt transactionHash matches requested 0xcc876a99edda…
+  [PASS] offline_qa1.cardinality: independent observed/uncovered = 1/2; probe report = 1/2
+  [PASS] offline_qa2.dest_identity: receipt transactionHash matches requested 0x6c45df6eb72f…
+  [PASS] offline_qa2.cardinality: independent observed/uncovered = 1/1; probe report = 1/1
+  [PASS] offline_control.dest_identity: receipt transactionHash matches requested 0x192a5193445a…
+  [PASS] offline_control.cardinality: independent observed/uncovered = 1/0; probe report = 1/0
+== INDEPENDENT: transfer-multiplicity oracle consumes unique identities [v4] ==
+  [PASS] oracle.repeated_log_identity: one log copied twice, two burns -> observed/uncovered = 1/1 (expect 1/1)
+  [PASS] oracle.distinct_log_identity: two distinct logs, two burns -> observed/uncovered = 2/0 (expect 2/0)
+  [PASS] oracle.duplicate_records_idempotent: duplicate records, one burn -> observed/uncovered = 1/0 (expect 1/0)
+  [PASS] oracle.mixed_recipients_identity: mixed recipients equal gross -> observed/uncovered = 2/0 (expect 2/0)
+
+INDEPENDENT CHECK PASSED

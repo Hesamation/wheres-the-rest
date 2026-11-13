@@ -1,0 +1,440 @@
+{
+  "archive_sha256": "c92edadfc65a46627d673b3e1d265dd2861bdd4fdcdea0a7cd5e72abc8105efe",
+  "python": "3.14.9 (main, Oct 25 2026, 14:52:47) [GCC 16.2.1 20260810]",
+  "manifest": {
+    "entries": 478,
+    "present_matches": 478,
+    "present_mismatches": [],
+    "absent_references": []
+  },
+  "suite": {
+    "exit_code": 0,
+    "pass_assertions": 174,
+    "fail_assertions": 0
+  },
+  "verifier_fresh": {
+    "exit_code": 0,
+    "pass_assertions": 30,
+    "fail_assertions": 0
+  },
+  "generated_invariants": {
+    "exit_code": 0,
+    "pass_assertions": 142,
+    "fail_assertions": 0
+  },
+  "ten_regressions": {
+    "exit_code": 0,
+    "pass_assertions": 10,
+    "fail_assertions": 0
+  },
+  "independent_regression_gate": {
+    "cases": 13,
+    "failures": []
+  },
+  "counterexamples": {
+    "group_all_pending": {
+      "overall": "IN_PROGRESS \u2014 bridge/destination pending",
+      "results": [
+        {
+          "row": [
+            0,
+            1
+          ],
+          "recipient": "0xc366efeff224ea755118b19c30202869c5a85490",
+          "amount": 10000,
+          "verdict": "GROUP_FINDING",
+          "observed": 0,
+          "rows_in_group": 2,
+          "records_matched": 2,
+          "unrecorded": 0,
+          "pending": 2,
+          "unavailable": 0,
+          "invalid_dest": 0,
+          "invalid_record": 0,
+          "reverted": 0,
+          "no_transfer": 0,
+          "note": "2 indistinguishable rows; records matched 2; OBSERVED_MATCH 0; pending 2; unavailable 0; invalid_dest 0; invalid_record 0; reverted 0; no_matching_transfer 0; unrecorded 0; WHICH row is paid is not determinable \u2014 grouped, never picked arbitrarily. bridge PENDING | bridge PENDING"
+        }
+      ],
+      "completeness": {
+        "complete": true,
+        "reason": "reachable graph fully resolved",
+        "action_outcomes": 1,
+        "referenced": 1,
+        "resolved": 1,
+        "data_receipts": 0,
+        "pending": false,
+        "missing": 0
+      }
+    },
+    "group_destination_unavailable": {
+      "overall": "INCONCLUSIVE \u2014 required leg unavailable or destination response malformed",
+      "results": [
+        {
+          "row": [
+            0,
+            1
+          ],
+          "recipient": "0xc366efeff224ea755118b19c30202869c5a85490",
+          "amount": 10000,
+          "verdict": "GROUP_FINDING",
+          "observed": 0,
+          "rows_in_group": 2,
+          "records_matched": 2,
+          "unrecorded": 0,
+          "pending": 0,
+          "unavailable": 2,
+          "invalid_dest": 0,
+          "invalid_record": 0,
+          "reverted": 0,
+          "no_transfer": 0,
+          "note": "2 indistinguishable rows; records matched 2; OBSERVED_MATCH 0; pending 0; unavailable 2; invalid_dest 0; invalid_record 0; reverted 0; no_matching_transfer 0; unrecorded 0; WHICH row is paid is not determinable \u2014 grouped, never picked arbitrarily. dest unavailable (destination RPC unavailable: timeout) | dest unavailable (destination RPC unavailable: timeout)"
+        }
+      ],
+      "completeness": {
+        "complete": true,
+        "reason": "reachable graph fully resolved",
+        "action_outcomes": 1,
+        "referenced": 1,
+        "resolved": 1,
+        "data_receipts": 0,
+        "pending": false,
+        "missing": 0
+      }
+    },
+    "group_zero_matching_transfers": {
+      "overall": "MISMATCH \u2014 some intended payments lack observed delivery (deficit, revert or unmatched transfer)",
+      "results": [
+        {
+          "row": [
+            0,
+            1
+          ],
+          "recipient": "0xc366efeff224ea755118b19c30202869c5a85490",
+          "amount": 10000,
+          "verdict": "GROUP_FINDING",
+          "observed": 0,
+          "rows_in_group": 2,
+          "records_matched": 2,
+          "unrecorded": 0,
+          "pending": 0,
+          "unavailable": 0,
+          "invalid_dest": 0,
+          "invalid_record": 0,
+          "reverted": 0,
+          "no_transfer": 2,
+          "note": "2 indistinguishable rows; records matched 2; OBSERVED_MATCH 0; pending 0; unavailable 0; invalid_dest 0; invalid_record 0; reverted 0; no_matching_transfer 2; unrecorded 0; WHICH row is paid is not determinable \u2014 grouped, never picked arbitrarily. destination tx 0x3333333333333333333333333333333333333333333333333333333333333333 has no USDC transfer of 7600 to 0xc366efeff224ea755118b19c30202869c5a85490 \u2014 check manually | destination tx 0x4444444444444444444444444444444444444444444444444444444444444444 has no USDC transfer of 7600 to 0xc366efeff224ea755118b19c30202869c5a85490 \u2014 check manually"
+        }
+      ],
+      "completeness": {
+        "complete": true,
+        "reason": "reachable graph fully resolved",
+        "action_outcomes": 1,
+        "referenced": 1,
+        "resolved": 1,
+        "data_receipts": 0,
+        "pending": false,
+        "missing": 0
+      }
+    },
+    "inconsistent_fee_arithmetic": {
+      "overall": "INVALID_EVIDENCE \u2014 monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)",
+      "results": [
+        {
+          "row": 0,
+          "recipient": "0xc366efeff224ea755118b19c30202869c5a85490",
+          "amount": 10000,
+          "verdict": "INVALID_RECORD",
+          "note": "bridge record unusable (gross 10000 != fee 999 + net 7600)"
+        },
+        {
+          "row": null,
+          "recipient": "0xc366efeff224ea755118b19c30202869c5a85490",
+          "amount": 7600,
+          "verdict": "UNMATCHED_DEST_TRANSFER",
+          "note": "transfer 7600 at 0x1111111111111111111111111111111111111111111111111111111111111111:1 consumed by nothing \u2014 unmatched evidence, not automatically an overpayment"
+        }
+      ],
+      "completeness": {
+        "complete": true,
+        "reason": "reachable graph fully resolved",
+        "action_outcomes": 1,
+        "referenced": 1,
+        "resolved": 1,
+        "data_receipts": 0,
+        "pending": false,
+        "missing": 0
+      }
+    },
+    "reachable_outcome_wrapper_without_execution": {
+      "overall": "INCOMPLETE_EVIDENCE \u2014 reachable graph unresolved (never complete success)",
+      "results": [
+        {
+          "row": 0,
+          "recipient": "0xc366efeff224ea755118b19c30202869c5a85490",
+          "amount": 10000,
+          "verdict": "OBSERVED_MATCH",
+          "note": "dest tx 0x1111111111111111111111111111111111111111111111111111111111111111 log 1 pays 7600 (= gross 10000 \u2212 fee 2400); receipt 0x1 block 100 confirmations 100 vs tip 200 \u2014 OBSERVED_MATCH, not final settlement"
+        }
+      ],
+      "completeness": {
+        "complete": false,
+        "reason": "1 reachable action(s) without valid executed outcome/data resolution",
+        "action_outcomes": 1,
+        "referenced": 2,
+        "resolved": 1,
+        "data_receipts": 0,
+        "pending": false,
+        "missing": 1
+      }
+    },
+    "receipt_transaction_hash_mismatch": {
+      "overall": "INCONCLUSIVE \u2014 required leg unavailable or destination response malformed",
+      "results": [
+        {
+          "row": 0,
+          "recipient": "0xc366efeff224ea755118b19c30202869c5a85490",
+          "amount": 10000,
+          "verdict": "INCONCLUSIVE",
+          "note": "invalid: receipt transactionHash 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff != requested 0x1111111111111111111111111111111111111111111111111111111111111111"
+        }
+      ],
+      "completeness": {
+        "complete": true,
+        "reason": "reachable graph fully resolved",
+        "action_outcomes": 1,
+        "referenced": 1,
+        "resolved": 1,
+        "data_receipts": 0,
+        "pending": false,
+        "missing": 0
+      }
+    },
+    "missing_child_edges_field": {
+      "overall": "INCOMPLETE_EVIDENCE \u2014 reachable graph unresolved (never complete success)",
+      "results": [
+        {
+          "row": 0,
+          "recipient": "0xc366efeff224ea755118b19c30202869c5a85490",
+          "amount": 10000,
+          "verdict": "OBSERVED_MATCH",
+          "note": "dest tx 0x1111111111111111111111111111111111111111111111111111111111111111 log 1 pays 7600 (= gross 10000 \u2212 fee 2400); receipt 0x1 block 100 confirmations 100 vs tip 200 \u2014 OBSERVED_MATCH, not final settlement"
+        }
+      ],
+      "completeness": {
+        "complete": false,
+        "reason": "1 reachable action(s) without valid executed outcome/data resolution (1 executed outcome(s) missing required receipt_ids child-edge array)",
+        "action_outcomes": 1,
+        "referenced": 1,
+        "resolved": 0,
+        "data_receipts": 0,
+        "pending": false,
+        "missing": 1
+      }
+    },
+    "fractional_integer_fields": {
+      "overall": "INVALID_EVIDENCE \u2014 monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)",
+      "results": [
+        {
+          "row": 0,
+          "recipient": "0xc366efeff224ea755118b19c30202869c5a85490",
+          "amount": 10000,
+          "verdict": "NOT_RECORDED",
+          "note": "burned on NEAR; no bridge record with this gross amount \u2014 ambiguous, NOT proof of permanent loss"
+        },
+        {
+          "row": null,
+          "recipient": null,
+          "amount": null,
+          "verdict": "INVALID_RECORD",
+          "note": "bridge record unusable: amount=10000.75 is a float, fractional amounts unsupported; withdrawal_fee=2400.5 is a float, fractional amounts unsupported; withdraw_amount=7600.25 is a float, fractional amounts unsupported \u2014 explicit unsupported evidence, never green"
+        },
+        {
+          "row": null,
+          "recipient": "0xc366efeff224ea755118b19c30202869c5a85490",
+          "amount": 7600,
+          "verdict": "UNMATCHED_DEST_TRANSFER",
+          "note": "transfer 7600 at 0x1111111111111111111111111111111111111111111111111111111111111111:1 consumed by nothing \u2014 unmatched evidence, not automatically an overpayment"
+        }
+      ],
+      "completeness": {
+        "complete": true,
+        "reason": "reachable graph fully resolved",
+        "action_outcomes": 1,
+        "referenced": 1,
+        "resolved": 1,
+        "data_receipts": 0,
+        "pending": false,
+        "missing": 0
+      }
+    },
+    "malformed_extra_bridge_record": {
+      "overall": "INVALID_EVIDENCE \u2014 monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)",
+      "results": [
+        {
+          "row": 0,
+          "recipient": "0xc366efeff224ea755118b19c30202869c5a85490",
+          "amount": 10000,
+          "verdict": "OBSERVED_MATCH",
+          "note": "dest tx 0x1111111111111111111111111111111111111111111111111111111111111111 log 1 pays 7600 (= gross 10000 \u2212 fee 2400); receipt 0x1 block 100 confirmations 100 vs tip 200 \u2014 OBSERVED_MATCH, not final settlement"
+        },
+        {
+          "row": null,
+          "recipient": null,
+          "amount": null,
+          "verdict": "INVALID_RECORD",
+          "note": "bridge record unusable: bridge withdrawal entry is not an object (got NoneType) \u2014 explicit unsupported evidence, never green"
+        }
+      ],
+      "completeness": {
+        "complete": true,
+        "reason": "reachable graph fully resolved",
+        "action_outcomes": 1,
+        "referenced": 1,
+        "resolved": 1,
+        "data_receipts": 0,
+        "pending": false,
+        "missing": 0
+      }
+    },
+    "malformed_source_burn_amount": {
+      "overall": "INVALID_EVIDENCE \u2014 monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)",
+      "results": [
+        {
+          "row": 0,
+          "recipient": "0xc366efeff224ea755118b19c30202869c5a85490",
+          "amount": null,
+          "verdict": "INVALID_EVENT_ROW",
+          "note": "burn event unusable: amount='not-an-integer' is not a decimal integer string"
+        },
+        {
+          "row": null,
+          "recipient": null,
+          "amount": 10000,
+          "verdict": "UNMATCHED_BRIDGE_RECORD",
+          "note": "bridge record 10000 matches no burn in this tx \u2014 unmatched evidence, not a confirmed overpayment"
+        },
+        {
+          "row": null,
+          "recipient": "0xc366efeff224ea755118b19c30202869c5a85490",
+          "amount": 7600,
+          "verdict": "UNMATCHED_DEST_TRANSFER",
+          "note": "transfer 7600 at 0x1111111111111111111111111111111111111111111111111111111111111111:1 consumed by nothing \u2014 unmatched evidence, not automatically an overpayment"
+        }
+      ],
+      "completeness": {
+        "complete": true,
+        "reason": "reachable graph fully resolved",
+        "action_outcomes": 1,
+        "referenced": 1,
+        "resolved": 1,
+        "data_receipts": 0,
+        "pending": false,
+        "missing": 0
+      }
+    },
+    "malformed_additional_burn_data_array": {
+      "overall": "INVALID_EVIDENCE \u2014 monetary/accounting/record fields malformed (fractional, non-integer, non-object or gross != fee + net)",
+      "results": [
+        {
+          "row": 1,
+          "recipient": null,
+          "amount": null,
+          "verdict": "INVALID_EVENT_ROW",
+          "note": "burn event unusable: nep141 ft_burn data is not a JSON array (got str)"
+        },
+        {
+          "row": 0,
+          "recipient": "0xc366efeff224ea755118b19c30202869c5a85490",
+          "amount": 10000,
+          "verdict": "OBSERVED_MATCH",
+          "note": "dest tx 0x1111111111111111111111111111111111111111111111111111111111111111 log 1 pays 7600 (= gross 10000 \u2212 fee 2400); receipt 0x1 block 100 confirmations 100 vs tip 200 \u2014 OBSERVED_MATCH, not final settlement"
+        }
+      ],
+      "completeness": {
+        "complete": true,
+        "reason": "reachable graph fully resolved",
+        "action_outcomes": 1,
+        "referenced": 1,
+        "resolved": 1,
+        "data_receipts": 0,
+        "pending": false,
+        "missing": 0
+      }
+    },
+    "fastnear_missing_transaction_root": {
+      "overall": "INCOMPLETE_EVIDENCE \u2014 reachable graph unresolved (never complete success)",
+      "results": [
+        {
+          "row": 0,
+          "recipient": "0xc366efeff224ea755118b19c30202869c5a85490",
+          "amount": 10000,
+          "verdict": "OBSERVED_MATCH",
+          "note": "dest tx 0x000x000x000x000x000x000x000x000x000x000x000x000x000x000x000x000x000x000x000x000x000x000x000x000x000x000x000x000x000x000x000x00 log 1 pays 7600 (= gross 10000 \u2212 fee 2400); receipt 0x1 block 100 confirmations 900 vs tip 1000 \u2014 OBSERVED_MATCH, not final settlement"
+        }
+      ],
+      "completeness": {
+        "complete": false,
+        "reason": "malformed transaction root: execution_outcome (transaction root) missing",
+        "action_outcomes": 1,
+        "referenced": 0,
+        "resolved": 0,
+        "data_receipts": 0,
+        "pending": false,
+        "missing": 1
+      }
+    },
+    "malformed_source_outcome_entry": {
+      "overall": "UNSUPPORTED_SOURCE \u2014 malformed source entries (1 null/non-object outcome/receipt entries)",
+      "results": [
+        {
+          "row": 0,
+          "recipient": "0xc366efeff224ea755118b19c30202869c5a85490",
+          "amount": 10000,
+          "verdict": "OBSERVED_MATCH",
+          "note": "dest tx 0x1111111111111111111111111111111111111111111111111111111111111111 log 1 pays 7600 (= gross 10000 \u2212 fee 2400); receipt 0x1 block 100 confirmations 100 vs tip 200 \u2014 OBSERVED_MATCH, not final settlement"
+        }
+      ],
+      "completeness": {
+        "complete": true,
+        "reason": "reachable graph fully resolved",
+        "action_outcomes": 1,
+        "referenced": 1,
+        "resolved": 1,
+        "data_receipts": 0,
+        "pending": false,
+        "missing": 0
+      }
+    }
+  },
+  "suite_scenarios": [
+    "fx_g1_attempt_no_burn",
+    "fx_g1_drpc_observed",
+    "fx_g1_native_failure",
+    "fx_g1_recipient_form",
+    "fx_g1_token_mismatch",
+    "fx_g2_net_coincidence",
+    "fx_g2_wrong_chain",
+    "fx_g3_grouped_rows",
+    "fx_g3_idempotent_dup",
+    "fx_g3_permutation_rev",
+    "fx_g4_empty_graph",
+    "fx_g4_exact20_complete",
+    "fx_g4_pending_outcome",
+    "fx_g4_truncated_graph",
+    "fx_g5_dest_unavailable",
+    "fx_g5_extra_transfer",
+    "fx_g5_pending_dest",
+    "fx_g6_list_spans_txs",
+    "fx_g6_list_unavailable",
+    "fx_r_dest_token_mismatch",
+    "fx_r_equal_two_recipients",
+    "fx_r_missing_child",
+    "fx_r_qa1_logs_stripped",
+    "fx_r_zero_confirmations",
+    "offline_control",
+    "offline_qa1",
+    "offline_qa2"
+  ],
+  "verifier_limit": "Verifier consumes transfer identities in selected saved examples and synthetic cases, but is not an exhaustive independent parser/graph validator or production audit."
+}

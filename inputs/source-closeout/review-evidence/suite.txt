@@ -1,0 +1,436 @@
+== FIXTURE + OFFLINE assertions (synthetic labeled; offline = saved raw evidence) ==
+== fx_g1_attempt_no_burn (SYNTHETIC FIXTURE) ==
+source_status: SuccessValue  finality: fixture  source: drpc
+completeness: True (reachable graph fully resolved)
+burn_diag: {'attempts_no_burn': 1, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 2, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=0 bridge_records=0
+list_check: not requested
+OVERALL: NO_BURN_OBSERVED — attempted ft_withdraw present but no successful burn (not a verified withdrawal)  counts={}
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_g1_attempt_no_burn.overall: got 'NO_BURN_OBSERVED — attempted ft_withdraw present but no successful burn (not a verified withdrawal)' want prefix 'NO_BURN_OBSERVED'
+  [PASS] fx_g1_attempt_no_burn.counts: got {} want {} diff {}
+  [PASS] fx_g1_attempt_no_burn.vocab: unknown verdicts none
+== fx_g1_drpc_observed (SYNTHETIC FIXTURE) ==
+source_status: SuccessValue  finality: fixture  source: drpc
+completeness: True (reachable graph fully resolved)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 2, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=1 bridge_records=1
+list_check: not requested
+OVERALL: ALL_ROWS_OBSERVED (receipt-level; not final settlement)  counts={'OBSERVED_MATCH': 1}
+  row      0     10000 -> 0xc366efeff224ea755118b19c30202869c5a85490 : OBSERVED_MATCH — dest tx 0x1111111111111111111111111111111111111111111111111111111111111111 log 1 pays 7600 (= gross 10000 − fee 2400); receipt 0x1 block 100 confirmations 100 vs tip 200 — OBSERVED_MATCH, not final settlement
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_g1_drpc_observed.overall: got 'ALL_ROWS_OBSERVED (receipt-level; not final settlement)' want prefix 'ALL_ROWS_OBSERVED'
+  [PASS] fx_g1_drpc_observed.counts: got {'OBSERVED_MATCH': 1} want {'OBSERVED_MATCH': 1} diff {}
+  [PASS] fx_g1_drpc_observed.vocab: unknown verdicts none
+== fx_g1_native_failure (SYNTHETIC FIXTURE) ==
+source_status: Failure  finality: fixture  source: drpc
+completeness: False (malformed: receipts/receipts_outcome missing or not lists)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 1, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=0 bridge_records=0
+list_check: not requested
+OVERALL: SOURCE_FAILED — transaction execution failed  counts={}
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_g1_native_failure.overall: got 'SOURCE_FAILED — transaction execution failed' want prefix 'SOURCE_FAILED'
+  [PASS] fx_g1_native_failure.counts: got {} want {} diff {}
+  [PASS] fx_g1_native_failure.vocab: unknown verdicts none
+== fx_g1_recipient_form (SYNTHETIC FIXTURE) ==
+source_status: SuccessValue  finality: fixture  source: drpc
+completeness: True (reachable graph fully resolved)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 1, 'failed_outcome_logs': 0, 'outcomes_seen': 2, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=0 bridge_records=0
+list_check: not requested
+OVERALL: UNSUPPORTED_SCOPE — rows/records outside the supported source-token→Base-USDC scope  counts={'UNSUPPORTED_SCOPE': 1}
+  row      0     10000 -> 5WtGw1pLPfxfKwT9YdmFFMF5ob9wRXYGf6rHNfqfBo4X : UNSUPPORTED_SCOPE — recipient form 5WtGw1pLPfxfKwT9… not an EVM address; destination chain outside scope
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_g1_recipient_form.overall: got 'UNSUPPORTED_SCOPE — rows/records outside the supported source-token→Base-USDC scope' want prefix 'UNSUPPORTED_SCOPE'
+  [PASS] fx_g1_recipient_form.counts: got {'UNSUPPORTED_SCOPE': 1} want {'UNSUPPORTED_SCOPE': 1} diff {}
+  [PASS] fx_g1_recipient_form.vocab: unknown verdicts none
+== fx_g1_token_mismatch (SYNTHETIC FIXTURE) ==
+source_status: SuccessValue  finality: fixture  source: drpc
+completeness: True (reachable graph fully resolved)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 1, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 2, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=0 bridge_records=0
+list_check: not requested
+OVERALL: UNSUPPORTED_SCOPE — rows/records outside the supported source-token→Base-USDC scope  counts={'UNSUPPORTED_SCOPE': 1}
+  row      0     10000 -> 0xc366efeff224ea755118b19c30202869c5a85490 : UNSUPPORTED_SCOPE — executor token other-token.omft.near outside supported scope
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_g1_token_mismatch.overall: got 'UNSUPPORTED_SCOPE — rows/records outside the supported source-token→Base-USDC scope' want prefix 'UNSUPPORTED_SCOPE'
+  [PASS] fx_g1_token_mismatch.counts: got {'UNSUPPORTED_SCOPE': 1} want {'UNSUPPORTED_SCOPE': 1} diff {}
+  [PASS] fx_g1_token_mismatch.vocab: unknown verdicts none
+== fx_g2_net_coincidence (SYNTHETIC FIXTURE) ==
+source_status: SuccessValue  finality: fixture  source: drpc
+completeness: True (reachable graph fully resolved)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 2, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=1 bridge_records=1
+list_check: not requested
+OVERALL: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)  counts={'NOT_RECORDED': 1, 'UNMATCHED_BRIDGE_RECORD': 1, 'UNMATCHED_DEST_TRANSFER': 1}
+  row      0     10000 -> 0xc366efeff224ea755118b19c30202869c5a85490 : NOT_RECORDED — burned on NEAR; no bridge record with this gross amount — ambiguous, NOT proof of permanent loss; gross 10000, hypothetical net 0 after the fee observed elsewhere — ESTIMATE, not evidence
+  row   None     20000 -> - : UNMATCHED_BRIDGE_RECORD — bridge record 20000 matches no burn in this tx — unmatched evidence, not a confirmed overpayment
+  row   None     10000 -> 0xc366efeff224ea755118b19c30202869c5a85490 : UNMATCHED_DEST_TRANSFER — transfer 10000 at 0x2222222222222222222222222222222222222222222222222222222222222222:1 consumed by nothing — unmatched evidence, not automatically an overpayment
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_g2_net_coincidence.overall: got 'MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)' want prefix 'MISMATCH'
+  [PASS] fx_g2_net_coincidence.counts: got {'NOT_RECORDED': 1, 'UNMATCHED_BRIDGE_RECORD': 1, 'UNMATCHED_DEST_TRANSFER': 1} want {'NOT_RECORDED': 1, 'UNMATCHED_BRIDGE_RECORD': 1, 'UNMATCHED_DEST_TRANSFER': 1} diff {}
+  [PASS] fx_g2_net_coincidence.vocab: unknown verdicts none
+== fx_g2_wrong_chain (SYNTHETIC FIXTURE) ==
+source_status: SuccessValue  finality: fixture  source: drpc
+completeness: True (reachable graph fully resolved)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 2, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=1 bridge_records=1
+list_check: not requested
+OVERALL: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)  counts={'UNSUPPORTED_BRIDGE': 1, 'NOT_RECORDED': 1}
+  row   None     10000 -> - : UNSUPPORTED_BRIDGE — chain solana:101 outside supported scope
+  row      0     10000 -> 0xc366efeff224ea755118b19c30202869c5a85490 : NOT_RECORDED — burned on NEAR; no bridge record with this gross amount — ambiguous, NOT proof of permanent loss; gross 10000, hypothetical net 7600 after the fee observed elsewhere — ESTIMATE, not evidence
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_g2_wrong_chain.overall: got 'MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)' want prefix 'MISMATCH'
+  [PASS] fx_g2_wrong_chain.counts: got {'UNSUPPORTED_BRIDGE': 1, 'NOT_RECORDED': 1} want {'UNSUPPORTED_BRIDGE': 1, 'NOT_RECORDED': 1} diff {}
+  [PASS] fx_g2_wrong_chain.vocab: unknown verdicts none
+== fx_g3_grouped_rows (SYNTHETIC FIXTURE) ==
+source_status: SuccessValue  finality: fixture  source: drpc
+completeness: True (reachable graph fully resolved)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 2, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=3 bridge_records=1
+list_check: not requested
+OVERALL: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)  counts={'GROUP_FINDING': 1}
+  row [0, 1, 2]     10000 -> 0xc366efeff224ea755118b19c30202869c5a85490 : GROUP_FINDING — 3 indistinguishable rows; records matched 1; OBSERVED_MATCH 1; pending 0; unavailable 0; invalid_dest 0; invalid_record 0; reverted 0; no_matching_transfer 0; unrecorded 2; WHICH row is paid is not determinable — grouped, never picked arbitrarily. dest tx 0x3333333333333333333333333333333333333333333333333333333333333333 log 1 pays 7600 (= gross 10000 − fee 2400); receipt 0x1 block 100 confirmations 300 vs tip 400 — OBSERVED_MATCH, not final settlement
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_g3_grouped_rows.overall: got 'MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)' want prefix 'MISMATCH'
+  [PASS] fx_g3_grouped_rows.counts: got {'GROUP_FINDING': 1} want {'GROUP_FINDING': 1} diff {}
+  [PASS] fx_g3_grouped_rows.note_contains: expected 'WHICH row is paid is not determinable' in results
+  [PASS] fx_g3_grouped_rows.forbidden_row_verdicts: row-level verdicts [] must not appear (grouping required)
+  [PASS] fx_g3_grouped_rows.vocab: unknown verdicts none
+== fx_g3_idempotent_dup (SYNTHETIC FIXTURE) ==
+source_status: SuccessValue  finality: fixture  source: drpc
+completeness: True (reachable graph fully resolved)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 2, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=1 bridge_records=1
+list_check: not requested
+OVERALL: ALL_ROWS_OBSERVED (receipt-level; not final settlement)  counts={'OBSERVED_MATCH': 1}
+  row      0     10000 -> 0xc366efeff224ea755118b19c30202869c5a85490 : OBSERVED_MATCH — dest tx 0x5555555555555555555555555555555555555555555555555555555555555555 log 1 pays 7600 (= gross 10000 − fee 2400); receipt 0x1 block 100 confirmations 400 vs tip 500 — OBSERVED_MATCH, not final settlement
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_g3_idempotent_dup.overall: got 'ALL_ROWS_OBSERVED (receipt-level; not final settlement)' want prefix 'ALL_ROWS_OBSERVED'
+  [PASS] fx_g3_idempotent_dup.counts: got {'OBSERVED_MATCH': 1} want {'OBSERVED_MATCH': 1} diff {}
+  [PASS] fx_g3_idempotent_dup.vocab: unknown verdicts none
+== fx_g3_permutation_rev (SYNTHETIC FIXTURE) ==
+source_status: SuccessValue  finality: fixture  source: drpc
+completeness: True (reachable graph fully resolved)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 2, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=3 bridge_records=2
+list_check: not requested
+OVERALL: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)  counts={'GROUP_FINDING': 1}
+  row [0, 1, 2]     10000 -> 0xc366efeff224ea755118b19c30202869c5a85490 : GROUP_FINDING — 3 indistinguishable rows; records matched 2; OBSERVED_MATCH 2; pending 0; unavailable 0; invalid_dest 0; invalid_record 0; reverted 0; no_matching_transfer 0; unrecorded 1; WHICH row is paid is not determinable — grouped, never picked arbitrarily. dest tx 0x3333333333333333333333333333333333333333333333333333333333333333 log 1 pays 7600 (= gross 10000 − fee 2400); receipt 0x1 block 100 confirmations 300 vs tip 400 — OBSERVED_MATCH, not final settlement | dest tx 0x4444444444444444444444444444444444444444444444444444444444444444 log 1 pays 7600 (= gross 10000 − fee 2400); receipt 0x1 block 100 confirmations 300 vs tip 400 — OBSERVED_MATCH, not final settlement
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_g3_permutation_rev.overall: got 'MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)' want prefix 'MISMATCH'
+  [PASS] fx_g3_permutation_rev.counts: got {'GROUP_FINDING': 1} want {'GROUP_FINDING': 1} diff {}
+  [PASS] fx_g3_permutation_rev.note_contains: expected 'OBSERVED_MATCH 2' in results
+  [PASS] fx_g3_permutation_rev.vocab: unknown verdicts none
+== fx_g4_empty_graph (SYNTHETIC FIXTURE) ==
+source_status: SuccessValue  finality: fixture  source: drpc
+completeness: False (malformed: receipts/receipts_outcome missing or not lists)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 1, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=0 bridge_records=0
+list_check: not requested
+OVERALL: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)  counts={}
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_g4_empty_graph.overall: got 'INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)' want prefix 'INCOMPLETE'
+  [PASS] fx_g4_empty_graph.counts: got {} want {} diff {}
+  [PASS] fx_g4_empty_graph.vocab: unknown verdicts none
+== fx_g4_exact20_complete (SYNTHETIC FIXTURE) ==
+source_status: SuccessValue  finality: fixture  source: drpc
+completeness: True (reachable graph fully resolved)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 21, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=1 bridge_records=1
+list_check: not requested
+OVERALL: ALL_ROWS_OBSERVED (receipt-level; not final settlement)  counts={'OBSERVED_MATCH': 1}
+  row      0     10000 -> 0xc366efeff224ea755118b19c30202869c5a85490 : OBSERVED_MATCH — dest tx 0x8888888888888888888888888888888888888888888888888888888888888888 log 1 pays 7600 (= gross 10000 − fee 2400); receipt 0x1 block 100 confirmations 700 vs tip 800 — OBSERVED_MATCH, not final settlement
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_g4_exact20_complete.overall: got 'ALL_ROWS_OBSERVED (receipt-level; not final settlement)' want prefix 'ALL_ROWS_OBSERVED'
+  [PASS] fx_g4_exact20_complete.counts: got {'OBSERVED_MATCH': 1} want {'OBSERVED_MATCH': 1} diff {}
+  [PASS] fx_g4_exact20_complete.vocab: unknown verdicts none
+== fx_g4_pending_outcome (SYNTHETIC FIXTURE) ==
+source_status: SuccessValue  finality: fixture  source: drpc
+completeness: False (pending outcome in reachable graph)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 2, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=0 bridge_records=0
+list_check: not requested
+OVERALL: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)  counts={}
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_g4_pending_outcome.overall: got 'INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)' want prefix 'INCOMPLETE'
+  [PASS] fx_g4_pending_outcome.counts: got {} want {} diff {}
+  [PASS] fx_g4_pending_outcome.vocab: unknown verdicts none
+== fx_g4_truncated_graph (SYNTHETIC FIXTURE) ==
+source_status: SuccessValue  finality: fixture  source: drpc
+completeness: False (1 reachable action(s) without valid executed outcome/data resolution)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 21, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=1 bridge_records=1
+list_check: not requested
+OVERALL: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)  counts={'OBSERVED_MATCH': 1}
+  row      0     10000 -> 0xc366efeff224ea755118b19c30202869c5a85490 : OBSERVED_MATCH — dest tx 0x7777777777777777777777777777777777777777777777777777777777777777 log 1 pays 7600 (= gross 10000 − fee 2400); receipt 0x1 block 100 confirmations 600 vs tip 700 — OBSERVED_MATCH, not final settlement
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_g4_truncated_graph.overall: got 'INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)' want prefix 'INCOMPLETE'
+  [PASS] fx_g4_truncated_graph.counts: got {'OBSERVED_MATCH': 1} want {'OBSERVED_MATCH': 1} diff {}
+  [PASS] fx_g4_truncated_graph.vocab: unknown verdicts none
+== fx_g5_dest_unavailable (SYNTHETIC FIXTURE) ==
+source_status: SuccessValue  finality: fixture  source: drpc
+completeness: True (reachable graph fully resolved)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 2, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=1 bridge_records=1
+list_check: not requested
+OVERALL: INCONCLUSIVE — required leg unavailable or destination response malformed  counts={'INCONCLUSIVE': 1}
+  row      0     10000 -> 0xc366efeff224ea755118b19c30202869c5a85490 : INCONCLUSIVE — dest unavailable (destination RPC unavailable: simulated timeout)
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_g5_dest_unavailable.overall: got 'INCONCLUSIVE — required leg unavailable or destination response malformed' want prefix 'INCONCLUSIVE'
+  [PASS] fx_g5_dest_unavailable.counts: got {'INCONCLUSIVE': 1} want {'INCONCLUSIVE': 1} diff {}
+  [PASS] fx_g5_dest_unavailable.vocab: unknown verdicts none
+== fx_g5_extra_transfer (SYNTHETIC FIXTURE) ==
+source_status: SuccessValue  finality: fixture  source: drpc
+completeness: True (reachable graph fully resolved)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 2, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=1 bridge_records=1
+list_check: not requested
+OVERALL: MATCH_WITH_UNMATCHED_EVIDENCE — all burns observed plus unmatched extras (surface, do not net away)  counts={'OBSERVED_MATCH': 1, 'UNMATCHED_DEST_TRANSFER': 1}
+  row      0     10000 -> 0xc366efeff224ea755118b19c30202869c5a85490 : OBSERVED_MATCH — dest tx 0x6666666666666666666666666666666666666666666666666666666666666666 log 1 pays 7600 (= gross 10000 − fee 2400); receipt 0x1 block 100 confirmations 500 vs tip 600 — OBSERVED_MATCH, not final settlement
+  row   None      7600 -> 0xc366efeff224ea755118b19c30202869c5a85490 : UNMATCHED_DEST_TRANSFER — transfer 7600 at 0x6666666666666666666666666666666666666666666666666666666666666666:2 consumed by nothing — unmatched evidence, not automatically an overpayment
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_g5_extra_transfer.overall: got 'MATCH_WITH_UNMATCHED_EVIDENCE — all burns observed plus unmatched extras (surface, do not net away)' want prefix 'MATCH_WITH_UNMATCHED_EVIDENCE'
+  [PASS] fx_g5_extra_transfer.counts: got {'OBSERVED_MATCH': 1, 'UNMATCHED_DEST_TRANSFER': 1} want {'OBSERVED_MATCH': 1, 'UNMATCHED_DEST_TRANSFER': 1} diff {}
+  [PASS] fx_g5_extra_transfer.note_contains: expected 'not automatically an overpayment' in results
+  [PASS] fx_g5_extra_transfer.vocab: unknown verdicts none
+== fx_g5_pending_dest (SYNTHETIC FIXTURE) ==
+source_status: SuccessValue  finality: fixture  source: drpc
+completeness: True (reachable graph fully resolved)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 2, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=1 bridge_records=1
+list_check: not requested
+OVERALL: IN_PROGRESS — bridge/destination pending  counts={'PENDING': 1}
+  row      0     10000 -> 0xc366efeff224ea755118b19c30202869c5a85490 : PENDING — bridge PENDING
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_g5_pending_dest.overall: got 'IN_PROGRESS — bridge/destination pending' want prefix 'IN_PROGRESS'
+  [PASS] fx_g5_pending_dest.counts: got {'PENDING': 1} want {'PENDING': 1} diff {}
+  [PASS] fx_g5_pending_dest.vocab: unknown verdicts none
+== fx_g6_list_spans_txs (SYNTHETIC FIXTURE) ==
+source_status: SuccessValue  finality: fixture  source: drpc
+completeness: True (reachable graph fully resolved)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 2, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=3 bridge_records=3 obligations=4
+list_check: available (fixture)
+  LIST_ADVISORY: list approves 1x 5000 to 0xc366efef… but this tx shows 0 burn(s) — not observed in THIS tx (list may span transactions; not a missed obligation)
+OVERALL: ALL_ROWS_OBSERVED (receipt-level; not final settlement)  counts={'GROUP_FINDING': 1}
+  row [0, 1, 2]     10000 -> 0xc366efeff224ea755118b19c30202869c5a85490 : GROUP_FINDING — 3 indistinguishable rows; records matched 3; OBSERVED_MATCH 3; pending 0; unavailable 0; invalid_dest 0; invalid_record 0; reverted 0; no_matching_transfer 0; unrecorded 0; WHICH row is paid is not determinable — grouped, never picked arbitrarily. dest tx 0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab log 1 pays 7600 (= gross 10000 − fee 2400); receipt 0x1 block 100 confirmations 800 vs tip 900 — OBSERVED_MATCH, not final settlement | dest tx 0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaac log 1 pays 7600 (= gross 10000 − fee 2400); receipt 0x1 block 100 confirmations 800 vs tip 900 — OBSERVED_MATCH, not final settlement | dest tx 0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad log 1 pays 7600 (= gross 10000 − fee 2400); receipt 0x1 block 100 confirmations 800 vs tip 900 — OBSERVED_MATCH, not final settlement
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_g6_list_spans_txs.overall: got 'ALL_ROWS_OBSERVED (receipt-level; not final settlement)' want prefix 'ALL_ROWS_OBSERVED'
+  [PASS] fx_g6_list_spans_txs.forbidden_overall: overall 'ALL_ROWS_OBSERVED (receipt-level; not final settlement)' must not start with []
+  [PASS] fx_g6_list_spans_txs.counts: got {'GROUP_FINDING': 1} want {'GROUP_FINDING': 1} diff {}
+  [PASS] fx_g6_list_spans_txs.advisory: advisory 'list approves 1x 5000 to 0xc366efef… but this tx shows 0 burn(s) — not observed in THIS tx (list may span transactions; not a missed obligation)' must contain 'may span transactions'
+  [PASS] fx_g6_list_spans_txs.vocab: unknown verdicts none
+== fx_g6_list_unavailable (SYNTHETIC FIXTURE) ==
+source_status: SuccessValue  finality: fixture  source: drpc
+completeness: True (reachable graph fully resolved)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 2, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=1 bridge_records=1
+list_check: UNAVAILABLE (simulated RPC error)
+OVERALL: ALL_ROWS_OBSERVED (receipt-level; not final settlement)  counts={'OBSERVED_MATCH': 1}
+  row      0     10000 -> 0xc366efeff224ea755118b19c30202869c5a85490 : OBSERVED_MATCH — dest tx 0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbc log 1 pays 7600 (= gross 10000 − fee 2400); receipt 0x1 block 100 confirmations 850 vs tip 950 — OBSERVED_MATCH, not final settlement
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_g6_list_unavailable.overall: got 'ALL_ROWS_OBSERVED (receipt-level; not final settlement)' want prefix 'ALL_ROWS_OBSERVED'
+  [PASS] fx_g6_list_unavailable.counts: got {'OBSERVED_MATCH': 1} want {'OBSERVED_MATCH': 1} diff {}
+  [PASS] fx_g6_list_unavailable.list_state: list_check 'UNAVAILABLE (simulated RPC error)' must contain 'UNAVAILABLE'
+  [PASS] fx_g6_list_unavailable.vocab: unknown verdicts none
+== fx_r_dest_token_mismatch (SYNTHETIC FIXTURE) ==
+source_status: SuccessValue  finality: fixture  source: drpc
+completeness: True (reachable graph fully resolved)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 2, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=1 bridge_records=1
+list_check: not requested
+OVERALL: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)  counts={'UNVERIFIED_DEST': 1}
+  row      0     10000 -> 0xc366efeff224ea755118b19c30202869c5a85490 : UNVERIFIED_DEST — destination tx 0xdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd has no USDC transfer of 7600 to 0xc366efeff224ea755118b19c30202869c5a85490 — check manually
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_r_dest_token_mismatch.overall: got 'MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)' want prefix 'MISMATCH'
+  [PASS] fx_r_dest_token_mismatch.counts: got {'UNVERIFIED_DEST': 1} want {'UNVERIFIED_DEST': 1} diff {}
+  [PASS] fx_r_dest_token_mismatch.vocab: unknown verdicts none
+== fx_r_equal_two_recipients (SYNTHETIC FIXTURE) ==
+source_status: SuccessValue  finality: fixture  source: drpc
+completeness: True (reachable graph fully resolved)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 2, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=2 bridge_records=2
+list_check: not requested
+OVERALL: ALL_ROWS_OBSERVED (receipt-level; not final settlement)  counts={'OBSERVED_MATCH': 2}
+  row      1     10000 -> 0x1111111111111111111111111111111111111111 : OBSERVED_MATCH — dest tx 0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb log 1 pays 7600 (= gross 10000 − fee 2400); receipt 0x1 block 100 confirmations 400 vs tip 500 — OBSERVED_MATCH, not final settlement
+  row      0     10000 -> 0xc366efeff224ea755118b19c30202869c5a85490 : OBSERVED_MATCH — dest tx 0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa log 1 pays 7600 (= gross 10000 − fee 2400); receipt 0x1 block 100 confirmations 400 vs tip 500 — OBSERVED_MATCH, not final settlement
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_r_equal_two_recipients.overall: got 'ALL_ROWS_OBSERVED (receipt-level; not final settlement)' want prefix 'ALL_ROWS_OBSERVED'
+  [PASS] fx_r_equal_two_recipients.counts: got {'OBSERVED_MATCH': 2} want {'OBSERVED_MATCH': 2} diff {}
+  [PASS] fx_r_equal_two_recipients.vocab: unknown verdicts none
+== fx_r_missing_child (SYNTHETIC FIXTURE) ==
+source_status: SuccessValue  finality: fixture  source: drpc
+completeness: False (1 reachable action(s) without valid executed outcome/data resolution)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 2, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=0 bridge_records=0
+list_check: not requested
+OVERALL: INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)  counts={}
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_r_missing_child.overall: got 'INCOMPLETE_EVIDENCE — reachable graph unresolved (never complete success)' want prefix 'INCOMPLETE'
+  [PASS] fx_r_missing_child.counts: got {} want {} diff {}
+  [PASS] fx_r_missing_child.vocab: unknown verdicts none
+== fx_r_qa1_logs_stripped (offline) ==
+source_status: SuccessValue  finality: FINAL  source: drpc
+completeness: True (reachable graph fully resolved)
+burn_diag: {'attempts_no_burn': 3, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 21, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=0 bridge_records=0
+list_check: not requested
+OVERALL: NO_BURN_OBSERVED — attempted ft_withdraw present but no successful burn (not a verified withdrawal)  counts={}
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_r_qa1_logs_stripped.overall: got 'NO_BURN_OBSERVED — attempted ft_withdraw present but no successful burn (not a verified withdrawal)' want prefix 'NO_BURN_OBSERVED'
+  [PASS] fx_r_qa1_logs_stripped.counts: got {} want {} diff {}
+  [PASS] fx_r_qa1_logs_stripped.vocab: unknown verdicts none
+== fx_r_zero_confirmations (SYNTHETIC FIXTURE) ==
+source_status: SuccessValue  finality: fixture  source: drpc
+completeness: True (reachable graph fully resolved)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 2, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=1 bridge_records=1
+list_check: not requested
+OVERALL: ALL_ROWS_OBSERVED (receipt-level; not final settlement)  counts={'OBSERVED_MATCH': 1}
+  row      0     10000 -> 0xc366efeff224ea755118b19c30202869c5a85490 : OBSERVED_MATCH — dest tx 0xcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc log 1 pays 7600 (= gross 10000 − fee 2400); receipt 0x1 block 100 confirmations 0 vs tip 100 — OBSERVED_MATCH, not final settlement
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] fx_r_zero_confirmations.overall: got 'ALL_ROWS_OBSERVED (receipt-level; not final settlement)' want prefix 'ALL_ROWS_OBSERVED'
+  [PASS] fx_r_zero_confirmations.counts: got {'OBSERVED_MATCH': 1} want {'OBSERVED_MATCH': 1} diff {}
+  [PASS] fx_r_zero_confirmations.note_contains: expected 'not final settlement' in results
+  [PASS] fx_r_zero_confirmations.vocab: unknown verdicts none
+== offline_control (offline) ==
+source_status: SuccessReceiptId  finality: not_reported  source: fastnear
+completeness: True (reachable graph fully resolved)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 7, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=1 bridge_records=1
+list_check: not requested
+OVERALL: ALL_ROWS_OBSERVED (receipt-level; not final settlement)  counts={'OBSERVED_MATCH': 1}
+  row      0  24950000 -> 0x3D03cc6Fc1b8e91e4569FDD2985160b9E7AA428A : OBSERVED_MATCH — dest tx 0x192a5193445af41a4528954c77c277e4b0c5f9f000c2d18f2db68fce0215795b log 25 pays 24947600 (= gross 24950000 − fee 2400); receipt 0x1 block 51792773 confirmations None vs tip None — OBSERVED_MATCH, not final settlement
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] offline_control.overall: got 'ALL_ROWS_OBSERVED (receipt-level; not final settlement)' want prefix 'ALL_ROWS_OBSERVED'
+  [PASS] offline_control.counts: got {'OBSERVED_MATCH': 1} want {'OBSERVED_MATCH': 1} diff {}
+  [PASS] offline_control.vocab: unknown verdicts none
+== offline_qa1 (offline) ==
+source_status: SuccessValue  finality: FINAL  source: drpc
+completeness: True (reachable graph fully resolved)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 21, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=3 bridge_records=1
+list_check: not requested
+OVERALL: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)  counts={'GROUP_FINDING': 1}
+  row [0, 1, 2]     10000 -> 0xc366efeff224ea755118b19c30202869c5a85490 : GROUP_FINDING — 3 indistinguishable rows; records matched 1; OBSERVED_MATCH 1; pending 0; unavailable 0; invalid_dest 0; invalid_record 0; reverted 0; no_matching_transfer 0; unrecorded 2; WHICH row is paid is not determinable — grouped, never picked arbitrarily. dest tx 0xcc876a99edda48c8a3d754bc3237438de0b903ad6967aebe41bbc7b624261e6e log 11 pays 7600 (= gross 10000 − fee 2400); receipt 0x1 block 55233711 confirmations None vs tip None — OBSERVED_MATCH, not final settlement
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] offline_qa1.overall: got 'MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)' want prefix 'MISMATCH'
+  [PASS] offline_qa1.counts: got {'GROUP_FINDING': 1} want {'GROUP_FINDING': 1} diff {}
+  [PASS] offline_qa1.note_contains: expected 'WHICH row is paid is not determinable' in results
+  [PASS] offline_qa1.vocab: unknown verdicts none
+== offline_qa2 (offline) ==
+source_status: SuccessValue  finality: FINAL  source: drpc
+completeness: True (reachable graph fully resolved)
+burn_diag: {'attempts_no_burn': 0, 'unsupported_executor': 0, 'unsupported_recipient_form': 0, 'failed_outcome_logs': 0, 'outcomes_seen': 15, 'malformed': False, 'malformed_events': 0, 'malformed_entries': 0}
+rows(supported-scope burns)=2 bridge_records=1
+list_check: not requested
+OVERALL: MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)  counts={'OBSERVED_MATCH': 1, 'NOT_RECORDED': 1}
+  row      0    190000 -> 0xc366efeff224ea755118b19c30202869c5a85490 : OBSERVED_MATCH — dest tx 0x6c45df6eb72f605d34a63ca4836536125c9c3cb0969a98cffa51ff34af6be708 log 2 pays 187600 (= gross 190000 − fee 2400); receipt 0x1 block 55261246 confirmations None vs tip None — OBSERVED_MATCH, not final settlement
+  row      1    200000 -> 0xc366efeff224ea755118b19c30202869c5a85490 : NOT_RECORDED — burned on NEAR; no bridge record with this gross amount — ambiguous, NOT proof of permanent loss; gross 200000, hypothetical net 197600 after the fee observed elsewhere — ESTIMATE, not evidence
+NOTE: missing observations are ambiguous, not proof of permanent loss; OBSERVED_MATCH is receipt-level evidence, not final settlement; no bridge root cause is established by absence of records
+  [PASS] offline_qa2.overall: got 'MISMATCH — some intended payments lack observed delivery (deficit, revert or unmatched transfer)' want prefix 'MISMATCH'
+  [PASS] offline_qa2.counts: got {'OBSERVED_MATCH': 1, 'NOT_RECORDED': 1} want {'OBSERVED_MATCH': 1, 'NOT_RECORDED': 1} diff {}
+  [PASS] offline_qa2.vocab: unknown verdicts none
+== UNIT: normalize_status (native shapes) ==
+  [PASS] status.failure: dict Failure
+  [PASS] status.success: dict SuccessValue
+  [PASS] status.pending: dict Pending
+  [PASS] status.str: bare str
+  [PASS] status.none: None -> Unknown
+== UNIT: normalize_bridge (scope validation + idempotency) ==
+  [PASS] bridge.single: valid record accepted, no malformed flag
+  [PASS] bridge.idempotent: identical repeated record deduped once
+  [PASS] bridge.wrong_chain: wrong chain flagged
+  [PASS] bridge.wrong_token: wrong source token flagged
+== UNIT: boundary validation — monetary JSON types (no int() truncation) ==
+  [PASS] money.float: amount=10000.75 fee=2400.5 net=7600.25 -> invalid_accounting='amount=10000.75 is a float, fractional amounts unsupported; withdrawal_fee=2400.5 is a float, fractional amounts unsupported; withdraw_amount=7600.25 is a float, fractional amounts unsupported' malformed=True
+  [PASS] money.float_int_valued: amount=10000.0 fee=2400.0 net=7600.0 -> invalid_accounting='amount=10000.0 is a float, fractional amounts unsupported; withdrawal_fee=2400.0 is a float, fractional amounts unsupported; withdraw_amount=7600.0 is a float, fractional amounts unsupported' malformed=True
+  [PASS] money.bool: amount=True fee=False net=True -> invalid_accounting='amount=True is a boolean, not an integer amount; withdrawal_fee=False is a boolean, not an integer amount; withdraw_amount=True is a boolean, not an integer amount' malformed=True
+  [PASS] money.negative: amount=-10000 fee=-2400 net=-7600 -> invalid_accounting='amount=-10000 is negative; withdrawal_fee=-2400 is negative; withdraw_amount=-7600 is negative' malformed=True
+  [PASS] money.string_garbage: amount='not-an-integer' fee='2400' net='7600' -> invalid_accounting="amount='not-an-integer' is not a decimal integer string" malformed=True
+  [PASS] money.null: amount=None fee=None net=None -> invalid_accounting='amount is missing/null; withdrawal_fee is missing/null; withdraw_amount is missing/null' malformed=True
+  [PASS] money.list_type: amount=[10000] fee=2400 net=7600 -> invalid_accounting='amount has unsupported JSON type list' malformed=True
+  [PASS] money.hex_string: amount='0x2710' fee='0x960' net='0x1db0' -> invalid_accounting="amount='0x2710' is not a decimal integer string; withdrawal_fee='0x960' is not a decimal integer string; withdraw_amount='0x1db0' is not a decimal integer string" malformed=True
+  [PASS] money.mixed_valid_int_str: amount=10000 fee='2400' net='7600' -> invalid_accounting=None malformed=False
+  [PASS] money.all_str: amount='10000' fee='2400' net='7600' -> invalid_accounting=None malformed=False
+  [PASS] money.valid_ints: amount=10000 fee=2400 net=7600 -> invalid_accounting=None malformed=False
+  [PASS] money.neg_string: amount='10000' fee='-2400' net='7600' -> invalid_accounting="withdrawal_fee='-2400' is not a decimal integer string" malformed=True
+== UNIT: boundary validation — malformed entries surfaced, not skipped ==
+  [PASS] entry.null: extra NoneType entry preserved as INVALID_RECORD, records=2 malformed=True
+  [PASS] entry.string: extra str entry preserved as INVALID_RECORD, records=2 malformed=True
+  [PASS] entry.number: extra int entry preserved as INVALID_RECORD, records=2 malformed=True
+  [PASS] entry.list: extra list entry preserved as INVALID_RECORD, records=2 malformed=True
+  [PASS] entry.bool: extra bool entry preserved as INVALID_RECORD, records=2 malformed=True
+  [PASS] entry.data_not_object: withdrawal with non-object data preserved as invalid record
+  [PASS] entry.withdrawals_not_list: withdrawals not a list -> whole response malformed (None)
+== UNIT: boundary validation — burn event amounts (no crash) ==
+  [PASS] burn.string_garbage: amount='not-an-integer' -> malformed_event "amount='not-an-integer' is not a decimal integer string"
+  [PASS] burn.float: amount=10000.75 -> malformed_event 'amount=10000.75 is a float, fractional amounts unsupported'
+  [PASS] burn.bool: amount=True -> malformed_event 'amount=True is a boolean, not an integer amount'
+  [PASS] burn.negative: amount=-1 -> malformed_event 'amount=-1 is negative'
+  [PASS] burn.null: amount=None -> malformed_event 'amount is missing/null'
+  [PASS] burn.missing: amount=None -> malformed_event 'amount is missing/null'
+  [PASS] burn.valid_int: amount=10000 parsed to 10000
+  [PASS] burn.valid_str: amount='10000' parsed to 10000
+  [PASS] burn.zero: amount=0 parsed to 0
+  [PASS] burn.data_entry_not_object: non-object event data entry -> malformed_event row
+  [PASS] burn.data_not_list: non-list event data -> malformed_event row ('nep141 ft_burn data is not a JSON array (got str)'), never silent skip
+  [PASS] burn.memo_not_string: non-string memo ignored, no crash
+== UNIT: [v5] burn-event data shape policy (exact) ==
+  [PASS] policy.data_absent: supported burn data_absent -> malformed_event 'nep141 ft_burn data is missing/null'
+  [PASS] policy.data_null: supported burn data_null -> malformed_event 'nep141 ft_burn data is missing/null'
+  [PASS] policy.data_string: supported burn data_string -> malformed_event 'nep141 ft_burn data is not a JSON array (got str)'
+  [PASS] policy.data_object: supported burn data_object -> malformed_event 'nep141 ft_burn data is not a JSON array (got dict)'
+  [PASS] policy.data_valid_array: valid data array -> row amount=1
+  [PASS] policy.ft_transfer_ignored: nep141/ft_transfer is not a withdrawal burn -> ignored (no row)
+  [PASS] policy.other_standard_ignored: nep245/ft_burn is not a withdrawal burn -> ignored (no row)
+  [PASS] policy.other_event_ignored: nep141/ft_metadata is not a withdrawal burn -> ignored (no row)
+  [PASS] policy.plain_burn_not_failure: data=plain_burn without string WITHDRAW_TO memo -> no rows, not a failure
+  [PASS] policy.other_memo_not_failure: data=other_memo without string WITHDRAW_TO memo -> no rows, not a failure
+  [PASS] policy.memo_null_not_failure: data=memo_null without string WITHDRAW_TO memo -> no rows, not a failure
+  [PASS] policy.memo_number_not_failure: data=memo_number without string WITHDRAW_TO memo -> no rows, not a failure
+  [PASS] policy.out_of_scope_malformed_burn: malformed burn from unsupported executor -> UNSUPPORTED_SCOPE, not INVALID
+== UNIT: [v5] source outcome collections (null/non-object entries) ==
+  [PASS] outcome.null_entry_no_crash: null/str entry tolerated by extract_burns (rows=1, malformed_entries=1)
+  [PASS] outcome.null_entry_counted: malformed_entries=1 (expect 1)
+  [PASS] outcome.string_entry_no_crash: null/str entry tolerated by extract_burns (rows=1, malformed_entries=1)
+  [PASS] outcome.string_entry_counted: malformed_entries=1 (expect 1)
+  [PASS] outcome.number_entry_no_crash: null/str entry tolerated by extract_burns (rows=1, malformed_entries=1)
+  [PASS] outcome.number_entry_counted: malformed_entries=1 (expect 1)
+  [PASS] outcome.nested_non_object_no_crash: nested non-object outcome tolerated; valid row survives
+  [PASS] outcome.nested_non_object_incomplete: reachable wrapper without execution evidence unresolved: 1 reachable action(s) without valid executed outcome/data resolution
+  [PASS] fn_receipt.null_entry_no_crash: FastNEAR null/str entry counted: rows=1 malformed_entries=1
+  [PASS] fn_receipt.string_entry_no_crash: FastNEAR null/str entry counted: rows=1 malformed_entries=1
+  [PASS] fn_receipt.nested_non_object: non-object execution_outcome -> incomplete: 1 reachable receipt(s) unresolved (receipt + root outcomes seen, receipt unresolved)
+== UNIT: [v5] transaction-root requirement (drpc + FastNEAR) ==
+  [PASS] drpc.root_absent: malformed transaction root: transaction_outcome missing
+  [PASS] drpc.root_null: malformed transaction root: transaction_outcome missing
+  [PASS] drpc.root_non_object: malformed transaction root: transaction_outcome missing
+  [PASS] drpc.root_outcome_missing: malformed transaction root: transaction_outcome.outcome missing or not an object
+  [PASS] drpc.root_receipt_ids_missing: malformed transaction root: transaction root missing receipt_ids child-edge array
+  [PASS] drpc.root_receipt_ids_not_list: malformed transaction root: transaction root receipt_ids is not a list (got str)
+  [PASS] drpc.root_valid: reachable graph fully resolved
+  [PASS] fn.root_absent: malformed transaction root: execution_outcome (transaction root) missing
+  [PASS] fn.root_non_object: malformed transaction root: execution_outcome (transaction root) missing
+  [PASS] fn.root_outcome_non_object: malformed transaction root: execution_outcome.outcome missing or not an object (got str)
+  [PASS] fn.root_receipt_ids_missing: malformed transaction root: transaction root missing receipt_ids child-edge array
+  [PASS] fn.root_receipt_ids_not_list: malformed transaction root: transaction root receipt_ids is not a list (got str)
+  [PASS] fn.root_valid: reachable graph fully resolved
+== UNIT: matcher gross-only + order independence ==
+  [PASS] matcher.order_independent: forward {'GROUP_FINDING': 1} == reversed {'GROUP_FINDING': 1}
+  [PASS] matcher.group_counts: group observed/unrecorded = 2/1 (2/1 expected)
+  [PASS] matcher.no_arbitrary_pick: no row-level picks for indistinguishable rows
+  [PASS] matcher.gross_only: gross 10000 does not match record gross 20000 even if net equals 10000
+== UNIT: distinct equal-amount bridge records (identity must survive) ==
+  [PASS] bridge.distinct_destinations: same source tx + amount, distinct destination tx -> 2 records (expect 2)
+  [PASS] bridge.dup_is_idempotent: exact repeat deduped to 1
+== UNIT: equal-amount two recipients, both record orders ==
+  [PASS] matcher.two_recipients_orders: forward {'OBSERVED_MATCH': 2} reversed {'OBSERVED_MATCH': 2} — both orders observe both (2/2)
+== UNIT: traversal/completeness (derived, no injected flags) ==
+  (graph builders exercised via fixtures fx_g4_*)
+== UNIT: parser edge cases via fixtures fx_g1_* ==
+  (attempt-vs-burn, native Failure, token mismatch exercised as cases)
+
+ALL PASSED
