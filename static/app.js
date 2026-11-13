@@ -12,7 +12,7 @@ let isInputsDirty = false;
 document.addEventListener("DOMContentLoaded", () => {
   initModeTabs();
   initLiveForm();
-  initDownloadButton();
+  initExportButtons();
   initStaleControls();
   initKeyboardNavigation();
   loadSavedExamplesAndPreloadQA1();
@@ -58,7 +58,7 @@ function initModeTabs() {
   });
 }
 
-// 2. Load Saved Examples & Preload QA1
+// 2. Load Saved Examples & Preload QA1 (with URL Deep-Linking)
 async function loadSavedExamplesAndPreloadQA1() {
   try {
     const res = await fetch("/api/examples");
@@ -66,11 +66,37 @@ async function loadSavedExamplesAndPreloadQA1() {
     savedExamplesCache = await res.json();
     renderExamplePills(savedExamplesCache);
 
-    // Preload QA1 immediately on first load
-    await runReconciliation({ mode: "saved", exampleId: "qa1" });
+    // Deep-linking via query parameters: ?example=qa1 or ?tx=...&signer=...
+    const urlParams = new URLSearchParams(window.location.search);
+    const exampleParam = urlParams.get("example");
+    const txParam = urlParams.get("tx");
+    const signerParam = urlParams.get("signer");
+
+    if (exampleParam && savedExamplesCache.some((ex) => ex.id === exampleParam)) {
+      activeExampleId = exampleParam;
+      highlightActivePill(activeExampleId);
+      await runReconciliation({ mode: "saved", exampleId: exampleParam });
+    } else if (txParam && signerParam) {
+      const tabLive = document.getElementById("tab-live");
+      if (tabLive) tabLive.click();
+      document.getElementById("live-tx").value = txParam;
+      document.getElementById("live-signer").value = signerParam;
+      await runReconciliation({ mode: "live", txHash: txParam, signerId: signerParam });
+    } else {
+      // Preload QA1 immediately on first load
+      await runReconciliation({ mode: "saved", exampleId: "qa1" });
+    }
   } catch (err) {
     showError(`Failed to load saved examples: ${err.message}`);
   }
+}
+
+function highlightActivePill(exampleId) {
+  document.querySelectorAll(".case-pill").forEach((p) => {
+    const isActive = p.dataset.exampleId === exampleId;
+    p.classList.toggle("active", isActive);
+    p.setAttribute("aria-checked", isActive ? "true" : "false");
+  });
 }
 
 function renderExamplePills(examples) {
@@ -96,11 +122,7 @@ function renderExamplePills(examples) {
     btn.addEventListener("click", () => {
       if (activeExampleId === ex.id && currentReport?.request?.exampleId === ex.id) return;
       activeExampleId = ex.id;
-      document.querySelectorAll(".case-pill").forEach((p) => {
-        const isActive = p.dataset.exampleId === ex.id;
-        p.classList.toggle("active", isActive);
-        p.setAttribute("aria-checked", isActive ? "true" : "false");
-      });
+      highlightActivePill(ex.id);
       runReconciliation({ mode: "saved", exampleId: ex.id });
     });
 
@@ -200,24 +222,163 @@ function hideStaleBanner() {
   body.classList.remove("stale");
 }
 
-// 4. Download JSON Report
-function initDownloadButton() {
-  const btn = document.getElementById("btn-download-json");
-  btn.addEventListener("click", () => {
-    if (!currentReport) return;
-    const jsonStr = JSON.stringify(currentReport, null, 2);
-    const blob = new Blob([jsonStr], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    const mode = currentReport.request?.mode || "report";
-    const tx = (currentReport.request?.txHash || "tx").slice(0, 10);
-    a.href = url;
-    a.download = `payout-audit-${mode}-${tx}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  });
+// 4. Export Buttons: JSON, CSV, Copy Proof
+function initExportButtons() {
+  // 4a. Download JSON Report
+  const jsonBtn = document.getElementById("btn-download-json");
+  if (jsonBtn) {
+    jsonBtn.addEventListener("click", () => {
+      if (!currentReport) return;
+      const jsonStr = JSON.stringify(currentReport, null, 2);
+      downloadBlob(jsonStr, "application/json", `payout-audit-${getReportFileSlug()}.json`);
+    });
+  }
+
+  // 4b. Download CSV Report
+  const csvBtn = document.getElementById("btn-download-csv");
+  if (csvBtn) {
+    csvBtn.addEventListener("click", () => {
+      if (!currentReport) return;
+      const csvStr = generateCsvReport(currentReport);
+      downloadBlob(csvStr, "text/csv;charset=utf-8;", `payout-audit-${getReportFileSlug()}.csv`);
+    });
+  }
+
+  // 4c. Copy Markdown Audit Proof
+  const copyBtn = document.getElementById("btn-copy-proof");
+  const copyLabel = document.getElementById("copy-proof-label");
+  if (copyBtn) {
+    copyBtn.addEventListener("click", async () => {
+      if (!currentReport) return;
+      const markdownProof = generateMarkdownProof(currentReport);
+      try {
+        await navigator.clipboard.writeText(markdownProof);
+        if (copyLabel) copyLabel.textContent = "✓ Copied!";
+        setTimeout(() => {
+          if (copyLabel) copyLabel.textContent = "Copy Proof";
+        }, 2500);
+      } catch (err) {
+        console.error("Clipboard copy failed", err);
+      }
+    });
+  }
+}
+
+function getReportFileSlug() {
+  const mode = currentReport?.request?.mode || "report";
+  const ex = currentReport?.request?.exampleId;
+  const tx = (currentReport?.request?.txHash || "tx").slice(0, 10);
+  return ex ? `${mode}-${ex}` : `${mode}-${tx}`;
+}
+
+function downloadBlob(content, mimeType, filename) {
+  const blob = new Blob([content], { type: mimeType });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function generateCsvReport(envelope) {
+  const headers = [
+    "row_indices",
+    "row_type",
+    "recipient",
+    "gross_usdc",
+    "fee_usdc",
+    "net_usdc",
+    "verdict",
+    "near_tx",
+    "base_tx",
+    "base_block",
+    "note",
+  ];
+  const lines = [headers.join(",")];
+  const reqTx = envelope.request?.txHash || "";
+
+  for (const r of envelope.rows || []) {
+    const rowIndices = (r.rowIndices || []).join(";");
+    const rowType = r.kind || "";
+    const recipient = r.recipient || "";
+    const amts = r.amounts || {};
+    const gross = amts.grossFormatted || "";
+    const fee = amts.feeFormatted || "";
+    const net = amts.netFormatted || "";
+    const verdict = r.verdict || "";
+    const ev = r.evidence || {};
+    const destTx = ev.destTransfer?.transferTxHash || ev.bridgeRecord?.transferTxHash || "";
+    const destBlock = ev.destTransfer?.block || "";
+    const note = (r.note || "").replace(/"/g, '""');
+
+    const row = [
+      `"${rowIndices}"`,
+      `"${rowType}"`,
+      `"${recipient}"`,
+      gross,
+      fee,
+      net,
+      `"${verdict}"`,
+      `"${reqTx}"`,
+      `"${destTx}"`,
+      destBlock,
+      `"${note}"`,
+    ];
+    lines.push(row.join(","));
+  }
+  return lines.join("\r\n");
+}
+
+function generateMarkdownProof(envelope) {
+  const req = envelope.request || {};
+  const summary = envelope.summary || {};
+  const prov = envelope.provenance || {};
+  const rows = envelope.rows || [];
+
+  const txHash = req.txHash || "-";
+  const signer = req.signerId || "-";
+  const overall = summary.overall || "UNKNOWN";
+  const overallCode = summary.overallCode || "UNKNOWN";
+  const captured = prov.capturedAt || "-";
+  const shaRaw = prov.readerSha256 || "";
+  const readerSha = shaRaw ? `${shaRaw.slice(0, 16)}...` : "-";
+
+  const lines = [
+    "### NEAR USDC Cross-Chain Payout Audit Proof",
+    `- **Transaction**: \`${txHash}\``,
+    `- **Signer**: \`${signer}\``,
+    `- **Audit Status**: **${overallCode}** (${overall})`,
+    "- **Route**: `base-0x8335...omft.near` → Base USDC (`eth:8453`)",
+    `- **Evidence Timestamp**: ${captured}`,
+    `- **Auditor**: Payout Reader (SHA-256 \`${readerSha}\`)`,
+    "",
+    "| Row(s) | Recipient | Gross (USDC) | Fee (USDC) | Net (USDC) | Verdict | Base Tx |",
+    "|---|---|---|---|---|---|---|",
+  ];
+
+  for (const r of rows) {
+    const indices = (r.rowIndices || []).join(",");
+    let recip = r.recipient || "-";
+    if (recip.length > 12) {
+      recip = `\`${recip.slice(0, 6)}...${recip.slice(-4)}\``;
+    }
+    const amts = r.amounts || {};
+    const gross = amts.grossFormatted || "-";
+    const fee = amts.feeFormatted || "-";
+    const net = amts.netFormatted || "-";
+    const verdict = r.verdict || "-";
+    const ev = r.evidence || {};
+    const destTx = ev.destTransfer?.transferTxHash || ev.bridgeRecord?.transferTxHash;
+    const destLink = destTx ? `[\`${destTx.slice(0, 8)}...\`](https://basescan.org/tx/${destTx})` : "-";
+    lines.push(`| ${indices} | ${recip} | ${gross} | ${fee} | ${net} | ${verdict} | ${destLink} |`);
+  }
+
+  lines.push("");
+  lines.push("> **Conservative Evidence Disclaimer**: Missing observations are ambiguous, not proof of permanent loss. OBSERVED_MATCH represents receipt-level provider evidence with block confirmations, not final settlement.");
+  return lines.join("\n");
 }
 
 // 5. Run Reconciliation API
@@ -240,6 +401,18 @@ async function runReconciliation(payload) {
 
     currentReport = data;
     isInputsDirty = false;
+
+    // Sync URL query params with current reconciliation
+    if (payload.mode === "saved" && payload.exampleId) {
+      history.replaceState(null, "", `?example=${encodeURIComponent(payload.exampleId)}`);
+    } else if (payload.mode === "live" && payload.txHash && payload.signerId) {
+      history.replaceState(
+        null,
+        "",
+        `?tx=${encodeURIComponent(payload.txHash)}&signer=${encodeURIComponent(payload.signerId)}`
+      );
+    }
+
     renderReport(data);
   } catch (err) {
     showError(err.message);

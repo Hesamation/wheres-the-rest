@@ -33,6 +33,19 @@ def test_cli_saved_json():
         assert len(data["rows"]) >= 1
 
 
+def test_cli_saved_csv():
+    res = subprocess.run(
+        [sys.executable, "main.py", "--saved", "prod_control", "--csv"],
+        cwd=str(REPO_ROOT),
+        capture_output=True,
+        text=True,
+    )
+    assert res.returncode == 0
+    assert "row_indices,row_type,recipient,gross_usdc" in res.stdout
+    assert "OBSERVED_MATCH" in res.stdout
+    assert "0.997600" in res.stdout
+
+
 def test_cli_saved_human():
     res = subprocess.run(
         [sys.executable, "main.py", "--saved", "prod_control"],
@@ -71,6 +84,7 @@ def test_cli_validation_errors():
 if __name__ == "__main__":
     test_cli_help()
     test_cli_saved_json()
+    test_cli_saved_csv()
     test_cli_saved_human()
     test_cli_validation_errors()
     print("test_cli PASSED")

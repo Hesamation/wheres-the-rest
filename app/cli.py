@@ -19,6 +19,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from app.adapter import SAVED_EXAMPLES_META  # noqa: E402
+from app.formatting import report_to_csv  # noqa: E402
 from app.runner import run_worker  # noqa: E402
 from app.server import run_server  # noqa: E402
 from app.validation import is_valid_near_account_id, is_valid_near_tx_hash  # noqa: E402
@@ -130,6 +131,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--live", dest="live_tx", help="NEAR transaction hash for live reconciliation")
     parser.add_argument("--signer", dest="live_signer", help="NEAR signer account ID (required with --live)")
     parser.add_argument("--json", action="store_true", help="Output raw JSON envelope instead of formatted text")
+    parser.add_argument("--csv", action="store_true", help="Output reconciliation rows as CSV for accounting/spreadsheets")
     parser.add_argument("--check", action="store_true", help="Run full test suite and verifier checks offline")
 
     args = parser.parse_args(argv)
@@ -145,6 +147,8 @@ def main(argv: list[str] | None = None) -> int:
         envelope = run_worker(mode="saved", example_id=args.saved)
         if args.json:
             print(json.dumps(envelope, indent=2))
+        elif args.csv:
+            sys.stdout.write(report_to_csv(envelope))
         else:
             print_human_report(envelope)
         return 0
@@ -164,6 +168,8 @@ def main(argv: list[str] | None = None) -> int:
         envelope = run_worker(mode="live", tx_hash=args.live_tx, signer_id=args.live_signer)
         if args.json:
             print(json.dumps(envelope, indent=2))
+        elif args.csv:
+            sys.stdout.write(report_to_csv(envelope))
         else:
             print_human_report(envelope)
         return 0
