@@ -551,19 +551,19 @@ function renderReport(report) {
     outcomeCard.classList.add("verdict-all-observed");
     outcomeTag.className = "carbon-tag carbon-tag--green";
     outcomeTag.textContent = "ALL OBSERVED";
-    outcomeTitle.textContent = "All Payments Observed on Base (Receipt-Level)";
-    outcomeDesc.textContent = "Every intended token burn has a completed bridge withdrawal record and a verified Base USDC transfer receipt. Receipt-level provider evidence confirmed.";
+    outcomeTitle.textContent = "All Supported Withdrawals Observed on Base (Receipt-Level)";
+    outcomeDesc.textContent = "Each supported burn has a completed bridge record and a matching Base USDC transfer log. Expand the evidence to trace gross, fee and net amounts across all three legs.";
   } else if (overallCode === "MISMATCH") {
     outcomeCard.classList.add("verdict-mismatch");
     outcomeTag.className = "carbon-tag carbon-tag--red";
     outcomeTag.textContent = "DELIVERY MISMATCH";
 
     if (req.exampleId === "qa1") {
-      outcomeTitle.textContent = "3 Intended Payments — 1 Observed on Base, 2 Unrecorded";
-      outcomeDesc.textContent = "Three identical 0.010000 USDC burns. One payment was delivered on Base (0.007600 USDC net after 0.002400 USDC fee). Two burns remain unrecorded on the bridge. All three burns name the same recipient. Which source burn corresponds to the observed transfer is ambiguous.";
+      outcomeTitle.textContent = "3 Source Burns — 1 Observed on Base, 2 Unrecorded";
+      outcomeDesc.textContent = "Three identical 0.010000 USDC burns to the same recipient; one observed transfer of 0.007600 USDC after a 0.002400 USDC fee. Two burns have no matching bridge record in this capture. Assigning the observed transfer to a particular burn would be a guess, so the finding stays grouped.";
     } else if (req.exampleId === "qa2") {
-      outcomeTitle.textContent = "2 Intended Payments — 1 Observed on Base, 1 Unrecorded";
-      outcomeDesc.textContent = "0.190000 USDC burn verified delivered on Base (0.187600 USDC net after 0.002400 USDC fee). 0.200000 USDC burn lacks an observed bridge withdrawal record.";
+      outcomeTitle.textContent = "2 Source Burns — 1 Observed on Base, 1 Unrecorded";
+      outcomeDesc.textContent = "One transaction, two different findings: the 0.190000 USDC burn has a matching 0.187600 USDC Base transfer after a 0.002400 USDC fee; the separate 0.200000 USDC burn has no matching bridge record in this capture. Source success alone does not distinguish them.";
     } else {
       outcomeTitle.textContent = "Delivery Mismatch — Inspect the Findings";
       outcomeDesc.textContent = summary.overall || `${trueObservedCount} observed on Base, ${trueUnrecordedCount} unrecorded on bridge. Inspect each finding.`;

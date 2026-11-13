@@ -1,6 +1,6 @@
 # Status
 
-Updated 2026-11-13. Final-gate corrections merged into `main` and pushed to the private remote. No pull request was opened. README release instructions and recording script removed; documentation diff checked. Railway rollout verification is pending.
+Updated 2026-11-13. README now leads with the mainnet QA example and concrete matching strengths; app purpose and saved-case explanations clarified. Frontend regressions pass; all three saved examples checked in the local browser; diff whitespace clean. Railway rollout verification is pending.
 
 - Works: read-only NEAR → Base USDC reconciliation, three dated saved examples, live provider queries, expandable evidence, exact amounts, JSON/CSV/Markdown exports. Preserved reader and archive digests verified unchanged.
 - Corrected: group exports now retain/sum every observed transfer and include all receipt links (2/3-match fixtures previously exported only the first); destination evidence uses tx + log identity; UI totals use BigInt and source/bridge evidence; live CLI JSON/CSV stdout is clean; failed checks no longer print a PASSED total; negative body lengths and static-directory prefix traversal rejected. Clarified same-recipient burn ambiguity, stale-report behavior, table keyboard semantics, address wrapping, README claims.

@@ -2,11 +2,13 @@
 
 **NEAR says the payout executed. Did the USDC arrive on Base?**
 
-Payout Reader is a read-only reconciliation workbench for treasury operators. Enter a NEAR transaction and signer; inspect the source burns, matching Chaindefuser bridge records, and Base USDC transfer receipts together. Export the same findings as JSON, CSV, or Markdown.
+Payout Reader is a read-only reconciliation workbench for treasury operators. **Trace supported withdrawals from executed NEAR burns through bridge records to Base USDC transfer logs.** Account for observed fees, see unresolved gaps, and inspect or export the evidence behind each finding as JSON, CSV, or Markdown.
 
 [Open the hosted demo](https://payout-reader.up.railway.app) · [Try the grouped deficit](https://payout-reader.up.railway.app/?example=qa1) · [Try the successful control](https://payout-reader.up.railway.app/?example=prod_control)
 
 Built for **NEAR HACKATHON 2026**. Intended tracks: **Real-World Money** (payout reconciliation) and **Social Money** (inspectable treasury payout evidence for Trezu/DAO workflows).
+
+**Replay a real mainnet QA discrepancy:** three identical burns to one recipient, one observed destination transfer, and two burns without matching bridge records. A separate successful payout provides the control.
 
 ![Saved QA1 evidence: three NEAR burns, one Base observation, two unrecorded burns](docs/workbench.jpg)
 
@@ -21,11 +23,15 @@ Saved evidence is explicitly labeled and dated. To refresh an example, select **
 
 ## Why this exists
 
-A source-chain execution result answers a different question from destination delivery. An operator otherwise has to inspect NEAR receipt graphs, query a bridge, account for fees, and find the matching USDC receipt on Base. Equal burns and reusable destination receipts make naive one-to-one matching unsafe.
+A treasury operator checking a cross-chain payout needs to connect several observations: what executed on NEAR, what the bridge recorded, and what USDC transfer appeared on Base. Source success alone does not answer that whole question. Payout Reader brings those observations into one report, with three matching rules that matter in practice:
 
-This prototype joins those observations while retaining gaps, group ambiguity, extra evidence, and provider failures. It does not send payments or recover funds. The mainnet staging cases demonstrate reconciliation behavior; they are not evidence of unpaid customer payroll, a bridge defect, user adoption, or permanent loss.
+- **Follow executed withdrawals.** Read the NEAR receipt graph and executed `ft_burn` logs, then compare source gross amounts, bridge fees and net amounts, and destination USDC transfer logs. A submitted action or completed bridge record alone is not enough for an observed match.
+- **Count each destination transfer once.** Match by transaction and log identity so repeated evidence cannot satisfy multiple burns. Keep indistinguishable burns grouped when the evidence cannot identify which individual burn matches an observed transfer.
+- **Keep incomplete evidence visible.** Missing records, pending execution, provider failures and invalid evidence retain distinct findings rather than becoming an all-observed result.
 
-**NEAR's role is concrete:** the source is executed `ft_burn` evidence from the supported bridged-USDC OMFT contract on NEAR. The application follows that route through Chaindefuser to Base. It does not claim a 1Click integration, agent runtime, new smart contract, or support for every NEAR Intents route.
+**Inspect and reproduce the investigation:** expand the source, bridge and destination evidence; follow receipt links; export the displayed findings; or replay dated captures offline. Regression cases exercise partial groups, repeated observations, distinct logs in one destination transaction, incomplete receipt graphs and invalid fee accounting ([matching checks](reader/run_invariants.py)).
+
+**NEAR's role is concrete:** executed `ft_burn` evidence from the supported bridged-USDC OMFT contract is the starting point for tracing the withdrawal through Chaindefuser to Base. The exact supported route and evidence limits are below.
 
 ## Run it locally
 
@@ -40,7 +46,7 @@ python3 main.py --serve
 
 Expected: checks exit 0 and print `ALL CHECKS PASSED SUCCESSFULLY`. The server prints `Payout Reader server running at http://127.0.0.1:8765/`. Open that address; QA1 loads automatically.
 
-The offline suite currently runs **359 reader checks and 19 application tests (378 total)**. It covers reader regressions/invariants, parity across all 27 fixtures, grouped monetary totals, input validation, API boundaries, and CLI output. It requires no provider access. Test counts are checks, not a guarantee of production readiness.
+The offline suite currently runs **359 reader checks and 19 application tests (378 total)**. It covers reader regressions/invariants, parity across all 27 fixtures, grouped monetary totals, input validation, API boundaries, and CLI output. It requires no provider access.
 
 Optional frontend controller regressions, for contributors with Node 22+: `node tests/test_frontend.js`. This checks all fixture render paths, large exact totals, grouped observations, and browser/CLI CSV data parity; Node is not required to run the app or the Python suite.
 
@@ -125,7 +131,7 @@ The standalone application was implemented on **November 13, 2026**. Its reader 
 - Original input archive: `inputs/source-closeout/payout-source-closeout-v5-20261111.tar.gz`, SHA-256 `c92edadfc65a46627d673b3e1d265dd2861bdd4fdcdea0a7cd5e72abc8105efe`.
 - Preserved engine: `reader/payout_probe.py`, SHA-256 `0ac8f7364292f5e9268bbcc465f433f9ac2ff48c7aeb9d2facfc0f24ce99f4a2`.
 - Application work: stdlib HTTP API, worker isolation, adapter, CLI, vanilla HTML/CSS/JavaScript workbench, exports, tests, Docker and hosting configuration. No third-party runtime libraries or frontend templates. Styling follows IBM Carbon design tokens; it does not use the Carbon component library.
-- AI coding agents assisted implementation and review. The repository includes reproducible checks; this is not a claim that every behavior has been human-verified.
+- AI coding agents assisted implementation and review.
 - Single project entry; no second project is being submitted by this author/team. [MIT license](LICENSE).
 
 Verify the preserved engine independently:
