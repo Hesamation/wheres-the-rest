@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -123,10 +124,13 @@ def run_checks() -> int:
 
 
 def main(argv: list[str] | None = None) -> int:
+    default_host = os.environ.get("HOST", "127.0.0.1")
+    default_port = int(os.environ.get("PORT", "8765"))
+
     parser = argparse.ArgumentParser(description="Payout Reader — NEAR USDC cross-chain payout audit tool")
     parser.add_argument("--serve", action="store_true", help="Start local web server")
-    parser.add_argument("--host", default="127.0.0.1", help="Server host (default: 127.0.0.1)")
-    parser.add_argument("--port", type=int, default=8765, help="Server port (default: 8765)")
+    parser.add_argument("--host", default=default_host, help=f"Server host (default: {default_host})")
+    parser.add_argument("--port", type=int, default=default_port, help=f"Server port (default: {default_port})")
     parser.add_argument("--saved", choices=list(SAVED_EXAMPLES_META.keys()), help="Run reconciliation on a saved example")
     parser.add_argument("--live", dest="live_tx", help="NEAR transaction hash for live reconciliation")
     parser.add_argument("--signer", dest="live_signer", help="NEAR signer account ID (required with --live)")
