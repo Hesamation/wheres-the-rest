@@ -53,6 +53,15 @@ function initModeTabs() {
     livePanel.style.display = "block";
     clearError();
 
+    // Make the displayed capture easy to refresh without overwriting user input.
+    const txInput = document.getElementById("live-tx");
+    const signerInput = document.getElementById("live-signer");
+    if (currentReport?.request?.mode === "saved" &&
+        !txInput.value.trim() && !signerInput.value.trim()) {
+      txInput.value = currentReport.request.txHash || "";
+      signerInput.value = currentReport.request.signerId || "";
+    }
+
     // Check if displayed report is stale
     checkStaleStatus();
   });

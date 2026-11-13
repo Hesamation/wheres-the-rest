@@ -2,7 +2,7 @@
 
 **NEAR says the payout executed. Did the USDC arrive on Base?**
 
-Where's the Rest? is a read-only reconciliation workbench for treasury operators. **Trace supported withdrawals from executed NEAR burns through bridge records to Base USDC transfer logs.** Account for observed fees, see unresolved gaps, and inspect or export the evidence behind each finding as JSON, CSV, or Markdown.
+Where's the Rest? is a **read-only investigation tool for NEAR → Base USDC payouts**. Trace supported withdrawals from executed NEAR burns through bridge records to Base USDC transfer logs. Account for observed fees, see unresolved gaps, and inspect or export the evidence behind each finding as JSON, CSV, or Markdown. Use it to investigate a payout discrepancy, check a completed withdrawal, or share the supporting evidence with someone reviewing the payment.
 
 [Open the hosted demo](https://payout-reader.up.railway.app) · [Try the grouped deficit](https://payout-reader.up.railway.app/?example=qa1) · [Try the successful control](https://payout-reader.up.railway.app/?example=prod_control)
 
@@ -19,11 +19,11 @@ Built for **NEAR HACKATHON 2026**. Intended tracks: **Real-World Money** (payout
 3. Expand the finding to inspect NEAR outcome/log identities, the bridge record, and the Base receipt link. Switch to **Control: 1.00 USDC** to see a fully observed payout.
 4. **Download JSON**, **Download CSV**, or **Copy Proof** exports the displayed investigation without another provider query.
 
-Saved evidence is explicitly labeled and dated. To refresh an example, select **Live Query** and enter its transaction and signer from the table below. Live mode queries providers; it never substitutes a saved result.
+Saved evidence is explicitly labeled and dated. To refresh an example, select **Live Query**: an empty form is prefilled from the displayed report. Click **Reconcile** to request fresh provider observations. Existing form entries are preserved; you can also enter another supported transaction and signer. Live mode never substitutes a saved result.
 
 ## Why this exists
 
-A treasury operator checking a cross-chain payout needs to connect several observations: what executed on NEAR, what the bridge recorded, and what USDC transfer appeared on Base. Source success alone does not answer that whole question. Where's the Rest? brings those observations into one report, with three matching rules that matter in practice:
+Checking a cross-chain payout means connecting several observations: what executed on NEAR, what the bridge recorded, and what USDC transfer appeared on Base. Source success alone does not answer that whole question. Where's the Rest? brings those observations into one report, with three matching rules that matter in practice:
 
 - **Follow executed withdrawals.** Read the NEAR receipt graph and executed `ft_burn` logs, then compare source gross amounts, bridge fees and net amounts, and destination USDC transfer logs. A submitted action or completed bridge record alone is not enough for an observed match.
 - **Count each destination transfer once.** Match by transaction and log identity so repeated evidence cannot satisfy multiple burns. Keep indistinguishable burns grouped when the evidence cannot identify which individual burn matches an observed transfer.
@@ -32,6 +32,12 @@ A treasury operator checking a cross-chain payout needs to connect several obser
 **Inspect and reproduce the investigation:** expand the source, bridge and destination evidence; follow receipt links; export the displayed findings; or replay dated captures offline. Regression cases exercise partial groups, repeated observations, distinct logs in one destination transaction, incomplete receipt graphs and invalid fee accounting ([matching checks](reader/run_invariants.py)).
 
 **NEAR's role is concrete:** executed `ft_burn` evidence from the supported bridged-USDC OMFT contract is the starting point for tracing the withdrawal through Chaindefuser to Base. The exact supported route and evidence limits are below.
+
+### From a reported discrepancy to a repeatable investigation
+
+The [Trezu QA report](https://github.com/NEAR-DevHub/trezu/issues/1924) provides a concrete starting case: the application reported executed payments while destination observations covered only part of the batch. The reader takes a transaction and signer, reads chain and bridge evidence directly, and applies the same matching rules to every supported input. It requires no Trezu application login or issue-specific error code.
+
+Try the three examples to see the distinction: **Control** traces a successful withdrawal and its fee; **QA1** preserves ambiguous source-burn attribution; **QA2** separates an observed transfer from an unrecorded withdrawal in the same transaction. The report supports payout review and technical investigation without requiring the reviewer to reconstruct the matching across separate services.
 
 ## Run it locally
 
