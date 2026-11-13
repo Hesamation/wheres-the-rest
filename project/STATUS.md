@@ -1,6 +1,8 @@
 # Status
 
-README's first example now explicitly identifies staging QA on mainnet. Documentation-only clarification; diff checked, runtime checks not repeated. Video direction: explain a successful payout and its fee first, then investigate the dated QA discrepancy. Next: produce the video in a later session; human repository publication, X post and submission.
+2026-11-13 positioning review: README now acknowledges NEAR Intents Explorer/Range, states the demonstrated payout-review contribution and provider-trust boundaries, credits the existing staging QA report, and moves the roadmap below shipped behavior. The separate video BRIEF.md preserves Control → QA1 → evidence/export, with matching narration and annotations. Rechecked official competitor docs/rules; all three saved CLI replays retain expected findings and amounts. Runtime unchanged; full suites not repeated. Next: produce the video; human repository publication, X post and submission.
+
+Earlier public UI spot-check: no results for QA1 source on either explorer, or for production-control source and QA1 Base destination on Range. These limited lookups do not establish missing capabilities or product superiority; differentiation remains unproven.
 
 Updated 2026-11-13. Approved Railway deployment completed from a clean Git archive; hosted HTML/JS/CSS match the tested source exactly. Health and all three saved API cases pass; hosted browser prefill and live control returned ALL_ROWS_OBSERVED (2026-11-13T08:44:52Z). Railway service uses CLI uploads, with no GitHub source connection: future code pushes require a separate deployment. Next: human video, repository publication, X post and submission.
 

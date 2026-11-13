@@ -2,13 +2,9 @@
 
 **NEAR says the payout executed. Did the USDC arrive on Base?**
 
-Where's the Rest? is a **read-only investigation tool for NEAR → Base USDC payouts**. Trace supported withdrawals from executed NEAR burns through bridge records to Base USDC transfer logs. Account for observed fees, see unresolved gaps, and inspect or export the evidence behind each finding as JSON, CSV, or Markdown. Use it to investigate a payout discrepancy, check a completed withdrawal, or share the supporting evidence with someone reviewing the payment.
+Where's the Rest? is a **read-only investigation tool for NEAR → Base USDC payouts**. Trace supported withdrawals from executed NEAR burns through bridge records to Base USDC transfer logs. Compare bridge-reported fees with observed amounts, see unresolved gaps, and inspect or export the evidence behind each finding as JSON, CSV, or Markdown. Use it to investigate a payout discrepancy, check a completed withdrawal, or share the supporting evidence with someone reviewing the payment.
 
 [Open the hosted demo](https://payout-reader.up.railway.app) · [Try the grouped deficit](https://payout-reader.up.railway.app/?example=qa1) · [Try the successful control](https://payout-reader.up.railway.app/?example=prod_control)
-
-## Where this could go
-
-The ambition is to make cross-chain payouts explainable: what left, what arrived, what fees were observed, and what remains unresolved. Today, Where's the Rest? investigates one NEAR → Base USDC route. A next step could reconcile intended payout lists against observed transfers and revisit unresolved withdrawals over time. Additional routes would require their own evidence adapters and validation. These are future directions; the demo implements the single-route investigation described above.
 
 Built for **NEAR HACKATHON 2026**. Intended tracks: **Real-World Money** (payout reconciliation) and **Social Money** (inspectable treasury payout evidence for Trezu/DAO workflows).
 
@@ -24,6 +20,16 @@ Built for **NEAR HACKATHON 2026**. Intended tracks: **Real-World Money** (payout
 4. **Download JSON**, **Download CSV**, or **Copy Proof** exports the displayed investigation without another provider query.
 
 Saved evidence is explicitly labeled and dated. To refresh an example, select **Live Query**: an empty form is prefilled from the displayed report. Click **Reconcile** to request fresh provider observations. Existing form entries are preserved; you can also enter another supported transaction and signer. Live mode never substitutes a saved result.
+
+## How this fits alongside existing tools
+
+**Doesn't cross-chain tracking already exist?** Yes. [NEAR Intents Explorer's API](https://docs.agentsonintents.com/integration/distribution-channels/1click-api/explorer/introduction) covers historical 1Click swaps. Range documents [NEAR Intents tracing](https://range.org/blog/near-intents-now-live-on-ranges-cross-chain-explorer) and a [payment reconciliation product](https://range.org/product/transaction-reconciliation). This project contributes a focused public OMFT/Chaindefuser withdrawal investigation within that established category. A different route scope alone does not establish a capability advantage over those products. No full comparison with those products has been completed.
+
+**What does this contribute for a payout reviewer?** Enter a supported transaction and signer to compare executed withdrawal counts and amounts against bridge records and Base transfer logs, then inspect or share one report without a Trezu login. The same matching rules run on live inputs and saved cases. In QA1, the reader preserves the three-burn/one-transfer deficit and ambiguous attribution; it counts the destination log once. The [matching rules](#why-this-exists) and [replayable examples](#real-mainnet-examples) make that behavior inspectable.
+
+**Is the report independently proven?** NEAR and Base receipt/log observations are queried separately from the payout application's status. Chaindefuser records supply the cross-chain association and reported fee; the reader checks their arithmetic and consistency with those observations. All three legs depend on providers. This is receipt-level reconciliation, not a trustless proof of the connection, every fee's cause, or final settlement.
+
+**What do the examples establish?** The discrepancy cases reproduce a [previously published staging QA report on mainnet](https://github.com/NEAR-DevHub/trezu/issues/1924), alongside a successful control. They demonstrate investigation behavior on dated evidence. They do not establish an original bug discovery, a production customer-loss incident, or customer adoption.
 
 ## Why this exists
 
@@ -135,6 +141,10 @@ The server uses a fresh subprocess per investigation, a single-worker lock, and 
 - **Failures remain visible:** pending, reverted, invalid, unmatched, and incomplete observations retain separate findings. On hard worker timeout, the report is inconclusive; partial in-flight evidence is currently discarded. Retry is manual.
 - **Small public demo:** one investigation at a time; concurrent requests can receive 429. No persistent history, background monitoring, authentication, payment execution, custody, recovery, or invoice/list reconciliation.
 - **Exports:** CSV is a generic reconciliation table for spreadsheets, not a tested QuickBooks import format. “Copy Proof” copies a provider-evidence summary, not a cryptographic proof or direct Trezu/Sputnik API integration. JSON preserves the full report and group metadata.
+
+## Where this could go
+
+The ambition is to make payout review repeatable: what left, what arrived, what fees the bridge reported, and what remains unresolved. Possible extensions include reconciling intended payout lists against observed transfers and revisiting unresolved withdrawals over time. Additional routes would require their own evidence adapters and validation. These are future directions; the demo implements the single-route investigation described above.
 
 ## Provenance and disclosures
 
