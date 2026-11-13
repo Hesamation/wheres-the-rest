@@ -6,6 +6,10 @@ Where's the Rest? is a **read-only investigation tool for NEAR → Base USDC pay
 
 [Open the hosted demo](https://payout-reader.up.railway.app) · [Try the grouped deficit](https://payout-reader.up.railway.app/?example=qa1) · [Try the successful control](https://payout-reader.up.railway.app/?example=prod_control)
 
+## Where this could go
+
+The ambition is to make cross-chain payouts explainable: what left, what arrived, what fees were observed, and what remains unresolved. Today, Where's the Rest? investigates one NEAR → Base USDC route. A next step could reconcile intended payout lists against observed transfers and revisit unresolved withdrawals over time. Additional routes would require their own evidence adapters and validation. These are future directions; the demo implements the single-route investigation described above.
+
 Built for **NEAR HACKATHON 2026**. Intended tracks: **Real-World Money** (payout reconciliation) and **Social Money** (inspectable treasury payout evidence for Trezu/DAO workflows).
 
 **Replay a [real mainnet QA discrepancy](https://github.com/NEAR-DevHub/trezu/issues/1924):** three identical burns to one recipient, one observed destination transfer, and two burns without matching bridge records. The public report includes reproduction steps, screenshots and transaction links. A separate successful payout provides the control.
@@ -38,10 +42,6 @@ Checking a cross-chain payout means connecting several observations: what execut
 The [Trezu QA report](https://github.com/NEAR-DevHub/trezu/issues/1924) provides a concrete starting case: the application reported executed payments while destination observations covered only part of the batch. The reader takes a transaction and signer, reads chain and bridge evidence directly, and applies the same matching rules to every supported input. It requires no Trezu application login or issue-specific error code.
 
 Try the three examples to see the distinction: **Control** traces a successful withdrawal and its fee; **QA1** preserves ambiguous source-burn attribution; **QA2** separates an observed transfer from an unrecorded withdrawal in the same transaction. The report supports payout review and technical investigation without requiring the reviewer to reconstruct the matching across separate services.
-
-### Where this could go
-
-The ambition is to make cross-chain payouts explainable: what left, what arrived, what fees were observed, and what remains unresolved. Today, Where's the Rest? investigates one NEAR → Base USDC route. A next step could reconcile intended payout lists against observed transfers and revisit unresolved withdrawals over time. Additional routes would require their own evidence adapters and validation. These are future directions; the demo implements the single-route investigation described above.
 
 ## Run it locally
 
