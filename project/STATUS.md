@@ -1,8 +1,12 @@
 # Status
 
-Updated 2026-11-13. Two demo-blocking evidence bugs found and fixed; all checks pass.
+Updated 2026-11-13. Ready-to-submit repository initialized on GitHub; high-leverage operator features and CI added; all 372 checks pass.
 
 - Works:
+  - Private GitHub remote established at `https://github.com/Hesamation/payout-reader` with MIT license and GitHub Actions CI workflow.
+  - Multi-format audit exports: SchemaVersion "1" JSON export, RFC 4180 CSV export (`--csv` CLI and "Download CSV" UI button), and one-click "Copy Proof" formatted Markdown for Trezu and DAO forums.
+  - URL Deep-Linking support (`?example=qa1`, `?example=prod_control`, `?example=qa2`) syncing state in real-time.
+  - Minimal Dockerfile containerizing the zero-dependency Python 3.13 stdlib service.
   - Preserved reader imported with SHA-256 `0ac8f7364292f5e9268bbcc465f433f9ac2ff48c7aeb9d2facfc0f24ce99f4a2`.
   - Offline fixtures: QA1 (group deficit), QA2 (mixed delivery), and production control FD7g (1.00 USDC observed via FastNEAR fallback) with sealed capture provenance.
   - Thin adapter, process-isolated workers, concurrency busy lock, and 120s live deadline.
@@ -12,18 +16,18 @@ Updated 2026-11-13. Two demo-blocking evidence bugs found and fixed; all checks 
   - Accurate KPI metric tiles for both single rows and group findings (1 observed, 2 unrecorded deficit).
   - Carbon data-table with inline expandable rows disclosing multi-leg audit trails (NEAR ft_burn -> Chaindefuser bridge -> Base USDC receipt) and keyboard accessibility (Enter/Space toggling).
   - Stale results warning banner and dimmed table upon editing inputs.
-  - Full CLI (`main.py --serve`, `--saved`, `--live`, `--check`).
-- Fixes committed (2026-11-13):
-  - **Wrong evidence on equal-amount rows**: OBSERVED_MATCH bridge record was looked up by gross amount only; when two rows shared the same amount both received the same bridge record. Fixed: use dest tx hash extracted from the reader note (authoritative), fall back to amount only when no note tx is present. Reproducer: `fx_r_equal_two_recipients`.
-  - **Missing evidence on group findings**: GROUP_FINDING rows never received `bridgeRecord` or `destTransfer` evidence even when `groupDetails.observed >= 1`. Fixed: same note-based lookup applied to group findings. QA1 drawer now shows bridge leg and destination leg. Reproducer: `offline_qa1`.
-  - **Misleading zero observed count in UI for group findings**: Header metrics previously read `0 OBSERVED ON BASE` on QA1. Fixed: KPI tiles aggregate both single rows and group details dynamically.
+  - Full CLI (`main.py --serve`, `--saved`, `--live`, `--csv`, `--json`, `--check`).
+- Fixes committed:
+  - Authoritative note-based bridge/dest evidence lookup on equal-amount rows and group findings.
+  - Aggregated KPI tiles correctly accounting for group findings.
+  - RFC 4180 CSV serialization and clipboard Markdown proof generators.
 - Checks run:
   - Reader suite (177 PASS), verifier (30 PASS), invariants (142 PASS), 10 regressions (10 PASS), disposable 13-case harness (13/13 PASS).
   - Adapter parity tests across all 27 fixtures and saved examples (0 mismatches).
-  - Validation, formatting, server API, and CLI test suites (all PASS).
-  - Interactive headless browser verification for desktop (1280px) and mobile (375px): auto-preload, expandable row keyboard toggling (Enter/Space), stale banner detection on input change, form validation errors, and JSON export.
+  - Validation, formatting, server API, and CLI test suites including CSV and proof tests (all PASS).
+  - Interactive headless browser verification for desktop (1280px) and mobile (375px).
 - Next steps:
-  - Review proposed QA1 workbench screen with human.
   - Record 90-120s walkthrough video following the script in README.md.
-  - Confirm GitHub account/organization to create private remote with `gh repo create` and push.
-  - Final product name, license, and public submission authorization remain with the human.
+  - Human publishes demo post on X tagging @NEARProtocol and #NEARHackathon with video attached.
+  - Switch repository visibility to Public before deadline: `gh repo edit Hesamation/payout-reader --visibility public`.
+  - Review and confirm final hackathon submission payload (tracks: `["realworld", "social"]`) for `POST https://nearhackathon.com/api/applications`.
