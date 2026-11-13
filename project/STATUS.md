@@ -1,6 +1,6 @@
 # Status
 
-Final cleanup: removed obsolete START-HERE.md, refreshed maintenance instructions, labeled PLAN as historical, corrected acceptance verification gaps, and clarified the initially expanded README finding. Fresh checks: 378 Python checks and Node frontend regressions pass; README local links resolve; all 136 tracked runtime/hosting/test/license/evidence files match their pre-cleanup hashes. Application and deployment unchanged. Next: human video, repository publication, X post and submission.
+README's first example now explicitly identifies staging QA on mainnet. Documentation-only clarification; diff checked, runtime checks not repeated. Video direction: explain a successful payout and its fee first, then investigate the dated QA discrepancy. Next: produce the video in a later session; human repository publication, X post and submission.
 
 Updated 2026-11-13. Approved Railway deployment completed from a clean Git archive; hosted HTML/JS/CSS match the tested source exactly. Health and all three saved API cases pass; hosted browser prefill and live control returned ALL_ROWS_OBSERVED (2026-11-13T08:44:52Z). Railway service uses CLI uploads, with no GitHub source connection: future code pushes require a separate deployment. Next: human video, repository publication, X post and submission.
 

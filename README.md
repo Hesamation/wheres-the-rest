@@ -12,7 +12,7 @@ The ambition is to make cross-chain payouts explainable: what left, what arrived
 
 Built for **NEAR HACKATHON 2026**. Intended tracks: **Real-World Money** (payout reconciliation) and **Social Money** (inspectable treasury payout evidence for Trezu/DAO workflows).
 
-**Replay a [real mainnet QA discrepancy](https://github.com/NEAR-DevHub/trezu/issues/1924):** three identical burns to one recipient, one observed destination transfer, and two burns without matching bridge records. The public report includes reproduction steps, screenshots and transaction links. A separate successful payout provides the control.
+**Replay a [public staging QA discrepancy on mainnet](https://github.com/NEAR-DevHub/trezu/issues/1924):** three identical burns to one recipient, one observed destination transfer, and two burns without matching bridge records. The public report includes reproduction steps, screenshots and transaction links. A separate successful payout provides the control.
 
 ![Saved QA1 evidence: three NEAR burns, one Base observation, two unrecorded burns](docs/workbench.jpg)
 
