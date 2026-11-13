@@ -208,6 +208,12 @@ def test_group_observed_totals_and_log_identity():
         assert row["amounts"]["net"] == str(observed * 7600)
         observations = row["evidence"]["observedTransfers"]
         assert len(observations) == observed
+        from app.formatting import report_to_csv, report_to_markdown_proof
+        envelope = reconcile_fixture(case)
+        for observation in observations:
+            tx = observation["destTransfer"]["transferTxHash"]
+            assert tx in report_to_csv(envelope)
+            assert tx in report_to_markdown_proof(envelope)
         assert len({(x["destTransfer"]["transferTxHash"], x["destTransfer"]["logIndex"])
                     for x in observations}) == observed
 

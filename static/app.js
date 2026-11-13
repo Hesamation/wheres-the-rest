@@ -310,7 +310,8 @@ function generateCsvReport(envelope) {
     const net = amts.netFormatted || "";
     const verdict = r.verdict || "";
     const ev = r.evidence || {};
-    const destTx = ev.destTransfer?.transferTxHash || ev.bridgeRecord?.transferTxHash || "";
+    const observedTxs = [...new Set((ev.observedTransfers || []).map(x => x.destTransfer.transferTxHash))];
+    const destTx = observedTxs.join(";") || ev.destTransfer?.transferTxHash || ev.bridgeRecord?.transferTxHash || "";
     const destBlock = ev.destTransfer?.block || "";
     const note = (r.note || "").replace(/"/g, '""');
 
@@ -371,8 +372,10 @@ function generateMarkdownProof(envelope) {
     const net = amts.netFormatted || "-";
     const verdict = r.verdict || "-";
     const ev = r.evidence || {};
-    const destTx = ev.destTransfer?.transferTxHash || ev.bridgeRecord?.transferTxHash;
-    const destLink = destTx ? `[\`${destTx.slice(0, 8)}...\`](https://basescan.org/tx/${destTx})` : "-";
+    const observedTxs = [...new Set((ev.observedTransfers || []).map(x => x.destTransfer.transferTxHash))];
+    const destTx = observedTxs.join(";") || ev.destTransfer?.transferTxHash || ev.bridgeRecord?.transferTxHash;
+    const destLink = (observedTxs.length ? observedTxs : destTx ? [destTx] : [])
+      .map(tx => `[\`${tx.slice(0, 8)}...\`](https://basescan.org/tx/${tx})`).join(" ") || "-";
     lines.push(`| ${indices} | ${recip} | ${gross} | ${fee} | ${net} | ${verdict} | ${destLink} |`);
   }
 

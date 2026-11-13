@@ -74,13 +74,20 @@ context.renderReport(extra);
 assert.equal(text('kpi-burns-amt'), '1.000000 USDC');
 
 // Browser CSV and Python CSV must represent the same report rows.
-const pythonCsv = execFileSync(process.env.PYTHON || 'python3', ['-c', [
-  'from app.adapter import reconcile_saved',
+const csvRows = JSON.parse(execFileSync(process.env.PYTHON || 'python3', ['-c', [
+  'import csv,io,json,sys',
   'from app.formatting import report_to_csv',
-  'print(report_to_csv(reconcile_saved("qa1")),end="")',
-].join('\n')], { cwd: root, encoding: 'utf8' });
-const csvRows = JSON.parse(execFileSync(process.env.PYTHON || 'python3', ['-c',
-  'import csv,io,json,sys; print(json.dumps([list(csv.reader(io.StringIO(x))) for x in json.load(sys.stdin)]))',
-], { input: JSON.stringify([context.generateCsvReport(reports.offline_qa1), pythonCsv]), encoding: 'utf8' }));
-assert.deepEqual(csvRows[0], csvRows[1]);
+  'parse=lambda x:list(csv.reader(io.StringIO(x)))',
+  'print(json.dumps([[parse(js),parse(report_to_csv(report))] for js,report in json.load(sys.stdin)]))',
+].join('\n')], {
+  cwd: root,
+  input: JSON.stringify(Object.values(reports).map(report => [context.generateCsvReport(report), report])),
+  encoding: 'utf8',
+}));
+for (const [browserRows, pythonRows] of csvRows) assert.deepEqual(browserRows, pythonRows);
+for (const row of reports.fx_g3_permutation_rev.rows) {
+  for (const observation of row.evidence.observedTransfers) {
+    assert.ok(context.generateMarkdownProof(reports.fx_g3_permutation_rev).includes(observation.destTransfer.transferTxHash));
+  }
+}
 console.log('Frontend regressions passed: all fixtures render, exact/group totals, extras, CSV parity.');
