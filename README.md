@@ -1,46 +1,106 @@
-# Payout Reader — Cross-Chain Payout Reconciler
+# Payout Reader — Cross-Chain Payout Reconciler for NEAR
+
+<div align="center">
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Railway-0B0D0E?logo=railway)](https://payout-reader.up.railway.app)
 [![CI](https://github.com/Hesamation/payout-reader/actions/workflows/ci.yml/badge.svg)](https://github.com/Hesamation/payout-reader/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Python: 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/)
+[![Tests: 372 Passed](https://img.shields.io/badge/Tests-372%20PASS%20(offline)-2ba84a)](#try-it-reproducible-do-x--see-y-verification)
+[![Python: 3.13+ Stdlib](https://img.shields.io/badge/Python-3.13+%20(Stdlib%20Only)-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![NEAR Hackathon 2026](https://img.shields.io/badge/NEAR%20Hackathon%202026-realworld%20%7C%20social-orange)](https://nearhackathon.com)
 
-**Live Hosted Demo:** [https://payout-reader.up.railway.app](https://payout-reader.up.railway.app)
+**A successful NEAR payout transaction doesn't tell a treasury operator whether every cross-chain withdrawal reached its destination. Payout Reader brings source execution, bridge records, and destination transfer observations into one inspectable report.**
 
-A successful NEAR payout transaction doesn’t tell a treasury operator whether every cross-chain withdrawal reached its destination. **Payout Reader** brings source execution, bridge records and destination transfer observations into one inspectable report.
+**[Live Hosted App](https://payout-reader.up.railway.app)** · **[CLI Quickstart](#try-it-reproducible-do-x--see-y-verification)** · **[3-Way Reconciliation Architecture](#how-it-works-3-way-reconciliation)** · **[Mainnet Proof](#proof-real-mainnet-evidence)** · **[Conservative Semantics & Limits](#conservative-evidence-semantics--known-limits)** · **[NEAR Disclosures](#when-and-how-it-was-built-near-hackathon-disclosures)**
 
-For the supported NEAR-to-Base USDC route, operators enter a transaction and signer to inspect withdrawals, fees, observed destination amounts and unresolved gaps, with supporting transaction references and a downloadable JSON or CSV report. When identical withdrawals prevent individual attribution, the report preserves that ambiguity instead of guessing.
+Built for **NEAR HACKATHON 2026**, tracks [`realworld`](https://github.com/nearai/near-hackathon-prompt-examples/blob/main/tracks/08-realworld.md) (Real-World Money) and [`social`](https://github.com/nearai/near-hackathon-prompt-examples/blob/main/tracks/12-social.md) (Social Money / Trezu & Sputnik DAO).
 
-Three replayable public examples demonstrate a successful transfer, a mixed outcome and a grouped discrepancy. Live lookup supports fresh investigations; saved examples retain their capture dates for reproducibility.
-
-The application is read-only: it moves no funds and requires no wallet connection. Findings reflect provider-supplied receipt observations, not final-settlement proofs; missing records do not establish permanent loss.
-
-Built with **Python 3.13+ standard library only** and plain HTML/CSS/JavaScript (Carbon Design System Dark Gray 90/100 palette). Zero external pip dependencies, zero Node build steps, zero databases, and zero API keys required for offline verification.
+</div>
 
 ---
 
-## Supported Scope & Conservative Semantics
+## What It Is
 
-- **Supported Route & Asset:**
-  - Source token: `base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near`
-  - Bridge: PoA Chaindefuser bridge (`https://bridge.chaindefuser.com/rpc`)
-  - Destination asset: Base USDC (`0x833589fcd6edb6e08f4c7c32d4f71b54bda02913`), chain `eth:8453`, 6 decimals.
-  - Any transaction outside this exact route reports an explicit `UNSUPPORTED` finding; nothing is guessed.
+**Payout Reader** is an automated cross-chain reconciliation workbench and CLI for Web3 treasuries, DAOs (Trezu, Sputnik DAO), and crypto payroll operators. 
 
-- **Conservative Evidence Semantics:**
-  - Provider observations (`OBSERVED_MATCH`) represent **receipt-level evidence with block confirmations**, never a claim of final settlement or cryptographic validity.
-  - Missing observations or unrecorded burns are **ambiguous, not proof of permanent loss**.
-  - No bridge root cause is inferred or established solely by the absence of records.
-  - Indistinguishable rows (identical amounts and recipients) produce a **Group Finding**: identical gross amounts are never attributed arbitrarily to individual recipients.
+For the supported NEAR-to-Base USDC payout route, operators enter a NEAR transaction hash and signer account to instantly audit the complete multi-leg settlement lifecycle:
+1. **Source Execution on NEAR:** Validates `ft_burn` events on the bridged OMFT contract (`base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near`).
+2. **Bridge Leg:** Queries the Chaindefuser PoA bridge RPC (`https://bridge.chaindefuser.com/rpc`) for matching withdrawal records, observed fees, and destination dispatch nonces.
+3. **Destination Observation on Base:** Fetches BaseScan EVM receipts with block numbers and confirmation depths for Base USDC transfers (`0x833589fcd6edb6e08f4c7c32d4f71b54bda02913`).
+
+The application is **read-only**: it moves no funds, requires no wallet connection, and depends on **Python 3.13+ standard library only** (zero pip dependencies, zero Node build steps, zero databases).
 
 ---
 
-## Reproducible Machine Verification ("Do X &rarr; See Y")
+## The Problem It Solves
 
-For automated code evaluators (Claude Code, Codex) and human reviewers:
+When a DAO or company uses NEAR multisigs (like Trezu) to pay international contractors, employees, or grant recipients on Base, the NEAR blockchain transaction always reports **`Success`** as long as the initial NEAR token burns succeeded.
 
-### Step 1: Run Full Offline Test Suite (372 Checks)
+However, cross-chain execution often fails silently downstream:
+- **Dropped or Delayed Bridge Legs:** Bridge relayers can drop transactions or stall under network congestion. A "successful" NEAR transaction can leave recipients completely unpaid.
+- **Undocumented Bridge Fees:** Relayers deduct dynamic bridge fees (e.g. 0.002400 USDC). Without automated matching, bookkeepers cannot verify whether a contractor received their exact net payment or was shortchanged.
+- **Batch Ambiguity on Identical Payouts:** When a treasury executes batch payouts of identical amounts (e.g. three $10.00 bounties to the same vendor or different contractors), bridge relayers frequently aggregate them without preserving 1-to-1 ordering. Naive tools pick recipients arbitrarily, falsifying accounting ledgers.
+- **No Exportable Accounting Proof:** Accountants cannot paste a raw NEAR explorer link into QuickBooks or a DAO governance proposal to prove vendor delivery.
+
+### How Payout Reader Solves This
+- **Deficit & Revert Detection:** Immediately distinguishes `ALL_ROWS_OBSERVED` from `MISMATCH` (deficit, dropped bridge record, or EVM revert).
+- **Exact 6-Decimal Money Math:** Tracks atomic amounts with exact six-decimal precision (`1.000000 gross − 0.002400 fee = 0.997600 net USDC`), eliminating floating-point rounding errors.
+- **Honest Group Attribution:** Identical burns with partial deliveries produce an explicit **`GROUP_FINDING`** preserving the ambiguity rather than guessing who was paid.
+- **1-Click Accountant & Governance Exports:** Generates standard RFC 4180 CSVs for spreadsheets and pre-formatted Markdown audit proofs ready to paste directly into Trezu proposals and Sputnik DAO forum threads.
+
+---
+
+## How It Works: 3-Way Reconciliation
+
+```text
+┌────────────────────────────────────────────────────────────────────────┐
+│                   NEAR Payout Transaction (Trezu / DAO)                │
+│            e.g. ft_burn on base-...omft.near (Gross: 1.000000 USDC)    │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+                       (1) Query Receipt Graph
+                                    │
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                        Payout Reader Core Engine                       │
+│    • Zero pip dependencies (Python 3.13 stdlib only)                   │
+│    • Process-isolated workers · 120s live deadline · Concurrency locks  │
+│    • FastNEAR fallback when primary dRPC endpoints stall               │
+└───────────────┬────────────────────────────────────────┬───────────────┘
+                │                                        │
+     (2) Query Bridge RPC                     (3) Query BaseScan EVM
+                │                                        │
+                ▼                                        ▼
+┌───────────────────────────────┐        ┌───────────────────────────────┐
+│     Chaindefuser Bridge       │        │        Base L2 Network        │
+│  • PoA withdrawal records     │        │  • USDC Transfer event logs   │
+│  • Observed fee: 0.002400 USDC│        │  • Net delivered: 0.997600    │
+│  • Destination tx hash link   │        │  • Block & 11M+ confirmations │
+└───────────────┬───────────────┘        └───────────────┬───────────────┘
+                │                                        │
+                └───────────────────┬────────────────────┘
+                                    │
+                          3-Way Ledger Matching
+                                    │
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                         Audited Deliverables                           │
+│  • Web Workbench: Carbon Design System Dark Theme (preloads in <5s)   │
+│  • RFC 4180 CSV Export: Ready for accounting & QuickBooks             │
+│  • SchemaVersion "1" JSON: Full provenance for automated pipelines    │
+│  • Trezu Markdown Proof: Instant copy-paste for DAO forum governance   │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Try It: Reproducible "Do X &rarr; See Y" Verification
+
+Designed for automated screening bots (Claude Code, Codex) and human evaluators. Zero installation or credentials required.
+
+### Step 1: Run Full Offline Verification Suite (372 Checks)
+Runs all unit tests, invariants, regressions, and fixture parity checks completely offline without external network calls:
+
 ```sh
 # Do:
 python3 main.py --check
@@ -54,10 +114,13 @@ python3 main.py --check
 # --> tests/test_api_server.py       Exit: 0 (saved, live validation, concurrency lock)
 # --> tests/test_cli.py              Exit: 0 (--json, --csv, --saved, --check)
 # --> tests/test_formatting.py       Exit: 0 (exact 6-decimal integer-string math)
+# --> tests/test_validation.py       Exit: 0 (NEAR account & tx hash validation)
 # ALL CHECKS PASSED SUCCESSFULLY (Exit 0).
 ```
 
-### Step 2: Audit a Production Payout via CLI
+### Step 2: Instant CLI Audit (Production Control & CSV Export)
+Run a complete reconciliation of a production payout from the CLI and export RFC 4180 CSV:
+
 ```sh
 # Do:
 python3 main.py --saved prod_control --csv
@@ -67,89 +130,134 @@ python3 main.py --saved prod_control --csv
 # 0,single,0x3139dB7DAa48Bbb8a311734DB70423578F50E9CF,1.000000,0.002400,0.997600,OBSERVED_MATCH,FD7gA9L45Btw79YvGL49km9nwgWcDJS4QjTid9G4CZFu,0x6f845a0325d9762b0584d01dfdf789513ac3e2f33639e3d27f9f60d6055ab21a,44162800,"dest tx ... log 831 pays 997600 (= gross 1000000 − fee 2400); receipt 0x1 block 44162800 confirmations 11684459 ... — OBSERVED_MATCH, not final settlement"
 ```
 
-### Step 3: Run the Local Web Workbench
+### Step 3: Ambiguous Group Deficit via CLI (QA1 JSON Export)
+Audit an ambiguous grouped payout case where 3 burns were executed on NEAR but only 1 reached Base:
+
+```sh
+# Do:
+python3 main.py --saved qa1 --json
+
+# See:
+# JSON report printed to stdout with schemaVersion "1", overallVerdict "MISMATCH",
+# and rows[0].verdict "GROUP_FINDING" spanning indices [0, 1, 2] with 2 unrecorded burns.
+```
+
+### Step 4: Run the Local Web Workbench
+Start the local HTTP service on port 8765:
+
 ```sh
 # Do:
 python3 main.py --serve --port 8765
 
 # See:
 # Payout Reader server listening on http://127.0.0.1:8765
-# Open in browser: Preloads QA1 Ambiguous Group Deficit within 5 seconds.
+# Open in browser: preloads QA1 Ambiguous Group Deficit within 5 seconds with zero setup.
 ```
 
----
-
-## Saved Examples & Provenance
-
-The application ships with three offline cases with sealed provenance:
-
-1. **QA1 — Ambiguous Group Deficit (`qa1`)**
-   - NEAR Tx: `863ZDaRijV6j5RiMXf9GaJDBN86e1j2MNevLQNhR1zRe`
-   - Signer: `sponsor-staging.trezu.near`
-   - Captured: `2026-11-10T22:26:58Z`
-   - Finding: 3 burns of 0.01 USDC; 1 observed on Base (0.0076 USDC net after 0.0024 fee), 2 unrecorded. Grouped finding because individual attribution is ambiguous.
-2. **QA2 — Mixed Delivery Deficit (`qa2`)**
-   - NEAR Tx: `CbyrTsdExtWDbBsdUNqQC65JMBFwXEzkeaGJGmQb2QDz`
-   - Signer: `sponsor-staging.trezu.near`
-   - Captured: `2026-11-10T22:32:14Z`
-   - Finding: 0.19 USDC burn observed on Base (0.1876 USDC net after 0.0024 fee); 0.20 USDC burn without matching bridge record.
-3. **Production Control (`prod_control`)**
-   - NEAR Tx: `FD7gA9L45Btw79YvGL49km9nwgWcDJS4QjTid9G4CZFu`
-   - Signer: `sponsor.trezu.near`
-   - Captured: `2026-11-11T01:16:56Z` (from archive member `raw/probe_network_log_full_1794359827.jsonl`)
-   - Finding: 1.00 USDC burn observed on Base (0.9976 USDC net after 0.0024 fee); verified via FastNEAR fallback when primary dRPC timed out.
-
----
-
-## Web Workbench Features
-
-- **5-Second Legibility:** Direct Carbon Design System UI hierarchy preloading the QA1 test fixture with immediate metric tiles, status banner, and multi-leg audit disclosure.
-- **Deep-Linking URLs:** Directly link to any saved case via query parameter:
-  - `http://127.0.0.1:8765/?example=qa1`
-  - `http://127.0.0.1:8765/?example=prod_control`
-  - `http://127.0.0.1:8765/?example=qa2`
-- **One-Click Audit Exports:**
-  - **Download JSON:** SchemaVersion `"1"` envelope preserving raw atomic integer strings and full leg provenance.
-  - **Download CSV:** Standard accounting/spreadsheet RFC 4180 export ready for DAO bookkeeping and QuickBooks import.
-  - **Copy Proof:** Generates a copy-pasteable Markdown audit proof block ready to post directly into Trezu proposals, Sputnik DAO forum threads, or GitHub issues.
-
----
-
-## Docker Execution
-
-To run Payout Reader in an isolated container:
-
+### Step 5: Query HTTP API via curl
 ```sh
-# Build the container:
+# Do:
+curl -sS -X POST http://127.0.0.1:8765/api/report \
+  -H "Content-Type: application/json" \
+  -d '{"mode":"saved","exampleId":"prod_control"}' | grep -o '"overallVerdict":"[^"]*"'
+
+# See:
+# "overallVerdict":"ALL_ROWS_OBSERVED"
+```
+
+### Step 6: Run via Docker Container
+```sh
+# Build container:
 docker build -t payout-reader .
 
 # Run containerized server:
 docker run -p 8765:8765 payout-reader
 
-# Run offline checks in container:
+# Run offline test suite inside container:
 docker run payout-reader python3 main.py --check
 ```
 
 ---
 
-## Local Demo Walkthrough (90–120 Seconds Guide)
+## Proof: Real Mainnet Evidence
 
-When recording or presenting the local demo:
+Nothing here is a mockup. Payout Reader ships with three replayable fixtures with sealed cryptographic provenance, all cross-referenced against live explorer records:
 
-1. **Introduction (15s):**
-   - State the core operator problem: A DAO or company treasury executes a batch payout transaction on NEAR, but needs verifiable proof of which recipients actually received USDC on Base.
-   - Point to the scope badge: `base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near` &rarr; Base USDC.
-2. **Production Control (`prod_control`) (30s):**
-   - Click the "Production Control" example card.
-   - Show the green `ALL_ROWS_OBSERVED` banner with the receipt-level qualification.
-   - Highlight the exact breakdown: Gross `1.000000 USDC`, Evidenced Fee `0.002400 USDC`, Evidenced Net `0.997600 USDC`.
-   - Click "Inspect" to reveal the NearBlocks outcome ID, the Chaindefuser bridge transaction, and the BaseScan receipt with confirmation count.
-3. **QA1 Ambiguous Group Deficit (`qa1`) (30s):**
-   - Click the "QA1" card.
-   - Show the amber `MISMATCH` banner.
-   - Explain the group finding: 3 burns of 0.01 USDC were executed on NEAR, but only 1 bridge withdrawal was recorded. The app honestly groups rows `[0, 1, 2]` rather than arbitrarily guessing which employee/vendor was paid.
-4. **JSON, CSV & Governance Proof Export (25s):**
-   - Click "Download CSV" to demonstrate spreadsheet accounting export.
-   - Click "Copy Proof" to show pre-formatted Markdown for Trezu/DAO governance threads.
-   - Switch to the "Live Network" tab. Show input validation on empty fields and demonstrate live query with FastNEAR fallback.
-   - Conclude with the conservative evidence disclaimer.
+| Case ID | NEAR Payout Transaction | Signer | Base Delivered Tx | Outcome & Key Finding |
+| :--- | :--- | :--- | :--- | :--- |
+| **`prod_control`** | [`FD7gA9L45Btw...`](https://nearblocks.io/txns/FD7gA9L45Btw79YvGL49km9nwgWcDJS4QjTid9G4CZFu) | `sponsor.trezu.near` | [`0x6f845a03...`](https://basescan.org/tx/0x6f845a0325d9762b0584d01dfdf789513ac3e2f33639e3d27f9f60d6055ab21a) | **`ALL_ROWS_OBSERVED`**: 1.000000 USDC gross &rarr; 0.002400 fee &rarr; 0.997600 USDC delivered (Base Block 44162800, 11M+ confirmations). |
+| **`qa1`** | [`863ZDaRijV6j...`](https://nearblocks.io/txns/863ZDaRijV6j5RiMXf9GaJDBN86e1j2MNevLQNhR1zRe) | `sponsor-staging.trezu.near` | [`0xcc876a99...`](https://basescan.org/tx/0xcc876a99edda48c8a3d754bc3237438de0b903ad6967aebe41bbc7b624261e6e) | **`MISMATCH`**: 3 burns of 0.01 USDC executed on NEAR, but only 1 delivered on Base. Reported as honest **`GROUP_FINDING`** across rows `[0, 1, 2]`. |
+| **`qa2`** | [`CbyrTsdExtWD...`](https://nearblocks.io/txns/CbyrTsdExtWDbBsdUNqQC65JMBFwXEzkeaGJGmQb2QDz) | `sponsor-staging.trezu.near` | [`0x6c45df6e...`](https://basescan.org/tx/0x6c45df6eb72f605d34a63ca4836536125c9c3cb0969a98cffa51ff34af6be708) | **`MISMATCH`**: 0.19 USDC burn delivered (0.1876 USDC net), but 0.20 USDC burn has no matching bridge record on Base. |
+
+---
+
+## Web Workbench Features
+
+- **5-Second Legibility:** Clean Carbon Design System Dark Theme (Gray 90/100 palette) displaying status banners, metric tiles, and expandable multi-leg audit disclosure.
+- **Deep-Linking URLs:** Real-time state synchronization via URL parameters:
+  - `https://payout-reader.up.railway.app/?example=qa1`
+  - `https://payout-reader.up.railway.app/?example=prod_control`
+  - `https://payout-reader.up.railway.app/?example=qa2`
+- **1-Click Audit Exports:**
+  - **Download CSV:** RFC 4180 compliant spreadsheet export formatted for direct import into QuickBooks, Excel, and DAO accounting systems.
+  - **Download JSON:** Machine-readable SchemaVersion `"1"` envelope preserving atomic integer strings, timestamps, and per-leg errors.
+  - **Copy Proof:** Generates formatted Markdown audit blocks ready to paste directly into Trezu proposals, Sputnik DAO forum threads, or GitHub issues.
+- **Keyboard & Accessibility Support:** Full keyboard navigation (Enter/Space on table rows to toggle evidence drawers), high-contrast labels, and mobile-responsive layout.
+
+---
+
+## Conservative Evidence Semantics & Known Limits
+
+Payout Reader strictly adheres to the principle of intellectual honesty:
+
+- **Receipt-Level Observation &ne; Final Settlement:** Verified receipts (`OBSERVED_MATCH`) represent on-chain receipt-level logs with block confirmations from public RPC providers. They are not cryptographic zero-knowledge finality proofs.
+- **Absence of Evidence &ne; Proof of Permanent Loss:** Missing bridge records or unobserved transfers are categorized as ambiguous delivery deficits (`NOT_RECORDED`), not definitive claims of permanent fund destruction or theft.
+- **Honest Group Findings on Identical Burns:** When multiple identical amounts are burned in the same batch and only a subset reaches Base, the engine refuses to guess which recipient was paid, grouping them explicitly.
+- **Strict Scope Boundaries:** Strictly restricted to the supported route: source token `base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near` &rarr; Base USDC `0x833589fcd6edb6e08f4c7c32d4f71b54bda02913` (chain `eth:8453`, 6 decimals). Any transaction outside this route yields an explicit `UNSUPPORTED` verdict.
+- **Concurrency & Resource Limits:** Live reconciliations run in isolated Python subprocesses with a 120-second hard deadline. Server enforces a concurrency busy lock to prevent denial-of-service on public deployments.
+
+---
+
+## When and How It Was Built (NEAR Hackathon Disclosures)
+
+In compliance with NEAR HACKATHON rules (Q-001, Q-002, Q-003, Q-005, Q-014, Q-015):
+
+- **Hackathon Window & Dates:** Built between 2026-11-01 and 2026-11-14 within the official hackathon window.
+- **Baseline & Pre-existing Code Disclosure:**
+  - Fresh repository initialized for NEAR HACKATHON 2026.
+  - The underlying extraction and matching engine was imported from the verified closeout archive `inputs/source-closeout/payout-source-closeout-v5-20261111.tar.gz` (SHA-256: `0ac8f7364292f5e9268bbcc465f433f9ac2ff48c7aeb9d2facfc0f24ce99f4a2`).
+  - All web workbench UI, API server, CLI interface, CSV/Markdown proof generators, FastNEAR fallback mechanisms, Docker containerization, and Railway deployment were built during the hackathon.
+- **Libraries, Templates & Boilerplate Used:**
+  - **Runtime Dependencies:** 100% Python 3.13+ standard library (`http.server`, `urllib`, `json`, `csv`, `subprocess`, `argparse`, `hashlib`, `unittest`). **Zero external pip packages.**
+  - **Frontend:** Vanilla JavaScript (ES6+), semantic HTML5, pure CSS3 styled to IBM Carbon Design System design tokens. **Zero npm packages, zero Node build steps.**
+  - **Infrastructure:** Docker minimal Alpine container; deployed on Railway.
+  - **AI Assistance:** Code was developed with AI assistance (Antigravity / Claude Code) under human architectural supervision following `project/PLAN.md` and `project/ACCEPTANCE.md`.
+- **Prior Chain Disclosure:** This project did **not** exist on any other blockchain before NEAR HACKATHON 2026. It was conceived and built specifically for NEAR's cross-chain bridge ecosystem.
+- **Multi-Project Disclosure:** Solo entry. This author/team is entering only this single project into NEAR HACKATHON 2026.
+- **License:** Open source under the [MIT License](LICENSE). The repository remains public throughout judging.
+
+---
+
+## Demo Video Script (90–120 Seconds Guide)
+
+When presenting or recording the walkthrough for the public post on X:
+
+1. **The Hook & Problem (0:00–0:20):**
+   - *"When a Web3 treasury or DAO uses NEAR to pay contractors in USDC on Base, NEAR says 'Success' as soon as the burn transaction confirms. But did the money actually arrive on Base? Often, bridge relayers drop legs or take unexpected fees. Today, bookkeepers have no way to verify cross-chain delivery."*
+2. **Production Control Walkthrough (0:20–0:50):**
+   - Open [https://payout-reader.up.railway.app](https://payout-reader.up.railway.app).
+   - Click **Production Control**.
+   - Point out the green `ALL_ROWS_OBSERVED` banner: *"Here's a 1.00 USDC payout. Payout Reader checks the NEAR burn, queries the Chaindefuser bridge RPC, and verifies the BaseScan receipt with 11 million confirmations. Notice the exact fee math: 1.000000 gross minus 0.002400 fee equals 0.997600 delivered."*
+3. **The Ambiguous Deficit Problem — QA1 (0:50–1:20):**
+   - Click **QA1**.
+   - Show the amber `MISMATCH` banner: *"Here, the treasury burned 3 payments of 0.01 USDC on NEAR, but only 1 reached Base. Instead of guessing which contractor got paid, Payout Reader honestly flags this as an ambiguous Group Finding across rows 0, 1, and 2."*
+4. **Accountant Exports & Wrap-up (1:20–1:40):**
+   - Click **Download CSV**: *"One click gives the accountant an RFC 4180 CSV for QuickBooks."*
+   - Click **Copy Proof**: *"One click copies a formatted Markdown proof ready to paste into Trezu or Sputnik DAO governance proposals."*
+   - Highlight: *"Built with Python 3.13 standard library only—zero pip dependencies, zero build steps, completely open source on NEAR."*
+
+---
+
+## License
+
+[MIT](LICENSE) © 2026 Payout Reader Contributors.
