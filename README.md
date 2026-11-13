@@ -1,12 +1,12 @@
 # Payout Reader — Cross-Chain Payout Reconciler
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Railway-0B0D0E?logo=railway)](https://payout-reader-production.up.railway.app)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Railway-0B0D0E?logo=railway)](https://payout-reader.up.railway.app)
 [![CI](https://github.com/Hesamation/payout-reader/actions/workflows/ci.yml/badge.svg)](https://github.com/Hesamation/payout-reader/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Python: 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/)
 [![NEAR Hackathon 2026](https://img.shields.io/badge/NEAR%20Hackathon%202026-realworld%20%7C%20social-orange)](https://nearhackathon.com)
 
-**Live Hosted Demo:** [https://payout-reader-production.up.railway.app](https://payout-reader-production.up.railway.app)
+**Live Hosted Demo:** [https://payout-reader.up.railway.app](https://payout-reader.up.railway.app)
 
 A successful NEAR payout transaction doesn’t tell a treasury operator whether every cross-chain withdrawal reached its destination. **Payout Reader** brings source execution, bridge records and destination transfer observations into one inspectable report.
 

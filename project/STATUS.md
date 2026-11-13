@@ -3,7 +3,7 @@
 Updated 2026-11-13. Live public cloud deployment active on Railway; ready-to-submit repository initialized on GitHub; all 372 checks pass.
 
 - Works:
-  - Live cloud deployment live and verified at `https://payout-reader-production.up.railway.app` (tested with live mainnet reconciliation, FastNEAR fallback, and BaseScan block confirmations).
+  - Live cloud deployment live and verified at `https://payout-reader.up.railway.app` (tested with live mainnet reconciliation, FastNEAR fallback, and BaseScan block confirmations).
   - Private GitHub remote established at `https://github.com/Hesamation/payout-reader` with MIT license and GitHub Actions CI workflow.
   - Multi-format audit exports: SchemaVersion "1" JSON export, RFC 4180 CSV export (`--csv` CLI and "Download CSV" UI button), and one-click "Copy Proof" formatted Markdown for Trezu and DAO forums.
   - URL Deep-Linking support (`?example=qa1`, `?example=prod_control`, `?example=qa2`) syncing state in real-time.
