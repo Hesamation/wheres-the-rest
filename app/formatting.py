@@ -72,6 +72,9 @@ def report_to_csv(envelope: dict) -> str:
         verdict = r.get("verdict", "")
         evidence = r.get("evidence") or {}
         dest_tx = (evidence.get("destTransfer") or {}).get("transferTxHash") or (evidence.get("bridgeRecord") or {}).get("transferTxHash") or ""
+        observations = evidence.get("observedTransfers") or []
+        if observations:
+            dest_tx = ";".join(dict.fromkeys(x["destTransfer"]["transferTxHash"] for x in observations))
         dest_block = (evidence.get("destTransfer") or {}).get("block", "")
         note = r.get("note", "")
         writer.writerow([
@@ -130,10 +133,11 @@ def report_to_markdown_proof(envelope: dict) -> str:
         verdict = r.get("verdict", "-")
         evidence = r.get("evidence") or {}
         dest_tx = (evidence.get("destTransfer") or {}).get("transferTxHash") or (evidence.get("bridgeRecord") or {}).get("transferTxHash")
-        if dest_tx:
-            dest_link = f"[`{dest_tx[:8]}...`](https://basescan.org/tx/{dest_tx})"
-        else:
-            dest_link = "-"
+        dest_txs = list(dict.fromkeys(x["destTransfer"]["transferTxHash"]
+                                     for x in evidence.get("observedTransfers", [])))
+        if not dest_txs and dest_tx:
+            dest_txs = [dest_tx]
+        dest_link = " ".join(f"[`{tx[:8]}...`](https://basescan.org/tx/{tx})" for tx in dest_txs) or "-"
         lines.append(f"| {indices} | {recip} | {gross} | {fee} | {net} | {verdict} | {dest_link} |")
 
     lines.append("")
