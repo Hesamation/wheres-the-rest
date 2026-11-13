@@ -301,7 +301,7 @@ function generateCsvReport(envelope) {
   const reqTx = envelope.request?.txHash || "";
 
   for (const r of envelope.rows || []) {
-    const rowIndices = (r.rowIndices || []).join(";");
+    const rowIndices = (r.rowIndices || []).join(",");
     const rowType = r.kind || "";
     const recipient = r.recipient || "";
     const amts = r.amounts || {};
@@ -750,7 +750,7 @@ function renderReport(report) {
             </div>
 
             <div class="note-box">
-              <strong style="color:var(--cds-text-primary)">Audit Note:</strong> ${escapeHtml(r.note || "No audit note recorded")}
+              <strong style="color:var(--cds-text-primary)">Audit Note:</strong> ${escapeHtml(humanizeNote(r.note) || "No audit note recorded")}
             </div>
           </div>
         </td>
@@ -861,6 +861,16 @@ function truncateMiddle(str, front = 10, back = 8) {
   if (!str) return "";
   if (str.length <= front + back + 3) return str;
   return `${str.slice(0, front)}...${str.slice(-back)}`;
+}
+
+function humanizeNote(note) {
+  // Display-only: rewrite the raw Python None leak in offline fixture notes.
+  // Exports (JSON/CSV/Markdown) keep the original reader note untouched.
+  if (!note) return note;
+  return String(note).replace(
+    /confirmations None vs tip None/g,
+    "confirmations not captured (offline evidence)"
+  );
 }
 
 function escapeHtml(str) {
