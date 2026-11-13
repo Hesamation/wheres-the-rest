@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -90,11 +91,14 @@ def run_checks() -> int:
     reader_dir = REPO_ROOT / "reader"
 
     all_passed = True
+    reader_passes = 0
+    app_tests = 0
     # 1. Unchanged reader test suites
     for script in ["run_tests.py", "verify_outputs.py", "run_invariants.py", "repro_all.py"]:
         print(f"--> reader/{script}")
         res = subprocess.run([sys.executable, "-B", script], cwd=str(reader_dir), capture_output=True, text=True)
         passes = res.stdout.count("[PASS]")
+        reader_passes += passes
         fails = res.stdout.count("[FAIL]")
         print(f"    Exit: {res.returncode}, PASS: {passes}, FAIL: {fails}")
         if res.returncode != 0 or fails > 0:
@@ -106,6 +110,7 @@ def run_checks() -> int:
     test_files = sorted((REPO_ROOT / "tests").glob("test_*.py"))
     for tf in test_files:
         print(f"--> tests/{tf.name}")
+        app_tests += len(re.findall(r"^def test_", tf.read_text(encoding="utf-8"), re.M))
         res = subprocess.run([sys.executable, "-B", str(tf)], cwd=str(REPO_ROOT), capture_output=True, text=True)
         print(f"    Exit: {res.returncode}")
         if res.returncode != 0:
@@ -115,6 +120,8 @@ def run_checks() -> int:
         else:
             print("    " + res.stdout.strip().replace("\n", "\n    "))
 
+    total = reader_passes + app_tests
+    print(f"\nTOTAL: {reader_passes} reader checks + {app_tests} application tests = {total} PASSED.")
     if all_passed:
         print("\nALL CHECKS PASSED SUCCESSFULLY (Exit 0).")
         return 0

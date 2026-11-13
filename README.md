@@ -4,7 +4,7 @@
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Railway-0B0D0E?logo=railway)](https://payout-reader.up.railway.app)
 [![CI](https://github.com/Hesamation/payout-reader/actions/workflows/ci.yml/badge.svg)](https://github.com/Hesamation/payout-reader/actions)
-[![Tests: 372 Passed](https://img.shields.io/badge/Tests-372%20PASS%20(offline)-2ba84a)](#try-it-reproducible-do-x--see-y-verification)
+[![Tests: 375 Passed](https://img.shields.io/badge/Tests-375%20PASS%20(offline)-2ba84a)](#try-it-reproducible-do-x--see-y-verification)
 [![Python: 3.13+ Stdlib](https://img.shields.io/badge/Python-3.13+%20(Stdlib%20Only)-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![NEAR Hackathon 2026](https://img.shields.io/badge/NEAR%20Hackathon%202026-realworld%20%7C%20social-orange)](https://nearhackathon.com)
@@ -26,7 +26,7 @@ Built for **NEAR HACKATHON 2026**, tracks [`realworld`](https://github.com/neara
 For the supported NEAR-to-Base USDC payout route, operators enter a NEAR transaction hash and signer account to instantly audit the complete multi-leg settlement lifecycle:
 1. **Source Execution on NEAR:** Validates `ft_burn` events on the bridged OMFT contract (`base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near`).
 2. **Bridge Leg:** Queries the Chaindefuser PoA bridge RPC (`https://bridge.chaindefuser.com/rpc`) for matching withdrawal records, observed fees, and destination dispatch nonces.
-3. **Destination Observation on Base:** Fetches BaseScan EVM receipts with block numbers and confirmation depths for Base USDC transfers (`0x833589fcd6edb6e08f4c7c32d4f71b54bda02913`).
+3. **Destination Observation on Base:** Fetches Base USDC transfer receipts (`0x833589fcd6edb6e08f4c7c32d4f71b54bda02913`) from the public Base L2 RPC (`mainnet.base.org`) with block numbers and confirmation depths; explorer links point to BaseScan.
 
 The application is **read-only**: it moves no funds, requires no wallet connection, and depends on **Python 3.13+ standard library only** (zero pip dependencies, zero Node build steps, zero databases).
 
@@ -68,7 +68,7 @@ However, cross-chain execution often fails silently downstream:
 │    • FastNEAR fallback when primary dRPC endpoints stall               │
 └───────────────┬────────────────────────────────────────┬───────────────┘
                 │                                        │
-     (2) Query Bridge RPC                     (3) Query BaseScan EVM
+     (2) Query Bridge RPC                     (3) Query Base L2 RPC
                 │                                        │
                 ▼                                        ▼
 ┌───────────────────────────────┐        ┌───────────────────────────────┐
@@ -98,7 +98,7 @@ However, cross-chain execution often fails silently downstream:
 
 Designed for automated screening bots (Claude Code, Codex) and human evaluators. Zero installation or credentials required.
 
-### Step 1: Run Full Offline Verification Suite (372 Checks)
+### Step 1: Run Full Offline Verification Suite (375 Checks)
 Runs all unit tests, invariants, regressions, and fixture parity checks completely offline without external network calls:
 
 ```sh
@@ -115,6 +115,7 @@ python3 main.py --check
 # --> tests/test_cli.py              Exit: 0 (--json, --csv, --saved, --check)
 # --> tests/test_formatting.py       Exit: 0 (exact 6-decimal integer-string math)
 # --> tests/test_validation.py       Exit: 0 (NEAR account & tx hash validation)
+# TOTAL: 359 reader checks + 16 application tests = 375 PASSED
 # ALL CHECKS PASSED SUCCESSFULLY (Exit 0).
 ```
 
@@ -150,7 +151,7 @@ Start the local HTTP service on port 8765:
 python3 main.py --serve --port 8765
 
 # See:
-# Payout Reader server listening on http://127.0.0.1:8765
+# Payout Reader server running at http://127.0.0.1:8765/
 # Open in browser: preloads QA1 Ambiguous Group Deficit within 5 seconds with zero setup.
 ```
 
@@ -225,13 +226,20 @@ In compliance with NEAR HACKATHON rules (Q-001, Q-002, Q-003, Q-005, Q-014, Q-01
 - **Hackathon Window & Dates:** Built between 2026-11-01 and 2026-11-14 within the official hackathon window.
 - **Baseline & Pre-existing Code Disclosure:**
   - Fresh repository initialized for NEAR HACKATHON 2026.
-  - The underlying extraction and matching engine was imported from the verified closeout archive `inputs/source-closeout/payout-source-closeout-v5-20261111.tar.gz` (SHA-256: `0ac8f7364292f5e9268bbcc465f433f9ac2ff48c7aeb9d2facfc0f24ce99f4a2`).
+  - The underlying extraction and matching engine was imported from the verified closeout archive `inputs/source-closeout/payout-source-closeout-v5-20261111.tar.gz` (archive SHA-256: `c92edadfc65a46627d673b3e1d265dd2861bdd4fdcdea0a7cd5e72abc8105efe`). The preserved engine file verifies itself:
+
+    ```sh
+    # Do:
+    sha256sum reader/payout_probe.py
+    # See:
+    # 0ac8f7364292f5e9268bbcc465f433f9ac2ff48c7aeb9d2facfc0f24ce99f4a2  reader/payout_probe.py
+    ```
   - All web workbench UI, API server, CLI interface, CSV/Markdown proof generators, FastNEAR fallback mechanisms, Docker containerization, and Railway deployment were built during the hackathon.
 - **Libraries, Templates & Boilerplate Used:**
   - **Runtime Dependencies:** 100% Python 3.13+ standard library (`http.server`, `urllib`, `json`, `csv`, `subprocess`, `argparse`, `hashlib`, `unittest`). **Zero external pip packages.**
   - **Frontend:** Vanilla JavaScript (ES6+), semantic HTML5, pure CSS3 styled to IBM Carbon Design System design tokens. **Zero npm packages, zero Node build steps.**
   - **Infrastructure:** Docker minimal Alpine container; deployed on Railway.
-  - **AI Assistance:** Code was developed with AI assistance (Antigravity / Claude Code) under human architectural supervision following `project/PLAN.md` and `project/ACCEPTANCE.md`.
+  - **AI Assistance:** Code was developed with AI assistance (GLM-based coding agents in the ZCode harness) under human architectural supervision following `project/PLAN.md` and `project/ACCEPTANCE.md`.
 - **Prior Chain Disclosure:** This project did **not** exist on any other blockchain before NEAR HACKATHON 2026. It was conceived and built specifically for NEAR's cross-chain bridge ecosystem.
 - **Multi-Project Disclosure:** Solo entry. This author/team is entering only this single project into NEAR HACKATHON 2026.
 - **License:** Open source under the [MIT License](LICENSE). The repository remains public throughout judging.
@@ -246,8 +254,8 @@ When presenting or recording the walkthrough for the public post on X:
    - *"When a Web3 treasury or DAO uses NEAR to pay contractors in USDC on Base, NEAR says 'Success' as soon as the burn transaction confirms. But did the money actually arrive on Base? Often, bridge relayers drop legs or take unexpected fees. Today, bookkeepers have no way to verify cross-chain delivery."*
 2. **Production Control Walkthrough (0:20–0:50):**
    - Open [https://payout-reader.up.railway.app](https://payout-reader.up.railway.app).
-   - Click **Production Control**.
-   - Point out the green `ALL_ROWS_OBSERVED` banner: *"Here's a 1.00 USDC payout. Payout Reader checks the NEAR burn, queries the Chaindefuser bridge RPC, and verifies the BaseScan receipt with 11 million confirmations. Notice the exact fee math: 1.000000 gross minus 0.002400 fee equals 0.997600 delivered."*
+   - Click **Control: 1.00 USDC**.
+   - Point out the green `ALL_ROWS_OBSERVED` banner: *"Here's a 1.00 USDC payout. Payout Reader checks the NEAR burn, queries the Chaindefuser bridge RPC, and verifies the Base receipt via the public Base L2 RPC with 11 million confirmations. Notice the exact fee math: 1.000000 gross minus 0.002400 fee equals 0.997600 delivered."*
 3. **The Ambiguous Deficit Problem — QA1 (0:50–1:20):**
    - Click **QA1**.
    - Show the amber `MISMATCH` banner: *"Here, the treasury burned 3 payments of 0.01 USDC on NEAR, but only 1 reached Base. Instead of guessing which contractor got paid, Payout Reader honestly flags this as an ambiguous Group Finding across rows 0, 1, and 2."*
