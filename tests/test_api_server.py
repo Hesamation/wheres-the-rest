@@ -1,5 +1,6 @@
 """Integration tests for app.server HTTP API and static file serving."""
 import json
+import http.client
 import socket
 import sys
 import threading
@@ -66,6 +67,24 @@ def test_server():
             assert False, "Expected 400 for bogus example"
         except urllib.error.HTTPError as e:
             assert e.code == 400
+
+        # Reject negative sizes before reading; read(-1) waits for an EOF.
+        connection = http.client.HTTPConnection("127.0.0.1", port, timeout=2)
+        connection.request("POST", "/api/report", headers={"Content-Length": "-1"})
+        response = connection.getresponse()
+        assert response.status == 400
+        response.read()
+        connection.close()
+
+        # A sibling with the same path prefix is still outside static/.
+        with urllib.request.urlopen(base_url + "/style.css", timeout=2) as response:
+            assert response.status == 200
+        connection = http.client.HTTPConnection("127.0.0.1", port, timeout=2)
+        connection.request("GET", "/../static-private/nonexistent.txt")
+        response = connection.getresponse()
+        assert response.status == 403
+        response.read()
+        connection.close()
 
         # 4. POST /api/report - malformed JSON
         req = urllib.request.Request(

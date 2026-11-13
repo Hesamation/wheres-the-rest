@@ -1,10 +1,15 @@
 """Tests for app.cli command line interface."""
 import json
+import contextlib
+import io
 import subprocess
 import sys
 from pathlib import Path
+from unittest.mock import patch
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO_ROOT))
+from app import cli
 
 
 def test_cli_help():
@@ -81,10 +86,35 @@ def test_cli_validation_errors():
     assert "Invalid NEAR transaction hash" in res.stderr
 
 
+def test_live_machine_output():
+    report = {"schemaVersion": "1", "request": {}, "rows": [], "summary": {}}
+    for flag in ("--json", "--csv"):
+        stdout, stderr = io.StringIO(), io.StringIO()
+        with patch.object(cli, "run_worker", return_value=report), contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+            assert cli.main(["--live", "FD7gA9L45Btw79YvGL49km9nwgWcDJS4QjTid9G4CZFu",
+                             "--signer", "sponsor.trezu.near", flag]) == 0
+        assert "Reconciling" in stderr.getvalue()
+        if flag == "--json":
+            assert json.loads(stdout.getvalue()) == report
+        else:
+            assert stdout.getvalue().startswith("row_indices,row_type,")
+
+
+def test_check_failure_is_not_reported_as_passed():
+    failed = subprocess.CompletedProcess([], 1, stdout="", stderr="simulated failure")
+    stdout = io.StringIO()
+    with patch.object(cli.subprocess, "run", return_value=failed), contextlib.redirect_stdout(stdout):
+        assert cli.run_checks() == 1
+    assert "PASSED." not in stdout.getvalue()
+    assert "failures above" in stdout.getvalue()
+
+
 if __name__ == "__main__":
     test_cli_help()
     test_cli_saved_json()
     test_cli_saved_csv()
     test_cli_saved_human()
     test_cli_validation_errors()
+    test_live_machine_output()
+    test_check_failure_is_not_reported_as_passed()
     print("test_cli PASSED")

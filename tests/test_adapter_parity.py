@@ -197,8 +197,25 @@ def test_all_fixtures_parity():
                     seen_bridge_txs[btx] = ri
 
 
+def test_group_observed_totals_and_log_identity():
+    # These fixtures exposed a projection bug: the reader found 2/3 payments,
+    # but the application exported the fee and net for only the first one.
+    for fixture, observed in [("fx_g3_permutation_rev.json", 2), ("fx_g6_list_spans_txs.json", 3)]:
+        case = json.loads((FIXTURES_DIR / fixture).read_text())
+        row = reconcile_fixture(case)["rows"][0]
+        assert row["groupDetails"]["observed"] == observed
+        assert row["amounts"]["fee"] == str(observed * 2400)
+        assert row["amounts"]["net"] == str(observed * 7600)
+        observations = row["evidence"]["observedTransfers"]
+        assert len(observations) == observed
+        assert len({(x["destTransfer"]["transferTxHash"], x["destTransfer"]["logIndex"])
+                    for x in observations}) == observed
+
+
 if __name__ == "__main__":
     test_saved_examples()
     print("test_saved_examples PASSED")
     test_all_fixtures_parity()
     print("test_all_fixtures_parity PASSED")
+    test_group_observed_totals_and_log_identity()
+    print("test_group_observed_totals_and_log_identity PASSED")

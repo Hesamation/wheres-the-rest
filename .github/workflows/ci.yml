@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, 'codex/**' ]
   pull_request:
     branches: [ main ]
 
@@ -20,3 +20,10 @@ jobs:
       - name: Run Offline Verifiers and Parity Tests
         run: |
           python3 main.py --check
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Check frontend controller regressions
+        run: node tests/test_frontend.js
