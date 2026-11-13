@@ -1,25 +1,11 @@
-# Current checkpoint
+# Resume
 
-Updated 2026-11-13. Preparation only; **no product implementation authorized or performed**.
+Updated 2026-11-13. Starter only; no app code yet. Builder unselected. Human has authorized starter preparation and workflow simplification, not product implementation or agent launch.
 
-## Completed
+- Ready: complete build plan, test checklist, accepted reader archive and original regression evidence in inputs/.
+- Checked here: archive SHA-256 and 478 manifest entries; evidence copied unchanged; starter links/whitespace and original backup restoration. Reader/API/UI/live tests have not run here. Historical test passes are in inputs; they are not current passes.
+- Next: open this repo in the chosen harness and send START-HERE's build prompt. Import the reader, build the app, test it and prepare the demo without batch approval stops.
+- Remote: none. Create a private repo with gh under the correct human account and push. Parent planning remote returned Repository not found; its backup is currently local.
+- All required starter inputs are tracked. No ignored evidence is needed. Final name/license, public release and submission still need human choices.
 
-- Full plan and confirmed choices saved; portable bootstrap, operating instructions and acceptance gates prepared.
-- Accepted v5 archive and original technical review/regression evidence copied byte-for-byte into inputs. Reader not extracted into runtime code.
-- Historical checks: 478 manifest matches; 174 suite, 30 verifier, 142 generated, 10 prior regressions; separate 13-case gate conservative. These are November 11 results, not fresh checks.
-
-## Next bounded task
-
-Human selects builder and authorizes implementation. Open this directory in the chosen harness and use START-HERE.md. Then Batch 1 imports the reader, establishes product commands and runs fresh offline checks. Do not restart broad discovery or parser auditing.
-
-## Repository and checks
-
-- Initial starter commit is identified by Git history subject `docs: initialize portable payout build handoff`; no implementation commits.
-- Starter integrity checks and backup location are recorded in the parent planning workspace's current STATUS. Product files and all required inputs are tracked here.
-- No remote configured. No app, UI, live/API, browser or CI checks have run in this repository. No new live payout-provider observations.
-- Original source manifest was checked during preparation; this is integrity evidence, not behavioral validation.
-- No ignored evidence is required to resume this starter. Future generated evidence must be indexed, backed up if needed and explicitly described here.
-
-## Boundaries and unresolved risks
-
-Provider reliability, production demand and measured time savings remain unproved. No finality threshold or receipt expansion exists. Identical burns cannot be assigned invoice identity. License/public release and final submission remain human gates. WBTS is paused outside this repository.
+Before stopping, replace this with a few lines on what works, checks/failures and next steps. Do not maintain a parallel decision log or report every coding step.

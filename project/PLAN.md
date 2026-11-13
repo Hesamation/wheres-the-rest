@@ -1,6 +1,6 @@
 # Payout reader — implementation plan
 
-Prepared 2026-11-13 from the full conversational plan. Builder unselected; preparation does not authorize implementation.
+Prepared 2026-11-13 from the full conversational plan. Builder unselected; preparation does not authorize implementation. Once authorized, execute this plan continuously without phase approvals.
 
 ## Outcome and scope
 
@@ -13,7 +13,7 @@ Exclude lists/invoices, CSV, auth/history, extra chains/assets, custody/executio
 ## Reader and server
 
 - Python 3.13+, runtime standard library only; plain HTML/CSS/JavaScript. No Node build or database.
-- Batch 1 verifies the accepted archive hash/manifest and imports the reader/tests/evidence needed for reproduction. Preserve reader source unchanged with hashes/provenance; historical README counts are stale.
+- Start by verifying the accepted archive hash/manifest and imports the reader/tests/evidence needed for reproduction. Preserve reader source unchanged with hashes/provenance; historical README counts are stale.
 - Thin adapter calls existing extraction, completeness, normalization, destination validation, reconcile and summarize functions. Matching/verdict precedence stay inside the reader. Compare adapter findings against original run_case on saved/synthetic inputs. Concrete semantic fixes require failing cases and recorded patches.
 - Serve static assets and same-origin API on 127.0.0.1:8765 by default, port overridable. Fresh subprocess per reconciliation isolates reader-global network logs. Permit one active reconciliation; busy responses reject overlap. Terminate/clean up workers after success, failure or timeout.
 - Preserve NEAR primary/FastNEAR fallback behavior and fixed reviewed provider endpoints. Configuration stays server-side; no arbitrary URL fetch API. No wallet, paid API requirement, polling or persistent report storage. Retry is user initiated.
@@ -43,14 +43,14 @@ Separate source success from destination observation. Only ALL_ROWS_OBSERVED get
 
 Production saved evidence is in archive member payout-feasibility/raw/probe_network_log_full_1794359827.jsonl (full source/bridge/Base exchanges). Build a fixture with original capture provenance. Existing offline_control is a DIFFERENT EEDi… transaction: retain it for regression, never relabel it FD7g…. QA fixtures are already present. Saved mode never performs network requests or silently appears live.
 
-## Batches and acceptance
+## Build order (no approval stops)
 
 1. Foundation (2–3 focused hours): verified import, portable records/provenance, three replayable examples, fresh reader checks. Product CLI/check commands documented.
 2. Adapter/API (3–5 h): isolated workers, contract, evidence, live/saved endpoints, conservative errors/timeouts and original-runner parity.
 3. UI (3–5 h): complete flow, exact money/group findings, evidence, export, responsive usability.
 4. Acceptance/demo (3–5 h): integrated checks, bounded live refresh, clean-clone rehearsal, README and video preparation.
 
-Total estimate 11–18 focused builder hours, not a promise; excludes provider/limit/human delays. Human availability is unknown. See ACCEPTANCE.md for gates. Commit/checkpoint each completed batch; implementation commits precede documentation checkpoint so exact hashes can be recorded. Do not interpret preparation as Batch 1 completion.
+Total estimate 11–18 focused builder hours, not a promise; excludes provider/limit/human delays. Human availability is unknown. Use ACCEPTANCE.md to verify the finished build. The sequence and estimates are guidance, not process gates. Commit meaningful progress; keep one short STATUS when stopping. No separate documentation commits, decision ledger or per-phase approval. Starter preparation is not implementation.
 
 ## Demo, contingencies and release
 
@@ -58,4 +58,4 @@ Total estimate 11–18 focused builder hours, not a promise; excludes provider/l
 
 Current official deadline checked 2026-11-13: November 14, 2026, 23:59 UTC. Local demo permitted with public repo, reproducible README and video-linked public post. Source: https://nearhackathon.com/HACKATHON.md . Refresh rules again before submission. Hosting deferred, not a delivery dependency. Remove optional polish before evidence honesty, required checks or reproducibility.
 
-Human gates: builder/implementation authorization now; name, license/third-party release review, remote/publication destination and release approval before publication; actual contact/team/payout/demo-post details and exact payload approval before submission. Human publishes the public post. Never guess personal inputs, send external messages, deploy or submit automatically. No numerical win odds, proved demand, recovered funds, permanent loss or final settlement claims.
+Human inputs: builder/implementation authorization now; name, license/third-party release review, remote/publication destination and release approval before publication; actual contact/team/payout/demo-post details and exact payload approval before submission. Human publishes the public post. Never guess personal inputs, send external messages, deploy or submit automatically. No numerical win odds, proved demand, recovered funds, permanent loss or final settlement claims.
