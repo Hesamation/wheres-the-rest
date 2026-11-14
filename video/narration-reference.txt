@@ -1,0 +1,50 @@
+Executed.
+
+Great. Now show me what arrived.
+
+Start simple. One USDC withdrawn on NEAR. A bridge-reported fee.
+Zero point nine nine seven six USDC observed on Base.
+
+The amounts line up.
+
+Now try three withdrawals.
+
+In this public staging QA test on mainnet:
+three identical burns. Same recipient.
+
+One observed transfer.
+
+Where’s the rest?
+
+Cross-chain explorers already exist.
+So we checked this source hash in NEAR Intents Explorer and Range.
+Neither search returned a result for this hash.
+
+Our payout question remains:
+do all three withdrawals have matching evidence?
+
+Where’s the Rest? checks the source burns,
+bridge records and Base transfers in one read-only report.
+
+Two burns have no matching bridge records in this saved capture.
+The evidence can’t identify which identical burn matched.
+
+So the report keeps them grouped.
+One observed transfer gets counted once.
+The unknowns stay visible.
+
+Open the finding. Follow the receipt. Check the amounts.
+The bridge reports the link and fee.
+These are provider observations, not settlement proof.
+Then share the report, with the evidence attached.
+
+Replay a dated capture, or query the providers again.
+Missing records don’t prove permanent loss.
+
+Today, one public NEAR-to-Base USDC route.
+
+Payout lists and ongoing monitoring are future work.
+
+Where’s the Rest?
+
+Follow the payout.

@@ -1,0 +1,9 @@
+node_modules/
+.remotion/
+.cache/
+.venv/
+assets/*.wav
+assets/*.mp3
+raw/
+out/
+*.tsbuildinfo
