@@ -1,5 +1,7 @@
 # Status
 
+2026-11-14 video brief: adopted Control → QA1 reveal → real same-hash explorer searches → unresolved payout question → reconciliation/export. Fresh QA1 public UI searches in NEAR Intents Explorer and Range both returned no results; the brief records this limited observation and requires the footage/narration to match actual capture results. Clarified optional 10–15s voice audition versus narration for the entire film. Application unchanged; runtime suites not repeated. Next: generate full narration and produce the video from the revised brief.
+
 2026-11-13 positioning review: README now acknowledges NEAR Intents Explorer/Range, states the demonstrated payout-review contribution and provider-trust boundaries, credits the existing staging QA report, and moves the roadmap below shipped behavior. The separate video BRIEF.md preserves Control → QA1 → evidence/export, with matching narration and annotations. Rechecked official competitor docs/rules; all three saved CLI replays retain expected findings and amounts. Runtime unchanged; full suites not repeated. Next: produce the video; human repository publication, X post and submission.
 
 Earlier public UI spot-check: no results for QA1 source on either explorer, or for production-control source and QA1 Base destination on Range. These limited lookups do not establish missing capabilities or product superiority; differentiation remains unproven.
