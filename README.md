@@ -153,4 +153,4 @@ The standalone application was built on **November 13, 2026**. Its reader was de
 - Python standard library and vanilla HTML/CSS/JavaScript; no third-party runtime libraries or frontend templates. Styling follows IBM Carbon design tokens without using its component library.
 - AI coding agents assisted implementation and review.
 - The imported reader is preserved unchanged. Source archive, file hashes and capture provenance: [reader/PROVENANCE.json](reader/PROVENANCE.json).
-- Single project entry; no second project is being submitted by this author/team. [MIT license](LICENSE).
+- Independent project entry. As permitted by hackathon rules for multi-project entries, see also our other independent submission: [WBTS](https://github.com/Hesamation/wbts). [MIT license](LICENSE).
