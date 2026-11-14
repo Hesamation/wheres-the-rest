@@ -1,0 +1,741 @@
+{
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "durationSec": 105,
+  "durationInFrames": 3150,
+  "narration": {
+    "file": "narration-normalized.wav",
+    "durationSec": 101.78
+  },
+  "captions": [
+    {
+      "text": "Executed.",
+      "a": 0,
+      "b": 1.55
+    },
+    {
+      "text": "Great. Now show me what arrived.",
+      "a": 1.7,
+      "b": 4.14
+    },
+    {
+      "text": "Start simple.",
+      "a": 4.76,
+      "b": 5.63
+    },
+    {
+      "text": "One USDC withdrawn on NEAR.",
+      "a": 6.06,
+      "b": 8.57
+    },
+    {
+      "text": "A bridge-reported fee.",
+      "a": 8.94,
+      "b": 10.45
+    },
+    {
+      "text": "0.9976 USDC observed on Base.",
+      "a": 10.92,
+      "b": 15.06
+    },
+    {
+      "text": "The amounts line up.",
+      "a": 15.48,
+      "b": 16.98
+    },
+    {
+      "text": "Now try three withdrawals.",
+      "a": 17.32,
+      "b": 19.400000000000002
+    },
+    {
+      "text": "In this public staging QA test on mainnet:",
+      "a": 19.92,
+      "b": 23.220000000000002
+    },
+    {
+      "text": "Three identical burns. Same recipient.",
+      "a": 23.56,
+      "b": 26.75
+    },
+    {
+      "text": "One observed transfer.",
+      "a": 27.46,
+      "b": 29.5,
+      "onCard": true
+    },
+    {
+      "text": "Cross-chain explorers already exist.",
+      "a": 31.58,
+      "b": 33.91
+    },
+    {
+      "text": "We checked this source hash in NEAR Intents Explorer and Range.",
+      "a": 33.98,
+      "b": 38.43
+    },
+    {
+      "text": "Neither search returned a result for this hash.",
+      "a": 39.28,
+      "b": 41.61
+    },
+    {
+      "text": "Our payout question remains:",
+      "a": 41.98,
+      "b": 43.61
+    },
+    {
+      "text": "Do all three withdrawals have matching evidence?",
+      "a": 44.06,
+      "b": 46.9
+    },
+    {
+      "text": "Where's the Rest? checks the source burns, bridge records and Base transfers in one read-only report.",
+      "a": 47.42,
+      "b": 53.99
+    },
+    {
+      "text": "Two burns have no matching bridge records in this saved capture.",
+      "a": 54.54,
+      "b": 58.27
+    },
+    {
+      "text": "The evidence can't identify which identical burn matched, so the report keeps them grouped.",
+      "a": 58.68,
+      "b": 64.15
+    },
+    {
+      "text": "One observed transfer gets counted once. The unknowns stay visible.",
+      "a": 64.52,
+      "b": 69.28
+    },
+    {
+      "text": "Open the finding. Follow the receipt. Check the amounts.",
+      "a": 69.7,
+      "b": 73.17
+    },
+    {
+      "text": "The bridge reports the link and fee.",
+      "a": 69.9,
+      "b": 75.81
+    },
+    {
+      "text": "These are provider observations, not settlement proof.",
+      "a": 76.16,
+      "b": 79.44
+    },
+    {
+      "text": "Then share the report, with the evidence attached.",
+      "a": 79.94,
+      "b": 83.29
+    },
+    {
+      "text": "Replay a dated capture, or query the providers again.",
+      "a": 83.88,
+      "b": 87.34
+    },
+    {
+      "text": "Missing records don't prove permanent loss.",
+      "a": 88,
+      "b": 90.38000000000001
+    },
+    {
+      "text": "Today: one public NEAR-to-Base USDC route.",
+      "a": 90.84,
+      "b": 95.22
+    },
+    {
+      "text": "Payout lists and ongoing monitoring are future work.",
+      "a": 95.86,
+      "b": 99.07
+    },
+    {
+      "text": "Where's the Rest? Follow the payout.",
+      "a": 99.52,
+      "b": 102.18,
+      "onCard": true
+    }
+  ],
+  "scenes": [
+    {
+      "id": "title",
+      "a": 0,
+      "b": 1.55,
+      "type": "card",
+      "card": "title"
+    },
+    {
+      "id": "workbench-intro",
+      "a": 1.55,
+      "b": 4.55,
+      "type": "screen",
+      "base": "control-wide",
+      "cam": {
+        "frames": [
+          {
+            "t": 1.55,
+            "s": 1,
+            "cx": 960,
+            "cy": 540
+          }
+        ]
+      }
+    },
+    {
+      "id": "control-walkthrough",
+      "a": 4.55,
+      "b": 17.1,
+      "type": "screen",
+      "base": "control-row",
+      "cam": {
+        "frames": [
+          {
+            "t": 4.55,
+            "s": 1,
+            "cx": 960,
+            "cy": 540
+          },
+          {
+            "t": 6.9,
+            "s": 1.5,
+            "cx": 1100,
+            "cy": 505
+          },
+          {
+            "t": 8.94,
+            "s": 1.5,
+            "cx": 1100,
+            "cy": 505
+          },
+          {
+            "t": 9.6,
+            "s": 2.3,
+            "cx": 1060,
+            "cy": 505
+          },
+          {
+            "t": 10.92,
+            "s": 2.3,
+            "cx": 1060,
+            "cy": 505
+          },
+          {
+            "t": 11.7,
+            "s": 2.3,
+            "cx": 1225,
+            "cy": 505
+          },
+          {
+            "t": 12.9,
+            "s": 2.3,
+            "cx": 1225,
+            "cy": 505
+          },
+          {
+            "t": 13.6,
+            "s": 1.55,
+            "cx": 1180,
+            "cy": 440
+          },
+          {
+            "t": 15.48,
+            "s": 1.55,
+            "cx": 1180,
+            "cy": 440
+          },
+          {
+            "t": 16.1,
+            "s": 1,
+            "cx": 960,
+            "cy": 540
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "id": "fee-tag",
+          "a": 8.94,
+          "b": 10.7,
+          "kind": "chip",
+          "text": "bridge-reported fee",
+          "x": 90,
+          "y": 900
+        }
+      ],
+      "equation": {
+        "a": 15.3,
+        "b": 17.05
+      }
+    },
+    {
+      "id": "qa1-select",
+      "a": 17.1,
+      "b": 20.4,
+      "type": "video",
+      "base": "qa1-click",
+      "play": {
+        "from": 0.5
+      },
+      "cursor": [
+        {
+          "t": 17.3,
+          "x": 820,
+          "y": 380
+        },
+        {
+          "t": 17.5,
+          "x": 1146,
+          "y": 123,
+          "click": 17.6
+        }
+      ]
+    },
+    {
+      "id": "qa1-reveal",
+      "a": 20.4,
+      "b": 29.2,
+      "type": "screen",
+      "base": "qa1-kpis",
+      "cam": {
+        "frames": [
+          {
+            "t": 20.4,
+            "s": 1,
+            "cx": 960,
+            "cy": 540
+          },
+          {
+            "t": 23.56,
+            "s": 1,
+            "cx": 960,
+            "cy": 540
+          },
+          {
+            "t": 24.25,
+            "s": 2.05,
+            "cx": 487,
+            "cy": 340
+          },
+          {
+            "t": 25.84,
+            "s": 2.05,
+            "cx": 487,
+            "cy": 340
+          },
+          {
+            "t": 26.45,
+            "s": 2.3,
+            "cx": 700,
+            "cy": 500
+          },
+          {
+            "t": 27.46,
+            "s": 2.3,
+            "cx": 700,
+            "cy": 500
+          },
+          {
+            "t": 28.1,
+            "s": 2.05,
+            "cx": 1117,
+            "cy": 340
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "id": "qa-context",
+          "a": 19.9,
+          "b": 23.4,
+          "kind": "chip",
+          "text": "public staging QA test · mainnet · saved evidence 2026-11-10",
+          "x": 90,
+          "y": 900
+        }
+      ]
+    },
+    {
+      "id": "question-card",
+      "a": 29.2,
+      "b": 31.58,
+      "type": "card",
+      "card": "reveal"
+    },
+    {
+      "id": "explorer-ni",
+      "a": 31.58,
+      "b": 37.9,
+      "type": "screen",
+      "base": "explorer-ni",
+      "bare": true,
+      "cam": {
+        "frames": [
+          {
+            "t": 31.58,
+            "s": 1,
+            "cx": 960,
+            "cy": 540
+          },
+          {
+            "t": 34,
+            "s": 1.5,
+            "cx": 960,
+            "cy": 700
+          },
+          {
+            "t": 36.2,
+            "s": 1.15,
+            "cx": 960,
+            "cy": 700
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "id": "search-label",
+          "a": 31.7,
+          "b": 37.9,
+          "kind": "chip",
+          "text": "public source-hash searches · 2026-11-14 · limited lookup, not a product comparison",
+          "x": 64,
+          "y": 52
+        }
+      ]
+    },
+    {
+      "id": "explorer-range",
+      "a": 37.9,
+      "b": 44.2,
+      "type": "screen",
+      "base": "explorer-range",
+      "bare": true,
+      "cam": {
+        "frames": [
+          {
+            "t": 37.9,
+            "s": 1,
+            "cx": 960,
+            "cy": 540
+          },
+          {
+            "t": 39.3,
+            "s": 1.12,
+            "cx": 960,
+            "cy": 400
+          },
+          {
+            "t": 41.3,
+            "s": 1,
+            "cx": 960,
+            "cy": 540
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "id": "search-label-2",
+          "a": 37.9,
+          "b": 44.2,
+          "kind": "chip",
+          "text": "public source-hash searches · 2026-11-14 · limited lookup, not a product comparison",
+          "x": 64,
+          "y": 52
+        }
+      ]
+    },
+    {
+      "id": "payout-question",
+      "a": 44.2,
+      "b": 47.5,
+      "type": "screen",
+      "base": "qa1-wide",
+      "cam": {
+        "frames": [
+          {
+            "t": 44.2,
+            "s": 1,
+            "cx": 960,
+            "cy": 540
+          }
+        ]
+      },
+      "questionOverlay": {
+        "a": 44.4,
+        "b": 47.4,
+        "text": "Do all three withdrawals have matching evidence?"
+      }
+    },
+    {
+      "id": "three-legs",
+      "a": 47.5,
+      "b": 69.7,
+      "type": "screen",
+      "base": "qa1-wide",
+      "cam": {
+        "frames": [
+          {
+            "t": 47.5,
+            "s": 1,
+            "cx": 960,
+            "cy": 540
+          },
+          {
+            "t": 48.24,
+            "s": 1,
+            "cx": 960,
+            "cy": 540
+          },
+          {
+            "t": 49,
+            "s": 2.2,
+            "cx": 551,
+            "cy": 715
+          },
+          {
+            "t": 50.14,
+            "s": 2.2,
+            "cx": 551,
+            "cy": 715
+          },
+          {
+            "t": 50.9,
+            "s": 2.2,
+            "cx": 960,
+            "cy": 715
+          },
+          {
+            "t": 51.18,
+            "s": 2.2,
+            "cx": 960,
+            "cy": 715
+          },
+          {
+            "t": 51.95,
+            "s": 2.2,
+            "cx": 1368,
+            "cy": 725
+          },
+          {
+            "t": 54.54,
+            "s": 2.2,
+            "cx": 1368,
+            "cy": 725
+          },
+          {
+            "t": 55.3,
+            "s": 1.3,
+            "cx": 960,
+            "cy": 640
+          },
+          {
+            "t": 58.68,
+            "s": 1.3,
+            "cx": 960,
+            "cy": 640
+          },
+          {
+            "t": 59.45,
+            "s": 2.7,
+            "cx": 551,
+            "cy": 725
+          },
+          {
+            "t": 63.08,
+            "s": 2.7,
+            "cx": 551,
+            "cy": 725
+          },
+          {
+            "t": 63.75,
+            "s": 1.28,
+            "cx": 960,
+            "cy": 505
+          }
+        ]
+      },
+      "overlays": [
+        {
+          "id": "leg-near",
+          "a": 48.3,
+          "b": 50,
+          "kind": "chip",
+          "text": "NEAR RPC observation",
+          "x": 90,
+          "y": 900
+        },
+        {
+          "id": "leg-bridge",
+          "a": 50.2,
+          "b": 51.95,
+          "kind": "chip",
+          "text": "bridge-reported link + fee",
+          "x": 90,
+          "y": 900
+        },
+        {
+          "id": "leg-base",
+          "a": 52.1,
+          "b": 54.4,
+          "kind": "chip",
+          "text": "Base RPC observation",
+          "x": 90,
+          "y": 900
+        }
+      ]
+    },
+    {
+      "id": "receipt-and-share",
+      "a": 69.7,
+      "b": 83.9,
+      "type": "screen",
+      "base": "qa1-evidence-dest",
+      "cam": {
+        "frames": [
+          {
+            "t": 69.7,
+            "s": 2.1,
+            "cx": 1368,
+            "cy": 725
+          },
+          {
+            "t": 71.5,
+            "s": 1.05,
+            "cx": 960,
+            "cy": 540
+          }
+        ]
+      },
+      "basescan": {
+        "a": 71.5,
+        "b": 75.4,
+        "cam": [
+          {
+            "t": 71.5,
+            "s": 1,
+            "cx": 960,
+            "cy": 540
+          },
+          {
+            "t": 72.2,
+            "s": 1.8,
+            "cx": 960,
+            "cy": 430
+          },
+          {
+            "t": 75,
+            "s": 1.8,
+            "cx": 960,
+            "cy": 430
+          }
+        ]
+      },
+      "bridgeLeg": {
+        "a": 75.4,
+        "b": 79.3,
+        "cam": [
+          {
+            "t": 75.4,
+            "s": 2.2,
+            "cx": 960,
+            "cy": 715
+          }
+        ]
+      },
+      "copyProof": {
+        "a": 79.3,
+        "b": 83.9
+      },
+      "overlays": [
+        {
+          "id": "provider-tag",
+          "a": 74.96,
+          "b": 79.3,
+          "kind": "chip",
+          "text": "provider observations · not settlement proof",
+          "x": 90,
+          "y": 900
+        },
+        {
+          "id": "live-tag-2",
+          "a": 87.8,
+          "b": 91.4,
+          "kind": "chip",
+          "text": "",
+          "x": 0,
+          "y": 0,
+          "skip": true
+        }
+      ],
+      "proofCard": {
+        "a": 80.75,
+        "b": 83.8
+      },
+      "cursor": [
+        {
+          "t": 79.5,
+          "x": 980,
+          "y": 520
+        },
+        {
+          "t": 80,
+          "x": 1203,
+          "y": 24,
+          "click": 80.15
+        }
+      ],
+      "cursorWindow": {
+        "a": 79.3,
+        "b": 81
+      }
+    },
+    {
+      "id": "saved-and-live",
+      "a": 83.9,
+      "b": 91.5,
+      "type": "screen",
+      "base": "live-prefill",
+      "cam": {
+        "frames": [
+          {
+            "t": 83.9,
+            "s": 1,
+            "cx": 960,
+            "cy": 540
+          }
+        ]
+      },
+      "liveVideo": {
+        "a": 87.1,
+        "b": 91.5,
+        "reconcileAt": 87.35,
+        "resultFrom": 87.95
+      },
+      "overlays": [
+        {
+          "id": "live-tag",
+          "a": 87.9,
+          "b": 91.45,
+          "kind": "chip",
+          "text": "fresh live query · 2026-11-14",
+          "x": 90,
+          "y": 900
+        }
+      ]
+    },
+    {
+      "id": "today-future",
+      "a": 91.5,
+      "b": 99.3,
+      "type": "card",
+      "card": "future"
+    },
+    {
+      "id": "end-card",
+      "a": 99.3,
+      "b": 105,
+      "type": "card",
+      "card": "end"
+    }
+  ]
+}
